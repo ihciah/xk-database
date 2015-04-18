@@ -6,7 +6,7 @@ from flask.ext.migrate import Migrate, MigrateCommand
 from app import create_app
 from models import db
 
-sys.path.append("D:/CODE/xk-database")
+sys.path.append(os.path.abspath(''))
 app = create_app()
 manager = Manager(app)
 migrate = Migrate(app, db)
