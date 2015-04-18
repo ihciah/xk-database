@@ -1,4 +1,4 @@
-import os
+import os,sys
 
 DEBUG = True
 
@@ -9,3 +9,5 @@ SESSION_COOKIE_NAME = '_s'
 PERMANENT_SESSION_LIFETIME = 3600 * 24 * 30
 SECRET_KEY = 'secret key'
 PASSWORD_SECRET = 'password secret'
+sys.path.append("D:/CODE/xk-database")
+SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:pasuwadonashi@localhost/fdxk'

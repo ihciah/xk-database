@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>注册 - 复旦大学选课系统</title>
+    <title>登录 - 复旦大学选课系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8" />
 
@@ -33,7 +33,7 @@
 
           <div class="inside-block">
             <img src="/static/images/logo-big.png" alt class="logo">
-            <h1><strong>注册</strong>科学的张江大学选课系统</h1>
+            <h1><strong>登录</strong>科学的张江大学选课系统</h1>
             <h5>By ihciah & qzane</h5>
 
             <form id="form-signin" class="form-signin">
@@ -46,21 +46,18 @@
                   <input type="password" class="form-control" name="password" placeholder="密码">
                   <div class="input-group-addon"><i class="fa fa-key"></i></div>
                 </div>
-                <div class="input-group">
-                  <input type="password" class="form-control" name="password-confirm" placeholder="确认密码">
-                  <div class="input-group-addon"><i class="fa fa-key"></i></div>
-                </div>
               </section>
               <section class="controls">
                 <div class="checkbox check-transparent">
                   <input type="checkbox" value="1" id="remember" checked>
+                  <label for="remember">记住我</label>
                 </div>
-                <a href="/account/login">已有账号? 登录</a>
+                <a href="#">忘记密码?</a>
               </section>
               <section class="log-in">
-                <button class="btn btn-greensea">注册</button>
-                <span><br/><br/><br/></span>
-                <button class="btn btn-slategray" type="reset">重置表单</button>
+                <button class="btn btn-greensea">登录</button>
+                <span>or</span>
+                <a class="btn btn-slategray" href="/account/signup">创建账号</a>
               </section>
             </form>
           </div>
