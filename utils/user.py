@@ -33,7 +33,8 @@ require_teacher = require_role('teacher')
 def login_user(user, permanent=False):
     if not user:
         return None
-    session['id'] = user.id
+    session['username'] = user.username
+    session['role']=user.role
     if permanent:
         session.permanent = True
     return user

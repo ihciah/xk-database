@@ -32,11 +32,22 @@
 
 
           <div class="inside-block">
-            <img src="/static/images/logo-big.png" alt class="logo">
+            <img src="/static/images/logo-big.png" alt class="logo" style="margin-top: 0px;">
             <h1><strong>注册</strong>科学的张江大学选课系统</h1>
             <h5>By ihciah & qzane</h5>
-
-            <form id="form-signin" class="form-signin">
+              {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <form id="form-signin" class="form-signin" method="post" style="margin-top: 10px;">
+    {% for message in messages %}
+        <div class="alert alert-warning alert-dismissable">
+                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                      <strong>Oops!</strong> {{ message }}
+                    </div>
+    {% endfor %}
+   {% else %}
+     <form id="form-signin" method="post" class="form-signin">
+  {% endif %}
+{% endwith %}
               <section>
                 <div class="input-group">
                   <input type="text" class="form-control" name="username" placeholder="学号">
@@ -47,7 +58,7 @@
                   <div class="input-group-addon"><i class="fa fa-key"></i></div>
                 </div>
                 <div class="input-group">
-                  <input type="password" class="form-control" name="password-confirm" placeholder="确认密码">
+                  <input type="password" class="form-control" name="confirm" placeholder="确认密码">
                   <div class="input-group-addon"><i class="fa fa-key"></i></div>
                 </div>
               </section>
@@ -59,7 +70,7 @@
               </section>
               <section class="log-in">
                 <button class="btn btn-greensea">注册</button>
-                <span><br/><br/><br/></span>
+                <span>&nbsp;&nbsp;</span>
                 <button class="btn btn-slategray" type="reset">重置表单</button>
               </section>
             </form>

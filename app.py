@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import sys
-sys.path.append("D:/CODE/xk-database")
+import sys,os
+sys.path.append(os.path.abspath(''))
 from flask import Flask
 from models import db
 

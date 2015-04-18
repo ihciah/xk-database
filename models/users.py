@@ -1,14 +1,13 @@
-from _base import db
+from _base import db,SessionMixin
 from werkzeug import security
 
 __all__ = ['Account']
-class Account(db.Model):
+class Account(db.Model, SessionMixin):
     __tablename__ = "users"
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(40), unique=True, index=True,nullable=False)
+    username = db.Column(db.String(100), primary_key=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
     role = db.Column(db.Integer,nullable=False)
-    email = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100))
 
     def __init__(self, **kwargs):
         if 'password' in kwargs:
@@ -16,8 +15,7 @@ class Account(db.Model):
             self.password = self.create_password(raw)
 
         if 'username' in kwargs:
-            username = kwargs.pop('username')
-            self.username = username.lower()
+            self.username = kwargs.pop('username')
 
         for k, v in kwargs.items():
             setattr(self, k, v)
