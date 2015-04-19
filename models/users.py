@@ -37,7 +37,6 @@ class Account(db.Model, SessionMixin):
 
     def change_password(self, raw):
         self.passwd = self.create_password(raw)
-        self.token = self.create_token()
         return self
 
     def check_password(self, raw):

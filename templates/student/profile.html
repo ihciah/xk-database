@@ -263,7 +263,7 @@
               <ol class="breadcrumb">
                 <li>你在这里</li>
                 <li><a href="/stu">选课管理</a></li>
-                <li class="active">总览</li>
+                <li class="active">资料修改</li>
               </ol>
             </div>
 
@@ -275,68 +275,89 @@
           <div class="main">
               
               <div class="row">
-                  <div class="col-md-12">
+                  
+                  <div class="col-md-6">
+
 
 
                 <!-- tile -->
-                <section class="tile transparent">
-
-
-
-
-                    <section class="tile color transparent-black">
+                <section class="tile color transparent-white">
 
 
 
                   <!-- tile header -->
                   <div class="tile-header">
-                    <h1><strong>课程表</strong></h1>
-                    <div class="controls">
-                      <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
-                      <a href="#" class="remove"><i class="fa fa-times"></i></a>
-                    </div>
+                    <h1><strong>修改资料</strong></h1>
                   </div>
                   <!-- /tile header -->
 
                   <!-- tile body -->
-                  <div class="tile-body nopadding">
-                    
-                    <table class="table" border="1" align="center">
-                      <thead>
-                        <tr>
-                          <th align="center">周 节</th>
-                          <th align="center">周 一</th>
-                          <th align="center">周 二</th>
-                          <th align="center">周 三</th>
-                          <th align="center">周 四</th>
-                          <th align="center">周 五</th>
-                          <th align="center">周 六</th>
-                          <th align="center">周 日</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                          {% for line in timetable %}
-                            <tr>
-                                <td align="center">{{loop.index}}</td>
-                                {% for it in line %}
-                                {% if it==1 %}
-                                <td></td>
-                                {% else %}
-                                  {% if it!=0 %}
-                                   <td align="center" rowspan="{{it[]}}">
-                                       {{it[1]}}
-                                       <br/>
-                                       {{it[2]}}
-                                       <br/>
-                                       {{it[3]}}
-                                   </td>
-                                  {% endif %}
-                                {% endif %}
-                                {% endfor %}
-                            </tr>
+                    <div class="tile-body">
+                    {% with messages = get_flashed_messages() %}
+                     {% if messages %}
+                      <div class="notification notification-warning" style="margin-top: 0px;">
+                      <h4>提示</h4>
+                          {% for message in messages %}
+                      <p>{{ message }}</p>
                           {% endfor %}
-                      </tbody>
-                    </table>
+                    </div>
+                      {% endif %}
+                      {% endwith %}
+                    
+                    <form class="form-horizontal" role="form" action="/stu/profile" method="POST">
+
+                      <div class="form-group">
+                        <label for="datepicker" class="col-sm-4 control-label">姓名</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="datepicker" name="name" value="{{name}}">
+                        </div>
+                      </div>
+
+                       <div class="form-group">
+                        <label for="datepicker" class="col-sm-4 control-label">年龄</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="datepicker" name="age" value="{{age}}">
+                        </div>
+                      </div>
+
+                        <div class="form-group">
+                        <label for="datepicker" class="col-sm-4 control-label">专业</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="datepicker" name="major" value="{{major}}">
+                        </div>
+                      </div>
+
+                        <div class="form-group">
+                        <label for="datepicker" class="col-sm-4 control-label">年级</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="datepicker" name="grade"  value="{{grade}}">
+                        </div>
+                      </div>
+                        <br/>
+                        <br/>
+
+                        <div class="form-group">
+                        <label for="datepicker" class="col-sm-4 control-label">修改密码</label>
+                        <div class="col-sm-8">
+                          <input type="password" class="form-control" name="password" placeholder="新密码(不需修改请留空)">
+                        </div>
+                      </div>
+
+                        <div class="form-group">
+                        <label for="datepicker" class="col-sm-4 control-label">确认密码</label>
+                        <div class="col-sm-8">
+                          <input type="password" class="form-control" name="confirm" placeholder="确认密码">
+                        </div>
+                      </div>
+
+                      <div class="form-group form-footer footer-white">
+                        <div class="col-sm-offset-4 col-sm-8">
+                          <button type="submit" class="btn btn-greensea">提交</button>
+                          <button type="reset" class="btn btn-red">重置</button>
+                        </div>
+                      </div>
+                            
+                    </form>
 
                   </div>
                   <!-- /tile body -->
@@ -345,12 +366,14 @@
 
 
                 </section>
-
-                  </div>
-
-
-                </section>
                 <!-- /tile -->
+
+
+
+
+              </div>
+                  
+
 
               </div>
 
