@@ -1,7 +1,5 @@
-import sys
 from flask import g, request, session, current_app
 from flask import url_for, redirect, abort, flash
-sys.path.append("D:/CODE/xk-database")
 import functools
 from models import Account
 class require_role(object):

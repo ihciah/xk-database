@@ -6,7 +6,7 @@ from wtforms import Form, validators, TextAreaField
 from wtforms import BooleanField, StringField, PasswordField, IntegerField
 from wtforms.validators import DataRequired, Length, Regexp,NumberRange
 from wtforms.validators import Optional
-from models import Account
+from models import Account,Student
 class SignupForm(Form):
     username = StringField(
         'username', validators=[
@@ -24,13 +24,15 @@ class SignupForm(Form):
 
     def validate_username(self, field):
         data = field.data
-        if Account.query.filter_by(username=data).count():
+        if Account.query.get(data):
             raise ValueError(u'此用户名已被注册')
 
     def save(self, role=1):
         user = Account(**self.data)
         user.role=role
         user.save()
+        stuusr=Student(stuid=user.username,grade="20"+user.username[0:2])
+        stuusr.save()
         return user
 
 
@@ -40,7 +42,7 @@ class LoginForm(Form):
 
     def validate_password(self, field):
         username = self.username.data
-        user = Account.query.filter_by(username=username).first()
+        user = Account.query.get(username)
         if not user:
             raise ValueError(u'用户不存在')
         if user.check_password(field.data):
