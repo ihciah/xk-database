@@ -10,7 +10,8 @@ from models import Account
 class SignupForm(Form):
     username = StringField(
         'username', validators=[
-            DataRequired(message=u"学号不能为空")
+            DataRequired(message=u"学号不能为空"),
+            Length(min=1, max=20, message=u"长度必须在1-20位之间")
         ], description='only numbers!(1-12)',
     )
 
@@ -33,9 +34,9 @@ class SignupForm(Form):
         return user
 
 
-class SigninForm(Form):
-    username = IntegerField('username', [validators.Length(min=1, max=20)])
-    password = PasswordField('password', [validators.DataRequired()])
+class LoginForm(Form):
+    username = StringField('username', [validators.Length(min=1, max=20, message=u"长度必须在1-20位之间")])
+    password = PasswordField('password', [validators.DataRequired(message=u"请输入密码")])
 
     def validate_password(self, field):
         username = self.username.data

@@ -41,14 +41,14 @@ def login_user(user, permanent=False):
 
 
 def logout_user():
-    if 'id' not in session:
+    if 'username' not in session:
         return
-    session.pop('id')
+    session.pop('username')
 
 
 def get_current_user():
-    if 'id' in session:
-        user = Account.query.get(int(session['id']))
+    if 'username' in session:
+        user = Account.query.get(session['username'])
         if not user:
             return None
         return user

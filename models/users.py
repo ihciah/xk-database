@@ -39,3 +39,7 @@ class Account(db.Model, SessionMixin):
         self.passwd = self.create_password(raw)
         self.token = self.create_token()
         return self
+
+    def check_password(self, raw):
+        passwd = '{old}{new}'.format(old=raw, new=db.app.config['PASSWORD_SECRET'])
+        return security.check_password_hash(self.password, passwd)
