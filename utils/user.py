@@ -16,14 +16,11 @@ class require_role(object):
     def __call__(self, method):
         @functools.wraps(method)
         def wrapper(*args, **kwargs):
-            if not g.user:
-                url = url_for('account.signin')
-                if '?' not in url:
-                    url += '?next=' + request.url
-                return redirect(url)
-            if self.roles[self.role]!=self.roles[g.user.role]:
-                return abort(403)
-            return method(*args, **kwargs)
+            usr=get_current_user()
+            if usr is not None and self.roles[self.role]==usr.role:
+                g.user=usr
+                return method(*args, **kwargs)
+            return abort(403)
         return wrapper
 
 require_stu = require_role('student')

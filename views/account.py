@@ -6,7 +6,7 @@ from flask import render_template
 from flask import g, request, flash, current_app
 from flask import render_template, redirect, url_for,current_app
 from forms import SignupForm,LoginForm
-from utils import login_user,get_current_user
+from utils import login_user,get_current_user,logout_user
 
 from models import Account
 __all__ = ['bp']
@@ -45,4 +45,8 @@ def login():
             flash(err)
      return render_template('account/login.html')
 
-
+@bp.route('/logout',methods=['GET'])
+def logout():
+    logout_user()
+    flash(u"已登出您的账号")
+    return render_template('account/login.html')

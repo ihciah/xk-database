@@ -38,7 +38,7 @@
 
               {% with messages = get_flashed_messages() %}
   {% if messages %}
-    <form id="form-signin" method="post" class="form-signin" style="margin-top: 10px;">
+    <form id="form-signin" action="/account/login" method="post" class="form-signin" style="margin-top: 10px;">
     {% for message in messages %}
         <div class="alert alert-warning alert-dismissable">
                       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -46,7 +46,7 @@
                     </div>
     {% endfor %}
    {% else %}
-     <form id="form-signin" method="post" class="form-signin">
+     <form id="form-signin" action="/account/login" method="post" class="form-signin">
   {% endif %}
 {% endwith %}
 

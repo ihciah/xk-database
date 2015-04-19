@@ -11,7 +11,7 @@ from utils import login_user,require_stu
 from models import Account
 __all__ = ['bp']
 
-bp = Blueprint('account',__name__)
+bp = Blueprint('stu',__name__)
 @bp.route('/',methods=['GET'])
 @require_stu
 def home():

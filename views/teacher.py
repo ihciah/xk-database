@@ -11,7 +11,7 @@ from utils import login_user,require_teacher
 from models import Account
 __all__ = ['bp']
 
-bp = Blueprint('account',__name__)
+bp = Blueprint('teacher',__name__)
 @bp.route('/',methods=['GET'])
 @require_teacher
 def home():
