@@ -315,7 +315,7 @@
                   <div style="height: 60px;">
                       <form action="/stu/xk" method="post">
                       <div class="input-group input-group-lg margin-bottom-20">
-                          <input type="text" name="search" class="form-control" placeholder="课程代码/课程代码前缀/专业/教师姓名...">
+                          <input type="text" name="search" class="form-control" placeholder="课程代码/课程代码前缀/专业...">
                           <span class="input-group-btn">
                             <button class="btn btn-default" type="submit">课程检索</button>
                           </span>
@@ -335,8 +335,6 @@
                             <th class="sort-amount">教师姓名</th>
                             <th class="sort-numeric">人数</th>
                             <th>时间</th>
-                            <th class="sort-amount">教室</th>
-                            <th class="sort-amount">开课院系</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -348,8 +346,6 @@
                                   <td>{{ r.teacher.name }}</td>
                                   <td class="text-center"> {{ r.num }}</td>
                                   <td class="text-center">{{ r.time }}</td>
-                              <td class="text-center">{{ r.place }}</td>
-                                  <td class="text-center">{{ r.major }}</td>
 
                           </tr>
                         {% endfor %}
@@ -416,7 +412,26 @@
     <script src="/static/js/vendor/chosen/chosen.jquery.min.js"></script>
 
     <script src="/static/js/minimal.min.js"></script>
-
+  <script>
+    function xk(code){
+        var r=confirm("确认选课"+code+"?");
+        if (r==true)
+        {
+            dotk(code);
+        }
+    }
+  function dotk(code){
+    $.post("/json/xk",
+    {
+        code:code
+    },
+    function(data,status){
+        var obj = eval ("(" + data + ")");
+        alert(obj.info);
+    }
+    );
+    }
+</script>
     <script>
     $(function(){
 
@@ -479,21 +494,24 @@
       // Append delete button to table
       var deleteRowLink = '<a href="#" id="deleteRow" class="btn btn-red btn-xs delete-row">选课</a>'
       $('#basicDataTable_wrapper').append(deleteRowLink);
+      /* Get the rows which are currently selected */
+      function fnGetSelected(oTable01Local){
+        return oTable01Local.$('tr.row_selected');
+      };
 
       /* Add a click handler for the delete row */
       $('#deleteRow').click( function() {
         var anSelected = fnGetSelected(oTable01);
         if (anSelected.length !== 0 ) {
-          oTable01.fnDeleteRow(anSelected[0]);
+          //oTable01.fnDeleteRow(anSelected[0]);
+          xk(anSelected[0].childNodes[1].innerText);
+          //console.log(anSelected[0].childNodes[1].innerText);
           $('#deleteRow').stop().fadeOut(300);
           //add code here to choose the course
         }
       });
 
-      /* Get the rows which are currently selected */
-      function fnGetSelected(oTable01Local){
-        return oTable01Local.$('tr.row_selected');
-      };
+
 
       /*******************************************************/
       /**************** INLINE EDIT DATATABLE ****************/
@@ -680,8 +698,6 @@
               '<tr><td>教师姓名:</td><td>'+oData.platform+'</td></tr>'+
               '<tr><td>人数:</td><td>'+oData.version+'</td></tr>'+
               '<tr><td>时间:</td><td>'+oData.grade+'</td></tr>'+
-              '<tr><td>教室:</td><td>'+oData.grade+'</td></tr>'+
-              '<tr><td>开课院系:</td><td>'+oData.grade+'</td></tr>'+
             '</table>'+
           '</div>';
         return sOut;
@@ -738,26 +754,7 @@
     })
       
     </script>
-  <script>
-    function xk(code){
-        var r=confirm("确认选课"+code+"?");
-        if (r==true)
-        {
-            dotk(code);
-        }
-    }
-  function dotk(code){
-    $.post("/json/xk",
-    {
-        code:code
-    },
-    function(data,status){
-        var obj = eval ("(" + data + ")");
-        alert(obj.info);
-    }
-    );
-    }
-</script>
+
   </body>
 </html>
       

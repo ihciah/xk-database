@@ -8,6 +8,4 @@ bp = Blueprint('mainpage',__name__)
 
 @bp.route('/')
 def home():
-    return render_template(
-        'index.html',name="ihciah"
-    )
+    return redirect("/account/login")

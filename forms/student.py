@@ -55,7 +55,7 @@ class SearchForm(Form):
     def search(self):
         res=[]
         sbycode=Course.query.filter(Course.code.like(self.name.data+'%'))
-        sbymajor=Course.query.filter(Course.major.like('%'+self.name.data+'%'))
+        sbymajor=Course.query.filter(Course.major==self.name.data)
         sr=sbycode.union(sbymajor).all()
         for i in sr:
             i.time=transj2w(i.time)
