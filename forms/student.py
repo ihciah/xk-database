@@ -59,7 +59,6 @@ class SearchForm(Form):
         sr=sbycode.union(sbymajor).all()
         for i in sr:
             i.time=transj2w(i.time)
-            current_app.logger.debug(i.time)
             res.append(i)
 
         #sbyteacher=Course.query.filter(Course.teacher.name.like('%'+self.name.data+'%')).all()

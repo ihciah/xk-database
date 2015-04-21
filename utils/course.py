@@ -42,3 +42,13 @@ def transj2w(js):
             stl.append(str(tj[0])+"-"+str(int(tj[0])+int(tj[1])-1))
         wtime.append(st+','.join(stl))
     return '\r\n'.join(wtime)
+
+def check_if_conflict(allc,sc):
+    #参数：所有课程、待选课程
+    #返回：1表示冲突，2表示无冲突
+    timetable=[[0 for p in range(7)] for k in range(14)]
+    for lp in allc:
+        k=json.loads(lp.time)
+        for i,j in k.items():
+            for tj in j:
+                timetable[i][i]

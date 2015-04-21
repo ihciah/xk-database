@@ -44,8 +44,7 @@ def xk():
     if form.validate():
         sres=form.search()
         return render_template('student/xk.html',result=sres)
-    for fieldName, errorMessages in form.errors.iteritems():
-        for err in errorMessages:
-            flash(err)
-            current_app.logger.debug(err)
+    #for fieldName, errorMessages in form.errors.iteritems():
+    #    for err in errorMessages:
+    #        flash(err)
     return render_template('student/xk.html')
