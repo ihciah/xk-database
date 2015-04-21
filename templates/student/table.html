@@ -679,13 +679,21 @@
       
     </script>
   <script>
-  function tk(code){
+    function tk(code){
+        var r=confirm("确认退课"+code+"?");
+        if (r==true)
+        {
+            dotk(code);
+        }
+    }
+  function dotk(code){
     $.post("/json/tk",
     {
         code:code
     },
     function(data,status){
-        alert("Data: " + data + "\nStatus: " + status);
+        var obj = eval ("(" + data + ")");
+        alert(obj.info);
         location.reload();
     }
     );

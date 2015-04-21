@@ -738,6 +738,26 @@
     })
       
     </script>
+  <script>
+    function xk(code){
+        var r=confirm("确认选课"+code+"?");
+        if (r==true)
+        {
+            dotk(code);
+        }
+    }
+  function dotk(code){
+    $.post("/json/xk",
+    {
+        code:code
+    },
+    function(data,status){
+        var obj = eval ("(" + data + ")");
+        alert(obj.info);
+    }
+    );
+    }
+</script>
   </body>
 </html>
       
