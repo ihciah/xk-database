@@ -35,4 +35,5 @@ class DotkForm(Form):
             raise ValueError(u'该课程未选择')
     def delete(self):
         kc=Xk.query.filter(Xk.stuid==g.user.username).filter(Xk.code==self.code.data)
-        kc.delete()
+        for i in kc:
+            i.delete()
