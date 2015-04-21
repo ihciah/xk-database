@@ -6,7 +6,8 @@ from wtforms import Form, validators, TextAreaField
 from wtforms import BooleanField, StringField, PasswordField, IntegerField
 from wtforms.validators import DataRequired, Length, Regexp,NumberRange
 from wtforms.validators import Optional
-from models import Student,Account
+from models import Student,Account,Course
+from utils import transj2w
 class ProfileForm(Form):
     name = StringField(
         'name', validators=[
@@ -45,4 +46,22 @@ class ProfileForm(Form):
         stuusr.major=self.major.data
         stuusr.grade=self.grade.data
         stuusr.save()
+class SearchForm(Form):
+    name = StringField(
+        'search', validators=[
+            Length(min=0, max=20, message=u"搜索关键字必须在0字以上20字以下")
+        ]
+    )
+    def search(self):
+        res=[]
+        sbycode=Course.query.filter(Course.code.like(self.name.data+'%'))
+        sbymajor=Course.query.filter(Course.major.like('%'+self.name.data+'%'))
+        sr=sbycode.union(sbymajor).all()
+        for i in sr:
+            i.time=transj2w(i.time)
+            current_app.logger.debug(i.time)
+            res.append(i)
 
+        #sbyteacher=Course.query.filter(Course.teacher.name.like('%'+self.name.data+'%')).all()
+        #res=res+[i for i in sbyteacher]
+        return res

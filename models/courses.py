@@ -2,7 +2,7 @@ from _base import *
 
 class Student(db.Model, SessionMixin):
     __tablename__ = "students"
-    stuid = db.Column(db.String(100), primary_key=True, nullable=False)
+    stuid = db.Column(db.String(100),primary_key=True, nullable=False)
     name = db.Column(db.String(50))
     age = db.Column(db.Integer)
     major = db.Column(db.String(50))

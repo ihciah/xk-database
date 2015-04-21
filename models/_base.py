@@ -9,6 +9,9 @@ class SessionMixin(object):
         db.session.add(self)
         db.session.commit()
         return self
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
     def __init__(self, **kwargs):
         for k, v in kwargs.items():
             setattr(self, k, v)
