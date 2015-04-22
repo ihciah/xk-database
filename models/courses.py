@@ -14,13 +14,13 @@ class Student(db.Model, SessionMixin):
 
 class Course(db.Model, SessionMixin):
     __tablename__ = "courses"
-    code = db.Column(db.String(100), primary_key=True, nullable=False)
-    teaid = db.Column(db.String(100), ForeignKey('teachers.teaid'), nullable=False)
-    num = db.Column(db.Integer,nullable=False)
-    desp = db.Column(db.String(200))
-    major = db.Column(db.String(50))
-    place = db.Column(db.String(200))
-    time = db.Column(db.String(500))
+    code = db.Column(db.String(100), primary_key=True, nullable=False)#选课代码
+    teaid = db.Column(db.String(100), ForeignKey('teachers.teaid'), nullable=False)#教师id
+    num = db.Column(db.Integer,nullable=False)#限制人数
+    desp = db.Column(db.String(200))#课程名
+    major = db.Column(db.String(50))#开课院系
+    place = db.Column(db.String(200))#教室
+    time = db.Column(db.String(500))#时间（json格式，见utils）
     students = relationship(
         'Student',
         secondary='xks'
@@ -34,5 +34,6 @@ class Xk(db.Model, SessionMixin):
 
 class Teacher(db.Model, SessionMixin):
     __tablename__ = "teachers"
-    teaid = db.Column(db.String(100), primary_key=True, nullable=False)
-    name = db.Column(db.String(50))
+    teaid = db.Column(db.String(100), primary_key=True, nullable=False)#教师id
+    name = db.Column(db.String(50))#教师姓名
+    prof = db.Column(db.String(50))#职称
