@@ -24,6 +24,7 @@ class Course(db.Model, SessionMixin):
     major = db.Column(db.String(50))#开课院系
     place = db.Column(db.String(200))#教室
     time = db.Column(db.String(500))#时间（json格式，见utils）
+    credit = db.Column(db.Integer)
     students = relationship(
         'Student',
         secondary='xks'

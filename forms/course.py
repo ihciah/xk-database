@@ -24,8 +24,11 @@ class DoxkFrom(Form):
         selectcourse=Course.query.filter(Course.code==code).first()
         if not selectcourse:
             raise ValueError(u'该课程不存在')
-        #if check_if_conflict(allcourses,selectcourse):
-        #    raise ValueError(u'时间冲突')
+        ####TO########
+        #时间冲突判断--ok
+        #人数是否满判断
+        if check_if_conflict(allcourses,selectcourse):
+            raise ValueError(u'时间冲突')
     def save(self):
         choose=Xk(stuid=g.user.username,code=self.code.data)
         choose.save()
