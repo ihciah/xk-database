@@ -32,7 +32,7 @@
     <![endif]-->
 
   </head>
-  <body class="bg-1">
+  <body class="bg-1"  onload="update_credit();">
 
  
 
@@ -186,8 +186,8 @@
 
                 <div class="media">
                   <div class="media-body">
-                    总学分
-                    <h3 class="media-heading">28.5</h3>
+                    学分统计
+                    <h3 class="media-heading" id="credit">Loading...</h3>
                   </div>
                 </div>
               </li>
@@ -625,22 +625,31 @@
       
     </script>
   <script>
-    function tk(code){
-        var r=confirm("确认退课"+code+"?");
+    function xk(code){
+        var r=confirm("确认选课"+code+"?");
         if (r==true)
         {
             dotk(code);
+            update_credit();
         }
     }
   function dotk(code){
-    $.post("/json/tk",
+    $.post("/json/xk",
     {
         code:code
     },
     function(data,status){
         var obj = eval ("(" + data + ")");
         alert(obj.info);
-        location.reload();
+        update_credit();
+    }
+    );
+    }
+      function update_credit(){
+    $.get("/json/credit",
+    function(data,status){
+        var obj = eval ("(" + data + ")");
+        $("#credit").text(obj.credit+" 分");
     }
     );
     }

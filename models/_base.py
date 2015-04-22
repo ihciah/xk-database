@@ -5,6 +5,7 @@ from sqlalchemy.orm import relationship
 db = SQLAlchemy()
 
 class SessionMixin(object):
+    session=db.session
     def save(self):
         db.session.add(self)
         db.session.commit()

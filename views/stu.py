@@ -4,7 +4,7 @@
 from flask import Blueprint
 from flask import g, request, flash
 from flask import render_template, redirect, url_for,current_app
-from utils import login_user,require_stu,gen_course_table
+from utils import login_user,require_stu,gen_course_table,get_credit
 from models import Student
 from forms import ProfileForm,SearchForm
 
@@ -38,6 +38,8 @@ def profile():
 @bp.route('/xk',methods=['GET','POST'])
 @require_stu
 def xk():
+    #stu_credit=get_credit(g.user.username)
+    #g.user.credit=stu_credit
     if request.method == 'GET':
         return render_template('student/xk.html')
     form=SearchForm(request.form)

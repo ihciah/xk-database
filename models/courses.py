@@ -30,6 +30,7 @@ class Course(db.Model, SessionMixin):
         secondary='xks'
     )
     teacher=relationship('Teacher')
+    xk=relationship('Xk')
 
 class Xk(db.Model, SessionMixin):
     __tablename__ = "xks"

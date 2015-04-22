@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import json,sys,os
+sys.path.append(os.path.abspath(''))
 from flask import g, request, session, current_app
 from flask import url_for, redirect, abort, flash
 import functools
-import json,sys,os
-sys.path.append(os.path.abspath(''))
+from sqlalchemy.sql import func
 from models import Student,Course,Xk
 
 def gen_course_table(stuid):
@@ -70,5 +70,11 @@ def check_if_full(cid):
     if num_already>=num_limit:
         return 1
     return 0
+
+def get_credit(sid):
+    #学号->学分
+    x=Course.session.query(func.sum(Course.credit).label('sum')).join(Xk, Xk.code==Course.code).filter(Xk.stuid==sid)
+    return x[0].sum
+
 
 
