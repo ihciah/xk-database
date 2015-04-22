@@ -28,4 +28,4 @@
 ---
 ##协议
 * 本项目依照GPL V2开源
-* Copyright ihciah & qzane
+* Copyright [ihciah](http://www.ihcblog.com) & qzane
