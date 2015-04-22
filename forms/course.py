@@ -7,7 +7,7 @@ from wtforms import BooleanField, StringField, PasswordField, IntegerField
 from wtforms.validators import DataRequired, Length, Regexp,NumberRange
 from wtforms.validators import Optional
 from models import Student,Account,Course,Xk
-from utils import check_if_conflict,check_if_full
+from utils import check_if_conflict,check_if_full,get_people_count
 
 class DoxkFrom(Form):
     code = StringField(
@@ -50,3 +50,12 @@ class DotkForm(Form):
         kc=Xk.query.filter(Xk.stuid==g.user.username).filter(Xk.code==self.code.data)
         for i in kc:
             i.delete()
+
+class Get_count(Form):
+    cid = StringField(
+        'cid', validators=[
+            Length(min=1, max=30, message=u"选课号长度错误")
+        ]
+    )
+    def get_res(self):
+        return get_people_count(self.cid.data)

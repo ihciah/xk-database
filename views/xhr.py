@@ -4,12 +4,12 @@ import json
 from flask import Blueprint
 from flask import g, request, flash
 from flask import render_template, redirect, url_for,current_app
-from utils import login_user,require_stu,gen_course_table,get_credit
-from forms import DotkForm,DoxkFrom
+from utils import login_user,require_stu,require_admin,gen_course_table,get_credit,get_people_count
+from forms import DotkForm,DoxkFrom,Get_count
 
 __all__ = ['bp']
 
-bp = Blueprint('jsonview',__name__)
+bp = Blueprint('xhr',__name__)
 @bp.route('/xk',methods=['POST'])
 @require_stu
 def xk():
@@ -40,3 +40,14 @@ def credit():
     result={}
     result['credit']=get_credit(g.user.username)
     return json.dumps(result)
+
+@bp.route('/stucount',methods=['GET'])
+@require_admin
+def stucount():
+    resform=Get_count(request.args)
+    if resform.validate():
+        r=resform.get_res()
+        r['state']='ok'
+    else:
+        r={'state':'error'}
+    return json.dumps(r)

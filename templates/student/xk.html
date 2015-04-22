@@ -323,7 +323,7 @@
         }
     }
   function dotk(code){
-    $.post("/json/xk",
+    $.post("/xhr/xk",
     {
         code:code
     },
@@ -335,7 +335,7 @@
     );
     }
       function update_credit(){
-    $.get("/json/credit",
+    $.get("/xhr/credit",
     function(data,status){
         var obj = eval ("(" + data + ")");
         $("#credit").text(obj.credit+" 分");
