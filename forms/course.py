@@ -7,7 +7,7 @@ from wtforms import BooleanField, StringField, PasswordField, IntegerField
 from wtforms.validators import DataRequired, Length, Regexp,NumberRange
 from wtforms.validators import Optional
 from models import Student,Account,Course,Xk
-from utils import check_if_conflict
+from utils import check_if_conflict,check_if_full
 
 class DoxkFrom(Form):
     code = StringField(
@@ -20,7 +20,7 @@ class DoxkFrom(Form):
         if Xk.query.filter(Xk.stuid==g.user.username).filter(Xk.code==code).count():
             raise ValueError(u'该课程已选择')
         #check if time conflict
-        allcourses=Xk.query.join(Course, Course.code==Xk.code).filter(Xk.stuid==g.user.username).all()
+        allcourses=Course.query.join(Xk, Course.code==Xk.code).filter(Xk.stuid==g.user.username).all()
         selectcourse=Course.query.filter(Course.code==code).first()
         if not selectcourse:
             raise ValueError(u'该课程不存在')
@@ -29,6 +29,8 @@ class DoxkFrom(Form):
         #人数是否满判断
         if check_if_conflict(allcourses,selectcourse):
             raise ValueError(u'时间冲突')
+        if check_if_full(code):
+            raise ValueError(u'人数已满')
     def save(self):
         choose=Xk(stuid=g.user.username,code=self.code.data)
         choose.save()

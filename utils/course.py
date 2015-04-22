@@ -6,7 +6,7 @@ from flask import url_for, redirect, abort, flash
 import functools
 import json,sys,os
 sys.path.append(os.path.abspath(''))
-from models import Student
+from models import Student,Course,Xk
 
 def gen_course_table(stuid):
     timetable=[[1 for p in range(7)] for t in range(14)]#14*7
@@ -53,12 +53,22 @@ def check_if_conflict(allc,sc):
             #i表示星期几
             for tj in j:
                 #tj[0]表示开始时间,tj[1]表示持续时间
-                for f in range(tj[0],tj[0]+tj[1]):
-                    timetable[f][i]=1
+                for f in range(int(tj[0]),int(tj[0])+int(tj[1])):
+                    timetable[int(f)][int(i)]=1
     k=json.loads(sc.time)
     for i,j in k.items():
         for tj in j:
-            for f in range(tj[0],tj[0]+tj[1]):
-                if timetable[f][i]==1:
+            for f in range(int(tj[0]),int(tj[0])+int(tj[1])):
+                if timetable[int(f)][int(i)]==1:
                     return 1
     return 0
+
+def check_if_full(cid):
+    #已满=1  可选=0
+    num_limit=Course.query.get(cid).num
+    num_already=Xk.query.filter(Xk.code==cid).count()
+    if num_already>=num_limit:
+        return 1
+    return 0
+
+
