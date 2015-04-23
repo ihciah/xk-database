@@ -231,7 +231,7 @@
                   <div style="height: 60px;">
                       <form action="/stu/xk" method="post">
                       <div class="input-group input-group-lg margin-bottom-20">
-                          <input type="text" name="search" class="form-control" placeholder="课程代码/课程代码前缀/专业...">
+                          <input type="text" name="search_course" class="form-control" placeholder="课程代码/课程代码前缀/专业/课程名...">
                           <span class="input-group-btn">
                             <button class="btn btn-default" type="submit">课程检索</button>
                           </span>
@@ -247,9 +247,9 @@
                         <thead>
                           <tr>
                             <th class="sort-alpha">课程编号</th>
-                            <th class="sort-amount">课程名</th>
-                            <th class="sort-amount">教师姓名</th>
-                            <th class="sort-numeric">人数</th>
+                            <th class="sort-amount">课程名 / 开课院系</th>
+                            <th class="sort-amount">教师姓名 / 职称</th>
+                            <th class="sort-numeric">已选人数 / 总人数</th>
                             <th>时间</th>
                           </tr>
                         </thead>
@@ -257,11 +257,11 @@
                         {% if result %}
                         {% for r in result %}
                           <tr class="gradeA">
-                                  <td>{{ r.code }}</td>
-                                  <td>{{ r.desp }}</td>
-                                  <td>{{ r.teacher.name }}</td>
-                                  <td class="text-center"> {{ r.num }}</td>
-                                  <td class="text-center">{{ r.time }}</td>
+                                  <td>{{ r.Course.code }}</td>
+                                  <td>{{ r.Course.desp }} / {{ r.Course.major }}</td>
+                                  <td>{{ r.Course.teacher.name }} / {{ r.Course.teacher.prof }}</td>
+                                  <td class="text-center"> {{ r.sum }} / {{ r.Course.num }}</td>
+                                  <td class="text-center">{{ r.Course.time }}</td>
 
                           </tr>
                         {% endfor %}

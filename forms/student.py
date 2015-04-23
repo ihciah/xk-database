@@ -2,11 +2,12 @@
 # -*- coding: utf-8 -*-
 
 from flask import current_app,g
-from wtforms import Form, validators, TextAreaField
+from wtforms import Form, validators
 from wtforms import BooleanField, StringField, PasswordField, IntegerField
 from wtforms.validators import DataRequired, Length, Regexp,NumberRange
 from wtforms.validators import Optional
-from models import Student,Account,Course
+from models import Student,Account,Course,Xk
+from sqlalchemy.sql import func
 from utils import transj2w
 class ProfileForm(Form):
     name = StringField(
@@ -19,7 +20,7 @@ class ProfileForm(Form):
     password = PasswordField('password', [
         validators.EqualTo('confirm', message=u'两次输入的密码不符')
     ])
-    age=IntegerField(
+    age = IntegerField(
         'age',validators=[
             NumberRange(min=1,max=80, message=u'年龄必须在1~80以内')
         ]
@@ -29,7 +30,7 @@ class ProfileForm(Form):
             Length(min=0, max=20, message=u"专业长度必须在20位以下")
         ]
     )
-    grade=IntegerField(
+    grade = IntegerField(
         'grade',validators=[
             NumberRange(min=2000,max=2020, message=u'年级必须在2000~2020之间')
         ]
@@ -46,20 +47,27 @@ class ProfileForm(Form):
         stuusr.major=self.major.data
         stuusr.grade=self.grade.data
         stuusr.save()
-class SearchForm(Form):
-    name = StringField(
-        'search', validators=[
-            Length(min=0, max=20, message=u"搜索关键字必须在0字以上20字以下")
-        ]
-    )
+class SearchForm():
+    def __init__(self,r):
+        self.scode=r.get('search_course')
+    def validate(self):
+        if self.scode is not None:
+            return True
+        return False
     def search(self):
-        res=[]
-        sbycode=Course.query.filter(Course.code.like(self.name.data+'%'))
-        sbymajor=Course.query.filter(Course.major==self.name.data)
-        sr=sbycode.union(sbymajor).all()
+        res=[]#TM给跪了,直接Course.query就是没找到怎么写。。
+        sbycode=Course.session.query(Course,func.count(Xk.stuid).label('sum')).join(Xk,Xk.code==Course.code).filter(Course.code.like(self.scode+'%'))
+        sr=sbycode.all()
+        if sbycode[0].sum==0:
+            sbymajor=Course.session.query(Course,func.count(Xk.stuid).label('sum')).filter(Course.major.like(self.scode+'%')).join(Xk,Xk.code==Course.code)
+            sr=sbymajor.all()
+            if sbymajor[0].sum==0:
+                sbydesp=Course.session.query(Course,func.count(Xk.stuid).label('sum')).filter(Course.desp.like(self.scode+'%')).join(Xk,Xk.code==Course.code)
+                sr=sbydesp.all()
         for i in sr:
-            i.time=transj2w(i.time)
-            res.append(i)
+            if i.Course is not None:
+                i.Course.time=transj2w(i.Course.time)
+                res.append(i)
 
         #sbyteacher=Course.query.filter(Course.teacher.name.like('%'+self.name.data+'%')).all()
         #res=res+[i for i in sbyteacher]

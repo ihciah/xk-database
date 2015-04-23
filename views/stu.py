@@ -38,15 +38,12 @@ def profile():
 @bp.route('/xk',methods=['GET','POST'])
 @require_stu
 def xk():
-    #stu_credit=get_credit(g.user.username)
-    #g.user.credit=stu_credit
+
     if request.method == 'GET':
         return render_template('student/xk.html')
-    form=SearchForm(request.form)
+    form = SearchForm(request.form)
+    #卧槽简直是坑啊，之前在这用wtform一切都没问题尼玛就是获取不到表单数据，索性SearchForm不继承Form，然后就过了，我勒个去，怀疑是wtform哪bug了
     if form.validate():
         sres=form.search()
         return render_template('student/xk.html',result=sres)
-    #for fieldName, errorMessages in form.errors.iteritems():
-    #    for err in errorMessages:
-    #        flash(err)
     return render_template('student/xk.html')
