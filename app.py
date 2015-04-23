@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 import sys,os
 sys.path.append(os.path.abspath(''))
 from flask import Flask

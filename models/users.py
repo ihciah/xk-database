@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from _base import db,SessionMixin
 from werkzeug import security
 

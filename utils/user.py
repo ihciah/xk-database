@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from flask import g, request, session, current_app
 from flask import url_for, redirect, abort, flash
 import functools
