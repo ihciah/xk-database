@@ -56,12 +56,13 @@ class SearchForm():
         return False
     def search(self):
         res=[]#TM给跪了,直接Course.query就是没找到怎么写。。
-        sbycode=Course.session.query(Course,func.count(Xk.stuid).label('sum')).join(Xk,Xk.code==Course.code).filter(Course.code.like(self.scode+'%'))
+        sbycode=Course.session.query(Course,func.count(Xk.stuid).label('sum')).join(Xk,Xk.code==Course.code).group_by(Course.code).filter(Course.code.like(self.scode+'%'))
         sr=sbycode.all()
-        if sbycode[0].sum==0:
+        print asdfghj
+        if sr[0].Course is None:
             sbymajor=Course.session.query(Course,func.count(Xk.stuid).label('sum')).filter(Course.major.like(self.scode+'%')).join(Xk,Xk.code==Course.code)
             sr=sbymajor.all()
-            if sbymajor[0].sum==0:
+            if sr[0].Course is None:
                 sbydesp=Course.session.query(Course,func.count(Xk.stuid).label('sum')).filter(Course.desp.like(self.scode+'%')).join(Xk,Xk.code==Course.code)
                 sr=sbydesp.all()
         for i in sr:
