@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>后台管理 - 某科学的张江大学选课系统</title>
+    <title>用户管理 - 某科学的张江大学选课系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8" />
 
@@ -53,7 +53,7 @@
           <!-- Branding -->
           <div class="navbar-header col-md-2">
             <a class="navbar-brand" href="index.html">
-              <strong>后台</strong>管理
+              <strong>用户</strong>管理
             </a>
             <div class="sidebar-collapse">
               <a href="#">
@@ -103,7 +103,7 @@
                   <li class="divider"></li>
 
                   <li>
-                    <a href="#"><i class="fa fa-user"></i> 个人资料</a>
+                    <a href="/admin/profile"><i class="fa fa-user"></i> 个人资料</a>
                   </li>
 
                   <li class="divider"></li>
@@ -138,7 +138,7 @@
                       <i class="fa fa-tachometer"></i> 总览
                     </a>
                   </li>
-                    
+
                 <li>
                     <a href="/admin/course">
                       <i class="fa fa-pencil"></i> 课程管理
@@ -262,7 +262,7 @@
               <ol class="breadcrumb">
                 <li>你在这里</li>
                 <li><a href="/admin">后台管理</a></li>
-                <li class="active">总览</li>
+                <li class="active">用户管理</li>
               </ol>
             </div>
 
@@ -274,91 +274,79 @@
           <div class="main">
               
               <div class="row">
-                  <div class="col-md-12">
+
+                  <div class="col-md-6">
+
 
 
                 <!-- tile -->
-                <section class="tile transparent">
+                <section class="tile color transparent-white">
 
 
 
-                  <div class="jumbotron bg-transparent-black-3">
+                  <!-- tile header -->
+                  <div class="tile-header">
+                    <h1><strong>用户检索</strong></h1>
+                      <p><i>输入任一条件即可检索</i></p>
+                  </div>
+                  <!-- /tile header -->
 
-                    <div class="container text-center">
-                      <h1>Hello, admin!</h1>
-                      <p>这是数据库课程的期中PJ，也是一个开源项目</p>
-                      <p><a href="https://github.com/ihciah/xk-database" target="_blank" class="btn btn-red btn-large">Check me out at github</a></p>
+                  <!-- tile body -->
+                    <div class="tile-body">
+                    {% with messages = get_flashed_messages() %}
+                     {% if messages %}
+                      <div class="notification notification-warning" style="margin-top: 0px;">
+                      <h4>提示</h4>
+                          {% for message in messages %}
+                      <p>{{ message }}</p>
+                          {% endfor %}
                     </div>
+                      {% endif %}
+                      {% endwith %}
+
+                    <form class="form-horizontal" role="form" action="/admin/userlist" method="POST">
+
+
+                        <div class="form-group">
+                        <label for="username" class="col-sm-2 control-label">学号</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="username" name="stuid" placeholder="请输入学生学号">
+                        </div>
+                      </div>
+
+                        <div class="form-group">
+                        <label for="name" class="col-sm-2 control-label">姓名</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="name" name="sname" placeholder="请输入学生姓名">
+                        </div>
+                      </div>
+
+                      <div class="form-group form-footer footer-white">
+                        <div class="col-sm-offset-4 col-sm-8">
+                          <button type="submit" class="btn btn-greensea">提交</button>
+                          <button type="reset" class="btn btn-red">重置</button>
+                        </div>
+                      </div>
+
+                    </form>
 
                   </div>
+                  <!-- /tile body -->
+
+
 
 
                 </section>
                 <!-- /tile -->
 
-              </div>
-              </div>
 
 
 
-            <!-- cards -->
-            <div class="row cards">
-              
-              <div class="card-container col-lg-3 col-sm-6 col-sm-12">
-                <div class="card card-redbrown hover">
-                  <div class="front"> 
-
-                    <div class="media">        
-                      <span class="pull-left">
-                        <i class="fa fa-users media-object"></i>
-                      </span>
-
-                      <div class="media-body">
-                        <small>用户</small>
-                        <h2 class="media-heading animate-number" data-value="{{ user_count }}" data-animation-duration="1500">0</h2>
-                      </div>
-                    </div> 
-
-
-                  </div>
-                  <div class="back">
-                    <a href="/admin/userlist">
-                      <i class="fa fa-bar-chart-o fa-4x"></i>
-                      <span>查看用户列表</span>
-                    </a>  
-                  </div>
-                </div>
               </div>
 
 
-              <div class="card-container col-lg-3 col-sm-6 col-sm-12">
-                <div class="card card-blue hover">
-                  <div class="front">
 
-                    <div class="media">
-                      <span class="pull-left">
-                        <i class="fa fa-shopping-cart media-object"></i>
-                      </span>
-
-                      <div class="media-body">
-                        <small>课程</small>
-                        <h2 class="media-heading animate-number" data-value="{{ course_count }}" data-animation-duration="1500">0</h2>
-                      </div>
-                    </div>
-
-
-                  </div>
-                  <div class="back">
-                    <a href="/admin/courselist">
-                      <i class="fa fa-bar-chart-o fa-4x"></i>
-                      <span>课程列表</span>
-                    </a>
-                  </div>
-                </div>
               </div>
-
-            </div>
-            <!-- /cards -->
 
           </div>
           <!-- /content container -->

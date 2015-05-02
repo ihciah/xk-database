@@ -56,7 +56,9 @@ class SearchForm():
         return False
     def search(self):
         res=[]#TM给跪了,直接Course.query就是没找到怎么写。。
-        sbycode=Course.session.query(Course,func.count(Xk.stuid).label('sum')).join(Xk,Xk.code==Course.code).group_by(Course.code).filter(Course.code.like(self.scode+'%'))
+        #sbycode=Course.session.query(Course,func.count(Xk.stuid).label('sum')).join(Xk,Xk.code==Course.code).group_by(Course.code).filter(Course.code.like(self.scode+'%'))
+        sbycode=Course.session.query(Course).filter(Course.code.like(self.scode+'%')).join(func.count(Xk).label('sum'),Xk.code==Course.code).group_by(Xk.stuid)
+
         sr=sbycode.all()
         print asdfghj
         if sr[0].Course is None:
