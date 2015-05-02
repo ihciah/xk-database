@@ -8,6 +8,7 @@ class Student(db.Model, SessionMixin):
     stuid = db.Column(db.String(100),primary_key=True, nullable=False)
     name = db.Column(db.String(50))
     age = db.Column(db.Integer)
+    sex = db.Column(db.Integer)#1->Male;0->Female
     major = db.Column(db.String(50))
     grade = db.Column(db.Integer)
     courses = relationship(
@@ -42,3 +43,6 @@ class Teacher(db.Model, SessionMixin):
     teaid = db.Column(db.String(100), primary_key=True, nullable=False)#教师id
     name = db.Column(db.String(50))#教师姓名
     prof = db.Column(db.String(50))#职称
+    major = db.Column(db.String(50))#院系
+    age = db.Column(db.Integer)#年龄
+    sex = db.Column(db.Integer)#1->Male;0->Female

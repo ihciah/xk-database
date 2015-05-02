@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8" />
 
-    <link rel="icon" type="image/ico" href="http://tattek.com/minimal/assets/images/favicon.ico" />
+    <link rel="icon" type="image/ico" href="/static/favicon.ico" />
     <!-- Bootstrap -->
     <link href="/static/css/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
@@ -283,7 +283,7 @@
 
                   <!-- tile header -->
                   <div class="tile-header">
-                    <h1><strong>检索结果</strong>{% if not result %} <font color="red">无结果{% endif %}</font></h1>
+                    <h1><strong>检索结果</strong>{% if not result_student and not result_teacher %} <font color="red">无结果{% endif %}</font></h1>
                     <div class="controls">
                       <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
                       <a href="#" class="remove"><i class="fa fa-times"></i></a>
@@ -292,6 +292,7 @@
                   <!-- /tile header -->
 
                   <!-- tile body -->
+                  {% if result_student %}
                   <div class="tile-body nopadding">
 
                     <table class="table table-bordered">
@@ -306,7 +307,6 @@
                         </tr>
                       </thead>
                       <tbody>
-                      {% if result %}
                         {% for r in result %}
                           <tr>
                                   <td>{{ r.stuid }}</td>
@@ -314,27 +314,58 @@
                                   <td>{{ r.age }}</td>
                                   <td>{{ r.major }}</td>
                                   <td>{{ r.grade }}</td>
-                                  <td><a href="/admin/stu-course?id={{r.stuid}}">教务管理</a> | <a href="/admin/stu-profile?id={{r.stuid}}">资料修改</a></td>
+                                  <td><a href="/admin/stu-course?id={{r.stuid}}">教务管理</a> | <a href="/admin/user-profile?id={{r.stuid}}">资料修改</a></td>
                           </tr>
                         {% endfor %}
-                        {% endif %}
+
                       </tbody>
                     </table>
 
                   </div>
+                    <br/>
+                  {% endif %}
                   <!-- /tile body -->
+                  <!-- tile body -->
+                  {% if result_student %}
+                  <div class="tile-body nopadding">
 
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>教师ID</th>
+                          <th>姓名</th>
+                          <th>性别</th>
+                          <th>年龄</th>
+                          <th>院系</th>
+                          <th>职称</th>
+                          <th>操作</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for r in result_teacher %}
+                          <tr>
+                                  <td>{{ r.teaid }}</td>
+                                  <td>{{ r.name }}</td>
+                                  <td>{% if r.sex==1 %}男{% elif r.sex==0 %}女{% else %}未指定{% endif %}</td>
+                                  <td>{{ r.age }}</td>
+                                  <td>{{ r.major }}</td>
+                                  <td>{{ r.prof }}</td>
+                                  <td><a href="/admin/user-profile?id={{r.teaid}}">资料修改</a></td>
+                          </tr>
+                        {% endfor %}
 
+                      </tbody>
+                    </table>
 
+                  </div>
+                  {% endif %}
+                  <!-- /tile body -->
 
                 </section>
                 <!-- /tile -->
 
-
               </div>
               </div>
-
-
 
             <!-- cards -->
             <div class="row cards">
@@ -354,7 +385,6 @@
                       </div>
                     </div> 
 
-
                   </div>
                   <div class="back">
                     <a href="/admin/userlist">
@@ -364,7 +394,6 @@
                   </div>
                 </div>
               </div>
-
 
               <div class="card-container col-lg-3 col-sm-6 col-sm-12">
                 <div class="card card-blue hover">

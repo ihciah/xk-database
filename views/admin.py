@@ -26,8 +26,8 @@ def userlist():
         return render_template('admin/user_search.html')
     form = SearchStudentFrom(request.form)
     if form.validate():
-        result=form.dosearch()
-        return render_template('admin/user_search_result.html',result=result)
+        [result_student,result_teacher]=form.dosearch()
+        return render_template('admin/user_search_result.html',result_student=result_student,result_teacher=result_teacher)
     for fieldName, errorMessages in form.errors.iteritems():
         for err in errorMessages:
             flash(err)
@@ -49,3 +49,16 @@ def profile():
         for err in errorMessages:
             flash(err)
     return render_template('admin/profile.html')
+
+@bp.route('/stu-course',methods=['GET','POST'])
+@require_admin
+def stu_course():
+    #查看学生选课、选课退课
+    pass
+
+
+@bp.route('/user-profile',methods=['GET','POST'])
+@require_admin
+def user_profile():
+    #修改教师/学生资料
+    pass

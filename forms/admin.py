@@ -6,31 +6,32 @@ from wtforms import Form, validators
 from wtforms import BooleanField, StringField, PasswordField, IntegerField
 from wtforms.validators import DataRequired, Length, Regexp,NumberRange
 from wtforms.validators import Optional
-from models import Student,Account,Course,Xk
+from models import Student,Account,Course,Xk,Teacher
 from sqlalchemy.sql import func
 from utils import transj2w
 
 class SearchStudentFrom(Form):
     stuid = StringField(
         'stuid', validators=[
-            Length(min=0, max=20, message=u"学生id格式错误")
+            Length(min=0, max=20, message=u"用户ID格式错误")
         ]
     )
     name = StringField(
         'sname', validators=[
-            Length(min=0, max=20, message=u"学生姓名格式错误")
+            Length(min=0, max=20, message=u"用户姓名格式错误")
         ]
     )
 
     def dosearch(self):
-        if self.stuid.data is None and self.name.data is None:
-            raise ValueError(u'用户名和学生id至少填写一个!')
-        result=Student.query
+        res_stu=Student.query
+        res_tea=Teacher.query
         if self.stuid.data is not None and self.stuid.data!='':
-            result=result.filter(Student.stuid.like(self.stuid.data+'%'))
+            res_stu=res_stu.filter(Student.stuid.like(self.stuid.data+'%'))
+            res_tea=res_tea.filter(Teacher.teaid.like(self.stuid.data+'%'))
         if self.name.data is not None and self.name.data!='':
-            result=result.filter(Student.name.like(self.name.data+'%'))
-        return result.all()
+            res_stu=res_stu.filter(Student.name.like(self.name.data+'%'))
+            res_tea=res_tea.filter(Teacher.name.like(self.name.data+'%'))
+        return res_stu.all(),res_tea.all()
 
 
 class adminProfileForm(Form):
