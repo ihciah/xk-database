@@ -1,0 +1,9 @@
+基本功能：
+教师页面均未完成
+管理员页面/stu-course(GET/xk-ajax/tk-ajax)，/user-profile(GET/POST)
+学生页面课程查询BUG修复
+
+额外功能：
+给分数据处理、导入
+学生页面课程查询时鼠标浮动展示
+课程推荐
