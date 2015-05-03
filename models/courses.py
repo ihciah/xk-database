@@ -23,7 +23,6 @@ class Course(db.Model, SessionMixin):
     num = db.Column(db.Integer,nullable=False)#限制人数
     desp = db.Column(db.String(200))#课程名
     major = db.Column(db.String(50))#开课院系
-    place = db.Column(db.String(200))#教室
     time = db.Column(db.String(500))#时间（json格式，见utils）
     credit = db.Column(db.Float(precision=1), default=0)
     students = relationship(

@@ -19,7 +19,7 @@ def gen_course_table(stuid):
         ctime=json.loads(i.time)  #{"1(weekday)":[[1,2],[6,2]]}  UPDATE:{"1(weekday)":[[1,2,'Z2101'],[6,2,'Z2212']]}
         for (weekday,v) in ctime.items():
             for j in v:
-                timetable[j[0]-1][int(weekday)-1]=[j[1],cname,cteaname,ccode,j[2]] #tt[start_time,weekday]=[last_time,course_name,teacher_name,course_code]
+                timetable[j[0]-1][int(weekday)-1]=[j[1],cname,cteaname,ccode,j[2]] #tt[start_time,weekday]=[last_time,course_name,teacher_name,course_code,classroom]
                 for co in range(j[0]+1,j[0]+j[1]):
                     timetable[co-1][int(weekday)-1]=0
     return timetable
