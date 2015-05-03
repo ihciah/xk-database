@@ -15,9 +15,9 @@ def create_app():
 
 def register_routes(app):
     from views import mainpage,account,admin,stu,teacher,xhr
+    app.register_blueprint(mainpage.bp, url_prefix='/')
     app.register_blueprint(account.bp, url_prefix='/account')
     app.register_blueprint(xhr.bp, url_prefix='/xhr')
-    app.register_blueprint(mainpage.bp, url_prefix='/')
     app.register_blueprint(admin.bp, url_prefix='/admin')
     app.register_blueprint(stu.bp, url_prefix='/stu')
     app.register_blueprint(teacher.bp, url_prefix='/teacher')

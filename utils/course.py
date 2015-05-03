@@ -15,7 +15,10 @@ def gen_course_table(stuid):
     for i in user.courses:
         cname=i.desp
         ccode=i.code
-        cteaname=i.teacher.name
+        #cteaname=i.teacher.name
+        cteaname=''
+        for te in i.teacher:
+            cteaname+=te.name+' '
         ctime=json.loads(i.time)  #{"1(weekday)":[[1,2],[6,2]]}  UPDATE:{"1(weekday)":[[1,2,'Z2101'],[6,2,'Z2212']]}
         for (weekday,v) in ctime.items():
             for j in v:

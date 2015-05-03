@@ -19,9 +19,9 @@ class Student(db.Model, SessionMixin):
 class Course(db.Model, SessionMixin):
     __tablename__ = "courses"
     code = db.Column(db.String(100), primary_key=True, nullable=False)#选课代码
-    teaid = db.Column(db.String(100), ForeignKey('teachers.teaid'), nullable=False)#教师id
     num = db.Column(db.Integer,nullable=False)#限制人数
     desp = db.Column(db.String(200))#课程名
+    addi_desp = db.Column(db.String(400),default='')#额外说明，如不允许其中退课，双周上课，1-9周上课等
     major = db.Column(db.String(50))#开课院系
     time = db.Column(db.String(500))#时间（json格式，见utils）
     credit = db.Column(db.Float(precision=1), default=0)
@@ -29,7 +29,10 @@ class Course(db.Model, SessionMixin):
         'Student',
         secondary='xks'
     )
-    teacher=relationship('Teacher')
+    teacher=relationship(
+        'Teacher',
+        secondary='emp'
+    )
     xk=relationship('Xk')
 
 class Xk(db.Model, SessionMixin):
@@ -45,3 +48,12 @@ class Teacher(db.Model, SessionMixin):
     major = db.Column(db.String(50))#院系
     age = db.Column(db.Integer)#年龄
     sex = db.Column(db.Integer)#1->Male;0->Female
+    courses = relationship(
+        'Course',
+        secondary='emp'
+    )
+
+class Emp(db.Model, SessionMixin):
+    __tablename__ = "emp"
+    code = db.Column(db.String(100), ForeignKey('courses.code'), nullable=False, primary_key=True)
+    teaid = db.Column(db.String(100), ForeignKey('teachers.teaid'), nullable=False, primary_key=True)

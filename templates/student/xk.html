@@ -259,7 +259,7 @@
                           <tr class="gradeA">
                                   <td>{{ r.Course.code }}</td>
                                   <td>{{ r.Course.desp }} / {{ r.Course.major }}</td>
-                                  <td>{{ r.Course.teacher.name }} / {{ r.Course.teacher.prof }}</td>
+                                  <td>{% for t in r.Course.teacher %}{{ t.name }}/{{ t.prof }} {% endfor %}</td>
                                   <td class="text-center"> {{ r.sum }} / {{ r.Course.num }}</td>
                                   <td class="text-center">{{ r.Course.time }}</td>
 
