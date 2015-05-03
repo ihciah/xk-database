@@ -1,9 +1,12 @@
 基本功能：
 教师页面均未完成-ihciah/qzane
 管理员页面/stu-course(GET/xk-ajax/tk-ajax)，/user-profile(GET/POST)-ihciah
-学生页面课程查询BUG修复-ihciah
+学生页面课程查询BUG修复-ihciah-FINISHED
 
 额外功能：
 给分数据处理、导入-qzane
 学生页面课程查询时鼠标浮动展示-qzane/ihciah
 课程推荐-qzane
+
+
+@2015-5-2

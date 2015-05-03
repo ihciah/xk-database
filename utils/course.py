@@ -15,12 +15,11 @@ def gen_course_table(stuid):
     for i in user.courses:
         cname=i.desp
         ccode=i.code
-        cplace=i.place
         cteaname=i.teacher.name
-        ctime=json.loads(i.time)  #{"1(weekday)":[[1,2],[6,2]]}
+        ctime=json.loads(i.time)  #{"1(weekday)":[[1,2],[6,2]]}  UPDATE:{"1(weekday)":[[1,2,'Z2101'],[6,2,'Z2212']]}
         for (weekday,v) in ctime.items():
             for j in v:
-                timetable[j[0]-1][int(weekday)-1]=[j[1],cname,cteaname,ccode,cplace] #tt[start_time,weekday]=[last_time,course_name,teacher_name,course_code]
+                timetable[j[0]-1][int(weekday)-1]=[j[1],cname,cteaname,ccode,j[2]] #tt[start_time,weekday]=[last_time,course_name,teacher_name,course_code]
                 for co in range(j[0]+1,j[0]+j[1]):
                     timetable[co-1][int(weekday)-1]=0
     return timetable
@@ -40,7 +39,7 @@ def transj2w(js):
         st=tra[str(i)]+" "
         stl=[]
         for tj in j:
-            stl.append(str(tj[0])+"-"+str(int(tj[0])+int(tj[1])-1))
+            stl.append(str(tj[0])+"-"+str(int(tj[0])+int(tj[1])-1)+'@'+tj[2])
         wtime.append(st+','.join(stl))
     return '\r\n'.join(wtime)
 
