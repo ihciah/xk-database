@@ -76,8 +76,8 @@ def check_if_full(cid):
 
 def get_credit(sid):
     #学号->学分
-    x=Course.session.query(func.sum(Course.credit).label('sum')).join(Xk, Xk.code==Course.code).filter(Xk.stuid==sid)
-    return x[0].sum
+    x=Course.session.query(func.sum(Course.credit).label('sum')).join(Xk, Xk.code==Course.code,isouter=True).filter(Xk.stuid==sid)
+    return x[0].sum or 0
 
 def get_people_count(cid):
     #类似check_if_full
