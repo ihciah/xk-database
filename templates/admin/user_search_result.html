@@ -283,7 +283,7 @@
 
                   <!-- tile header -->
                   <div class="tile-header">
-                    <h1><strong>检索结果</strong>{% if not result_student and not result_teacher %} <font color="red">无结果{% endif %}</font></h1>
+                    <h1><strong>检索结果</strong>{% if result_student|count==0 and result_teacher|count==0 %} <font color="red">无结果{% endif %}</font></h1>
                     <div class="controls">
                       <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
                       <a href="#" class="remove"><i class="fa fa-times"></i></a>
@@ -307,7 +307,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        {% for r in result %}
+                        {% for r in result_student %}
                           <tr>
                                   <td>{{ r.stuid }}</td>
                                   <td>{{ r.name }}</td>
