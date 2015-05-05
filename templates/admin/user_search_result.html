@@ -292,7 +292,7 @@
                   <!-- /tile header -->
 
                   <!-- tile body -->
-                  {% if result_student %}
+                  {% if result_student and result_student|count!=0 %}
                   <div class="tile-body nopadding">
 
                     <table class="table table-bordered">
@@ -326,7 +326,7 @@
                   {% endif %}
                   <!-- /tile body -->
                   <!-- tile body -->
-                  {% if result_student %}
+                  {% if result_teacher and result_teacher|count!=0 %}
                   <div class="tile-body nopadding">
 
                     <table class="table table-bordered">
@@ -366,63 +366,6 @@
 
               </div>
               </div>
-
-            <!-- cards -->
-            <div class="row cards">
-              
-              <div class="card-container col-lg-3 col-sm-6 col-sm-12">
-                <div class="card card-redbrown hover">
-                  <div class="front"> 
-
-                    <div class="media">        
-                      <span class="pull-left">
-                        <i class="fa fa-users media-object"></i>
-                      </span>
-
-                      <div class="media-body">
-                        <small>用户</small>
-                        <h2 class="media-heading animate-number" data-value="{{ user_count }}" data-animation-duration="1500">0</h2>
-                      </div>
-                    </div> 
-
-                  </div>
-                  <div class="back">
-                    <a href="/admin/userlist">
-                      <i class="fa fa-bar-chart-o fa-4x"></i>
-                      <span>查看用户列表</span>
-                    </a>  
-                  </div>
-                </div>
-              </div>
-
-              <div class="card-container col-lg-3 col-sm-6 col-sm-12">
-                <div class="card card-blue hover">
-                  <div class="front">
-
-                    <div class="media">
-                      <span class="pull-left">
-                        <i class="fa fa-shopping-cart media-object"></i>
-                      </span>
-
-                      <div class="media-body">
-                        <small>课程</small>
-                        <h2 class="media-heading animate-number" data-value="{{ course_count }}" data-animation-duration="1500">0</h2>
-                      </div>
-                    </div>
-
-
-                  </div>
-                  <div class="back">
-                    <a href="/admin/courselist">
-                      <i class="fa fa-bar-chart-o fa-4x"></i>
-                      <span>课程列表</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            <!-- /cards -->
 
           </div>
           <!-- /content container -->

@@ -16,7 +16,7 @@ class SearchStudentFrom(Form):
             Length(min=0, max=20, message=u"用户ID格式错误")
         ]
     )
-    name = StringField(
+    sname = StringField(
         'sname', validators=[
             Length(min=0, max=20, message=u"用户姓名格式错误")
         ]
@@ -25,12 +25,15 @@ class SearchStudentFrom(Form):
     def dosearch(self):
         res_stu=Student.query
         res_tea=Teacher.query
-        if self.stuid.data is not None and self.stuid.data!='':
+        current_app.logger.debug(self.sname.data)
+        if self.stuid.data is not None and self.stuid.data.replace(' ','')!='':
+            self.stuid.data = self.stuid.data.replace('%','').replace(' ','')
             res_stu=res_stu.filter(Student.stuid.like(self.stuid.data+'%'))
             res_tea=res_tea.filter(Teacher.teaid.like(self.stuid.data+'%'))
-        if self.name.data is not None and self.name.data!='':
-            res_stu=res_stu.filter(Student.name.like(self.name.data+'%'))
-            res_tea=res_tea.filter(Teacher.name.like(self.name.data+'%'))
+        if self.sname.data is not None and self.sname.data.replace(' ','')!='':
+            self.sname.data = self.sname.data.replace('%','').replace(' ','')
+            res_stu=res_stu.filter(Student.name.like(self.sname.data+'%'))
+            res_tea=res_tea.filter(Teacher.name.like(self.sname.data+'%'))
         return res_stu.all(),res_tea.all()
 
 

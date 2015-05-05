@@ -9,6 +9,8 @@ from wtforms.validators import Optional
 from models import Student,Account,Course,Xk
 from sqlalchemy.sql import func
 from utils import transj2w
+import random
+
 class ProfileForm(Form):
     name = StringField(
         'name', validators=[
@@ -66,6 +68,6 @@ class SearchForm():
                 sr=sbydesp.all()
         for i in sr:
             if i.Course is not None:
-                i.Course.time=transj2w(i.Course.time)
+                setattr( i.Course.__class__, 'time', transj2w(i.Course.ctime))
                 res.append(i)
         return res
