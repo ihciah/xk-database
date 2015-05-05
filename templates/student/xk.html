@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8" />
 
-    <link rel="icon" type="image/ico" href="http://tattek.com/minimal/assets/images/favicon.ico" />
+    <link rel="icon" type="image/ico" href="/static/favicon.ico" />
     <!-- Bootstrap -->
     <link href="/static/css/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
@@ -250,7 +250,7 @@
                             <th class="sort-amount">课程名 / 开课院系</th>
                             <th class="sort-amount">教师姓名 / 职称</th>
                             <th class="sort-numeric">已选人数 / 总人数</th>
-                            <th>时间</th>
+                            <th>时间/教室</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -259,7 +259,7 @@
                           <tr class="gradeA">
                                   <td>{{ r.Course.code }}</td>
                                   <td>{{ r.Course.desp }} / {{ r.Course.major }}</td>
-                                  <td>{{ r.Course.teacher.name }} / {{ r.Course.teacher.prof }}</td>
+                                  <td>{% for t in r.Course.teacher %}{{ t.name }}/{{ t.prof }} {% endfor %}</td>
                                   <td class="text-center"> {{ r.sum }} / {{ r.Course.num }}</td>
                                   <td class="text-center">{{ r.Course.time }}</td>
 

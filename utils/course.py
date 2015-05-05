@@ -15,12 +15,14 @@ def gen_course_table(stuid):
     for i in user.courses:
         cname=i.desp
         ccode=i.code
-        cplace=i.place
-        cteaname=i.teacher.name
-        ctime=json.loads(i.time)  #{"1(weekday)":[[1,2],[6,2]]}
+        #cteaname=i.teacher.name
+        cteaname=''
+        for te in i.teacher:
+            cteaname+=te.name+' '
+        ctime=json.loads(i.time)  #{"1(weekday)":[[1,2],[6,2]]}  UPDATE:{"1(weekday)":[[1,2,'Z2101'],[6,2,'Z2212']]}
         for (weekday,v) in ctime.items():
             for j in v:
-                timetable[j[0]-1][int(weekday)-1]=[j[1],cname,cteaname,ccode,cplace] #tt[start_time,weekday]=[last_time,course_name,teacher_name,course_code]
+                timetable[j[0]-1][int(weekday)-1]=[j[1],cname,cteaname,ccode,j[2]] #tt[start_time,weekday]=[last_time,course_name,teacher_name,course_code,classroom]
                 for co in range(j[0]+1,j[0]+j[1]):
                     timetable[co-1][int(weekday)-1]=0
     return timetable
@@ -40,7 +42,7 @@ def transj2w(js):
         st=tra[str(i)]+" "
         stl=[]
         for tj in j:
-            stl.append(str(tj[0])+"-"+str(int(tj[0])+int(tj[1])-1))
+            stl.append(str(tj[0])+"-"+str(int(tj[0])+int(tj[1])-1)+'@'+tj[2])
         wtime.append(st+','.join(stl))
     return '\r\n'.join(wtime)
 
@@ -75,7 +77,7 @@ def check_if_full(cid):
 def get_credit(sid):
     #学号->学分
     x=Course.session.query(func.sum(Course.credit).label('sum')).join(Xk, Xk.code==Course.code).filter(Xk.stuid==sid)
-    return x[0].sum
+    return x[0].sum or 0
 
 def get_people_count(cid):
     #类似check_if_full

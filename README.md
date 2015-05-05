@@ -17,7 +17,8 @@
 ---
 ##部署说明
 * 数据库初始化
-  * python manager.py db init(if the folder migrations does not exist)
+  * create database fdxk;
+  * python manager.py db init (if the folder migrations does not exist)
   * python manager.py db migrate
   * python manager.py db upgrade
 * 运行
