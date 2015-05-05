@@ -49,3 +49,73 @@ class adminProfileForm(Form):
         if self.password!='':
             user.password=Account.create_password(self.password)
             user.save()
+
+class UserProfileForm(Form):
+    stuid = StringField(
+        'stuid', validators=[
+            Length(min=0, max=20, message=u"学号长度必须在20位以下")
+        ]
+    )
+    teaid = StringField(
+        'teaid', validators=[
+            Length(min=0, max=20, message=u"教师编号长度必须在20位以下")
+        ]
+    )
+    uname = StringField(
+        'uname', validators=[
+            Length(min=0, max=20, message=u"姓名长度必须在20位以下")
+        ]
+    )
+    confirm = PasswordField('confirm')
+
+    password = PasswordField('password', [
+        validators.EqualTo('confirm', message=u'两次输入的密码不符')
+    ])
+    age = IntegerField(
+        'age',validators=[
+            NumberRange(min=1,max=80, message=u'年龄必须在1~80以内')
+        ]
+    )
+    sex = IntegerField(
+        'sex',validators=[
+            NumberRange(min=0,max=2, message=u'请选择性别')
+        ]
+    )
+    major = StringField(
+        'major', validators=[
+            Length(min=0, max=20, message=u"专业长度必须在20位以下")
+        ]
+    )
+    grade = IntegerField('grade')
+    def save(self):
+        user=None
+        uid='1'
+        type=0
+        if self.stuid.data is not None and self.stuid.data!='':
+            user = Student.query.get(self.stuid.data)
+            uid=self.stuid.data
+            type=1
+        if self.teaid.data is not None and self.teaid.data!='':
+            user = Teacher.query.get(self.teaid.data)
+            uid=self.teaid.data
+            type=2
+        if user is None:
+            return
+        self.type=type
+        if self.password!='':
+            accuser = Account.query.get(uid)
+            if accuser is not None:
+                accuser.password=Account.create_password(self.password)
+                accuser.save()
+        if type==1:
+            user.name=self.uname.data
+            user.age=self.age.data
+            user.sex=self.sex.data
+            user.major=self.major.data
+            user.grade=self.grade.data
+        else:
+            user.name=self.uname.data
+            user.age=self.age.data
+            user.sex=self.sex.data
+            user.major=self.major.data
+        user.save()

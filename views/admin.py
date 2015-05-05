@@ -4,9 +4,9 @@
 from flask import Blueprint
 from flask import g, request, flash, current_app
 from flask import render_template, redirect, url_for,current_app
-from models import Student,Account,Course,Xk
+from models import Student,Account,Course,Xk,Teacher
 from sqlalchemy.sql import func
-from forms import SearchStudentFrom,adminProfileForm
+from forms import SearchStudentFrom,adminProfileForm,UserProfileForm
 from utils import get_current_user,require_admin
 
 __all__ = ['bp']
@@ -61,4 +61,31 @@ def stu_course():
 @require_admin
 def user_profile():
     #修改教师/学生资料
-    pass
+    if request.method == 'GET':
+        uid=request.args.get('id')
+        if uid is None:
+            return redirect("/admin/userlist")
+        user=Student.query.get(uid)
+        if user is None:
+            user=Teacher.query.get(uid)
+            if user is None:
+                return redirect("/admin/userlist")
+            return render_template('admin/user_profile.html',stu=None,tea=user)
+        return render_template('admin/user_profile.html',stu=user,tea=None)
+
+    form=UserProfileForm(request.form)
+
+    if form.validate():
+        form.save()
+        flash(u"资料成功更新!")
+    current_app.logger.debug(3)
+    for fieldName, errorMessages in form.errors.iteritems():
+        for err in errorMessages:
+            flash(err)
+    current_app.logger.debug(2)
+    if form.stuid is not None and form.stuid.data!='':
+        user=Student.query.get(form.stuid.data)
+        return render_template('admin/user_profile.html',stu=user,tea=None)
+    else:
+        user=Teacher.query.get(form.teaid.data)
+        return render_template('admin/user_profile.html',stu=None,tea=user)
