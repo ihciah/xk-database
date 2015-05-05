@@ -39,6 +39,7 @@ class Xk(db.Model, SessionMixin):
     __tablename__ = "xks"
     code = db.Column(db.String(100), ForeignKey('courses.code'), nullable=False, primary_key=True)
     stuid = db.Column(db.String(100), ForeignKey('students.stuid'), nullable=False, primary_key=True)
+    score = db.Column(db.Integer,default=0, autoincrement=False)#给分，百分制
 
 class Teacher(db.Model, SessionMixin):
     __tablename__ = "teachers"
@@ -65,4 +66,4 @@ class Timeplace(db.Model, SessionMixin):
     starttime = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=False)
     durtime = db.Column(db.Integer, nullable=False, autoincrement=False)
     place = db.Column(db.String(100), nullable=False)
-    additional = db.Column(db.String(200), default='')#是否单双周等l
+    additional = db.Column(db.String(200), default='')#是否单双周等

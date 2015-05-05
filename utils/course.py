@@ -24,7 +24,7 @@ def gen_course_table(stuid):
         for te in i.teacher:
             cteaname+=te.name+' '
         for time in i.ctime:
-            timetable[time.starttime-1][time.weekday-1]=[time.durtime,cname,cteaname,ccode,time.place,colors[count%(len(colors))]]
+            timetable[time.starttime-1][time.weekday-1]=[time.durtime,cname,cteaname,ccode,time.place,time.additional,colors[count%(len(colors))]]
             for j in range(time.starttime,time.starttime+time.durtime):
                 timetable[j][time.weekday-1]=0
     return timetable
@@ -40,7 +40,7 @@ def transj2w(times):
     }
     wtime=[]
     for time in times:
-        wtime.append("%s %d-%d@%s" %(tra[str(time.weekday)],time.starttime,time.durtime+time.starttime-1,time.place))
+        wtime.append("%s %d-%d@%s%s" %(tra[str(time.weekday)],time.starttime,time.durtime+time.starttime-1,time.place,time.additional))
     return '\r\n'.join(wtime)
 
 def check_if_conflict(allc,sc):
