@@ -38,7 +38,6 @@ def profile():
 @bp.route('/xk',methods=['GET','POST'])
 @require_stu
 def xk():
-
     if request.method == 'GET':
         return render_template('student/xk.html')
     form = SearchForm(request.form)

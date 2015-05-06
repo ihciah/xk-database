@@ -3,12 +3,12 @@
 
 from flask import current_app,g
 from wtforms import Form, validators
-from wtforms import BooleanField, StringField, PasswordField, IntegerField
+from wtforms import BooleanField, StringField, PasswordField, IntegerField, FloatField
 from wtforms.validators import DataRequired, Length, Regexp,NumberRange
 from wtforms.validators import Optional
-from models import Student,Account,Course,Xk,Teacher
+from models import Student,Account,Course,Xk,Teacher,Timeplace,Emp
 from sqlalchemy.sql import func
-from utils import check_if_conflict,check_if_full
+from utils import check_if_conflict,check_if_full,transtea2line,transline2tea,transline2times
 
 class SearchStudentFrom(Form):
     stuid = StringField(
@@ -172,3 +172,126 @@ class adminDotkForm(Form):
         kc=Xk.query.filter(Xk.stuid==self.stuid.data).filter(Xk.code==self.code.data)
         for i in kc:
             i.delete()
+
+class CourseEditForm(Form):
+    code = StringField(
+        'code', validators=[
+            Length(min=1, max=20, message=u"课程代码长度错误")
+        ]
+    )
+    desp = StringField(
+        'desp', validators=[
+            Length(min=1, max=20, message=u"课程名长度错误")
+        ]
+    )
+    major = StringField(
+        'major', validators=[
+            Length(min=1, max=20, message=u"选课院系长度错误")
+        ]
+    )
+    additional=StringField(
+        'additional', validators=[
+            Length(min=1, max=20, message=u"额外信息长度错误")
+        ]
+    )
+    num = IntegerField(
+        'num',validators=[
+            NumberRange(min=1,max=10000, message=u'人数限制格式错误')
+        ]
+    )
+    credit = FloatField('credit')
+    coursetime=StringField('coursetime')
+    teas=StringField('teas')
+
+    def validate_teas(self,field):
+        tea=transline2tea(field.data)
+        for i in tea:
+            if not Teacher.query.get(i):
+                raise ValueError(u'教师编号%s不存在!' %i)
+    def validate_coursetime(self,field):
+        t=transline2times(self.coursetime.data)
+        if t is None or t==False:
+            raise ValueError(u'时间格式不正确!')
+
+    def save(self):
+        cour=Course.query.get(self.code.data)
+        if cour is None:
+            cour=Course(**self.data)
+        else:
+            cour.modify(**self.data)
+        cour.save()
+        t=transline2times(self.coursetime.data)
+        if t!=False and t is not None and len(t)!=0:
+            cdel=Timeplace.query.filter(Timeplace.code == self.code.data)
+            cdel.delete()
+            for st in t:
+                ta=Timeplace(code=self.code.data,weekday=st[0],starttime=st[1],durtime=st[2],place=st[3])
+                ta.save()
+        tea=transline2tea(self.teas.data)
+        if tea is not None and len(tea)!=0:
+            tdel=Emp.query.filter(Emp.code==self.code.data)
+            tdel.delete()
+            for st in tea:
+                ta=Emp(code=self.code.data,teaid=st)
+                ta.save()
+        return cour
+class UseraddForm(Form):
+    username = StringField(
+        'username', validators=[
+            DataRequired(message=u"学号不能为空"),
+            Length(min=1, max=20, message=u"长度必须在1-20位之间")
+        ], description='only numbers!(1-12)',
+    )
+    role = IntegerField(
+        'role',validators=[
+            NumberRange(min=1,max=3, message=u'权限设置错误!')
+        ]
+    )
+
+    confirm = PasswordField('confirm')
+
+    password = PasswordField('password', [
+        validators.DataRequired(message=u"密码不能为空"),
+        validators.EqualTo('confirm', message=u'两次输入的密码不符')
+    ])
+
+    def validate_username(self, field):
+        data = field.data
+        if Account.query.get(data):
+            raise ValueError(u'此用户名已被注册')
+
+    def save(self):
+        user = Account(**self.data)
+        user.save()
+        if self.role.data==1:
+            stuusr=Student(stuid=user.username.data)
+            stuusr.save()
+        if self.role.data==3:
+            teausr=Teacher(teaid=user.username.data)
+            teausr.save()
+
+        return self.username.data
+
+class DelCourseForm(Form):
+    code = StringField(
+        'code', validators=[
+            Length(min=1, max=20, message=u"选课代码格式错误")
+        ]
+    )
+    def validate_code(self,field):
+        code=field.data
+        if Course.query.get(field.data) is None:
+            raise ValueError(u'该课程不存在!')
+
+    def delete(self):
+        kc=Xk.query.filter(Xk.code==self.code.data)
+        for i in kc:
+            i.delete()
+        kt=Emp.query.filter(Emp.code==self.code.data)
+        for i in kt:
+            i.delete()
+        ktm=Timeplace.query.filter(Timeplace.code==self.code.data)
+        for i in ktm:
+            i.delete()
+        p=Course.query.get(self.code.data)
+        p.delete()

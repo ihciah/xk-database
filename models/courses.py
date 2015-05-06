@@ -34,6 +34,10 @@ class Course(db.Model, SessionMixin):
     )
     xk = relationship('Xk')
     ctime = relationship('Timeplace')
+    def modify(self,**kwargs):
+        for k, v in kwargs.items():
+            if k!='code':
+                setattr(self, k, v)
 
 class Xk(db.Model, SessionMixin):
     __tablename__ = "xks"

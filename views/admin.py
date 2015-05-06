@@ -2,12 +2,11 @@
 # -*- coding: utf-8 -*-
 
 from flask import Blueprint
-from flask import g, request, flash, current_app
-from flask import render_template, redirect, url_for,current_app
+from flask import g, request, flash
+from flask import render_template, redirect
 from models import Student,Account,Course,Xk,Teacher
-from sqlalchemy.sql import func
-from forms import SearchStudentFrom,adminProfileForm,UserProfileForm
-from utils import get_current_user,require_admin
+from forms import SearchStudentFrom,adminProfileForm,UserProfileForm,SearchForm,CourseEditForm,UseraddForm
+from utils import get_current_user,require_admin,transt2line,transtea2line
 
 __all__ = ['bp']
 
@@ -82,14 +81,73 @@ def user_profile():
     if form.validate():
         form.save()
         flash(u"资料成功更新!")
-    current_app.logger.debug(3)
+    #current_app.logger.debug(3)
     for fieldName, errorMessages in form.errors.iteritems():
         for err in errorMessages:
             flash(err)
-    current_app.logger.debug(2)
+    #current_app.logger.debug(2)
     if form.stuid is not None and form.stuid.data!='':
         user=Student.query.get(form.stuid.data)
         return render_template('admin/user_profile.html',stu=user,tea=None)
     else:
         user=Teacher.query.get(form.teaid.data)
         return render_template('admin/user_profile.html',stu=None,tea=user)
+
+@bp.route('/course',methods=['GET','POST'])
+@require_admin
+def course():
+    if request.method == 'GET':
+        return render_template('admin/courselist.html')
+    form = SearchForm(request.form)
+    if form.validate():
+        sres=form.search()
+        return render_template('admin/courselist.html',result=sres)
+    return render_template('admin/courselist.html')
+
+@bp.route('/course-edit',methods=['GET','POST'])
+@require_admin
+def course_edit():
+    if request.method == 'GET':
+        code=request.args.get('id')
+        if code is None or code=='':
+            course=None
+            times=None
+            teas=None
+            type=1#1:new;0:edit
+        else:
+            type=0
+            course=Course.query.get(code)
+            if course is None:
+                return redirect("/admin/course")
+            times=transt2line(course.ctime)
+            teas=transtea2line(course.teacher)
+        return render_template('admin/course_edit.html',type=type,course=course,times=times,teas=teas)
+    form = CourseEditForm(request.form)
+    course=times=teas=None
+    if form.validate():
+        course=form.save()
+        flash(u"课程保存成功!")
+    else:
+        course=Course.query.get(form.code.data)
+    times=transt2line(course.ctime)
+    teas=transtea2line(course.teacher)
+    for fieldName, errorMessages in form.errors.iteritems():
+        for err in errorMessages:
+            flash(err)
+    return render_template('admin/course_edit.html',type=0,course=course,times=times,teas=teas)
+
+@bp.route('/useradd',methods=['GET', 'POST'])
+@require_admin
+def signup():
+    roles={1:"stu",2:"admin",3:"teacher"}
+    if request.method == 'GET':
+        return render_template('admin/useradd.html')
+    form = UseraddForm(request.form)
+    if form.validate():
+        uid=form.save()
+        flash(u"课程保存成功!")
+        return redirect("/admin/user-profile?id="+uid)
+    for fieldName, errorMessages in form.errors.iteritems():
+        for err in errorMessages:
+            flash(err)
+    return render_template('admin/useradd.html')

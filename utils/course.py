@@ -43,6 +43,61 @@ def transj2w(times):
         wtime.append("%s %d-%d@%s%s" %(tra[str(time.weekday)],time.starttime,time.durtime+time.starttime-1,time.place,time.additional))
     return '\r\n'.join(wtime)
 
+def transt2line(times):
+    tra={'1':u'周一',
+         '2':u'周二',
+         '3':u'周三',
+         '4':u'周四',
+         '5':u'周五',
+         '6':u'周六',
+         '7':u'周日'
+    }
+    wtime=[]
+    for time in times:
+        wtime.append("%s %d-%d@%s" %(tra[str(time.weekday)],time.starttime,time.durtime+time.starttime-1,time.place))
+    return ','.join(wtime)
+
+def transline2times(l):
+    #解析自然语言描述的日期
+    l=l.replace(' ','')
+    tra={u'星期':u'周',
+         u'周一':'1@',
+         u'周二':'2@',
+         u'周三':'3@',
+         u'周四':'4@',
+         u'周五':'5@',
+         u'周六':'6@',
+         u'周日':'7@',
+         u'周末':'7@',
+         u'周天':'7@',
+    }
+    for k,v in tra.items():
+        l=l.replace(k,v)
+    ts=l.split(',')
+    times=[]
+    for i in ts:
+        if len(i)!=0:
+            its=i.split('@')
+            if(len(its)!=3):
+                return None
+            weekday=int(its[0])
+            its[1]=its[1].replace(u'到','-')
+            tts=its[1].split('-')
+            starttime=int(tts[0])
+            durtime=int(tts[1])-int(tts[0])+1
+            place=its[2]
+            times.append([weekday,starttime,durtime,place])
+    return times
+
+def transline2tea(l):
+    return l.replace(' ','').split(',')
+
+def transtea2line(teas):
+    wtea=[]
+    for tea in teas:
+        wtea.append("%s" %tea.teaid)
+    return ','.join(wtea)
+
 def check_if_conflict(allc,sc):
     #参数：所有课程列表、待选课程
     #返回：1表示冲突，0表示无冲突
