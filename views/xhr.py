@@ -6,7 +6,7 @@ from flask import Blueprint
 from flask import g, request, flash
 from flask import render_template, redirect, url_for,current_app
 from utils import login_user,require_stu,require_admin,gen_course_table,get_credit,get_people_count
-from forms import DotkForm,DoxkFrom,Get_count
+from forms import DotkForm,DoxkFrom,Get_count,adminDoxkForm,adminDotkForm
 
 __all__ = ['bp']
 
@@ -31,6 +31,29 @@ def tk():
     if form.validate():
         form.delete()
         result['info']=u'退课成功'
+    for fieldName, errorMessages in form.errors.iteritems():
+        result['info']=','.join(errorMessages)
+    return json.dumps(result)
+@bp.route('/admintk',methods=['POST'])
+@require_admin
+def admintk():
+    form=adminDotkForm(request.form)
+    result={}
+    if form.validate():
+        form.delete()
+        result['info']=u'退课成功'
+    for fieldName, errorMessages in form.errors.iteritems():
+        result['info']=','.join(errorMessages)
+    return json.dumps(result)
+
+@bp.route('/adminxk',methods=['POST'])
+@require_admin
+def adminxk():
+    form=adminDoxkForm(request.form)
+    result={}
+    if form.validate():
+        form.save()
+        result['info']=u'选课成功'
     for fieldName, errorMessages in form.errors.iteritems():
         result['info']=','.join(errorMessages)
     return json.dumps(result)

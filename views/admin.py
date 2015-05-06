@@ -50,11 +50,15 @@ def profile():
             flash(err)
     return render_template('admin/profile.html')
 
-@bp.route('/stu-course',methods=['GET','POST'])
+@bp.route('/stu-course',methods=['GET'])
 @require_admin
 def stu_course():
     #查看学生选课、选课退课
-    pass
+    if request.method == 'GET':
+        uid=request.args.get('id')
+        if uid is None:
+            return redirect("/admin/userlist")
+        return render_template('admin/stu_course.html',result=Student.query.get(uid),uid=uid)
 
 
 @bp.route('/user-profile',methods=['GET','POST'])
