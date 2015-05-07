@@ -53,11 +53,10 @@ def profile():
 @require_admin
 def stu_course():
     #查看学生选课、选课退课
-    if request.method == 'GET':
-        uid=request.args.get('id')
-        if uid is None:
-            return redirect("/admin/userlist")
-        return render_template('admin/stu_course.html',result=Student.query.get(uid),uid=uid)
+    uid=request.args.get('id')
+    if uid is None or uid=='':
+        return redirect("/admin/userlist")
+    return render_template('admin/stu_course.html',result=Student.query.get(uid),uid=uid)
 
 
 @bp.route('/user-profile',methods=['GET','POST'])
@@ -153,3 +152,12 @@ def signup():
         for err in errorMessages:
             flash(err)
     return render_template('admin/useradd.html')
+
+@bp.route('/course-stu',methods=['GET'])
+@require_admin
+def course_stu():
+    cid=request.args.get('id')
+    if cid is None or cid=='':
+        return redirect("/admin/course")
+    result_student=Student.query.join(Xk, Xk.stuid==Student.stuid).filter(Xk.code==cid).all()
+    return render_template('admin/course_user.html',result_student=result_student,result_teacher=None,courseid=cid)
