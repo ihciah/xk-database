@@ -14,7 +14,7 @@ bp = Blueprint('admin',__name__)
 @bp.route('/',methods=['GET'])
 @require_admin
 def home():
-    user_count=Account.query.count()
+    user_count=Account.query.filter(Account.role!=2).count()
     course_count=Course.query.count()
     return render_template('admin/admin.html',user_count=user_count,course_count=course_count)
 
@@ -144,9 +144,11 @@ def signup():
         return render_template('admin/useradd.html')
     form = UseraddForm(request.form)
     if form.validate():
-        uid=form.save()
-        flash(u"课程保存成功!")
-        return redirect("/admin/user-profile?id="+uid)
+        uid,type=form.save()
+        flash(u"用户添加成功!")
+        if type==1 or type==3:
+            return redirect("/admin/user-profile?id="+uid)
+        return redirect("/admin/useradd")
     for fieldName, errorMessages in form.errors.iteritems():
         for err in errorMessages:
             flash(err)

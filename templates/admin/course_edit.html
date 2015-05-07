@@ -327,7 +327,7 @@
                         <div class="form-group">
                         <label for="cid" class="col-sm-4 control-label">课程代码</label>
                         <div class="col-sm-8">
-                          <input type="text" class="form-control" id="cid" name="code" value="{% if type==0 %}{{ course.code }}{% endif %}">
+                          <input type="text" class="form-control" id="cid" name="code" value="{% if type==0 %}{{ course.code }}{% endif %}" {% if type==0 %}readonly{% endif %}>
                         </div>
                       </div>
 

@@ -86,6 +86,11 @@ class UserProfileForm(Form):
             Length(min=0, max=20, message=u"专业长度必须在20位以下")
         ]
     )
+    prof = StringField(
+        'prof', validators=[
+            Length(min=0, max=20, message=u"职称长度必须在20位以下")
+        ]
+    )
     grade = IntegerField('grade')
     def save(self):
         user=None
@@ -118,6 +123,7 @@ class UserProfileForm(Form):
             user.age=self.age.data
             user.sex=self.sex.data
             user.major=self.major.data
+            user.prof=self.prof.data
         user.save()
 
 class adminDoxkForm(Form):
@@ -216,9 +222,9 @@ class CourseEditForm(Form):
     def save(self):
         cour=Course.query.get(self.code.data)
         if cour is None:
-            cour=Course(**self.data)
+            cour=Course(code=self.code.data,desp=self.desp.data,major=self.major.data,additional=self.additional.data,num=self.num.data,credit=self.credit.data)
         else:
-            cour.modify(**self.data)
+            cour.modify(code=self.code.data,desp=self.desp.data,major=self.major.data,additional=self.additional.data,num=self.num.data,credit=self.credit.data)
         cour.save()
         t=transline2times(self.coursetime.data)
         if t!=False and t is not None and len(t)!=0:
@@ -264,13 +270,13 @@ class UseraddForm(Form):
         user = Account(**self.data)
         user.save()
         if self.role.data==1:
-            stuusr=Student(stuid=user.username.data)
+            stuusr=Student(stuid=self.username.data)
             stuusr.save()
         if self.role.data==3:
-            teausr=Teacher(teaid=user.username.data)
+            teausr=Teacher(teaid=self.username.data)
             teausr.save()
 
-        return self.username.data
+        return self.username.data,self.role.data
 
 class DelCourseForm(Form):
     code = StringField(
@@ -295,3 +301,25 @@ class DelCourseForm(Form):
             i.delete()
         p=Course.query.get(self.code.data)
         p.delete()
+class DelUserForm(Form):
+    username = StringField(
+        'username', validators=[
+            Length(min=1, max=20, message=u"选课代码格式错误")
+        ]
+    )
+    def validate_username(self,field):
+        u=Account.query.get(field.data)
+        if u is None:
+            raise ValueError(u'该用户不存在!')
+        else:
+            if u.role == 2:
+                raise ValueError(u'该用户为管理员用户,不允许删除!')
+    def delquery(self,q):
+        for i in q:
+            i.delete()
+    def delete(self):
+        self.delquery(Xk.query.filter(Xk.stuid==self.username.data))
+        self.delquery(Emp.query.filter(Emp.code==self.username.data))
+        self.delquery(Teacher.query.filter(Teacher.teaid==self.username.data))
+        self.delquery(Student.query.filter(Student.stuid==self.username.data))
+        self.delquery(Account.query.filter(Account.username==self.username.data))

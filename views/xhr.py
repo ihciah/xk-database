@@ -6,7 +6,7 @@ from flask import Blueprint
 from flask import g, request, flash
 from flask import render_template, redirect, url_for,current_app
 from utils import login_user,require_stu,require_admin,gen_course_table,get_credit,get_people_count
-from forms import DotkForm,DoxkFrom,Get_count,adminDoxkForm,adminDotkForm,DelCourseForm
+from forms import DotkForm,DoxkFrom,Get_count,adminDoxkForm,adminDotkForm,DelCourseForm,DelUserForm
 
 __all__ = ['bp']
 
@@ -80,6 +80,18 @@ def stucount():
 @require_admin
 def delcourse():
     form=DelCourseForm(request.form)
+    result={}
+    if form.validate():
+        form.delete()
+        result['info']=u'删除成功'
+    for fieldName, errorMessages in form.errors.iteritems():
+        result['info']=','.join(errorMessages)
+    return json.dumps(result)
+
+@bp.route('/delu',methods=['POST'])
+@require_admin
+def deluser():
+    form=DelUserForm(request.form)
     result={}
     if form.validate():
         form.delete()

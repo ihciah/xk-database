@@ -307,7 +307,7 @@
                   <!-- tile header -->
                   <div class="tile-header">
                     <h1><strong>用户检索</strong></h1>
-                      <p><i>输入任一条件即可检索</i></p>
+                      <p><i>请选择检索条件(检索所有请留空):</i></p>
                   </div>
                   <!-- /tile header -->
 
@@ -416,6 +416,7 @@
 {
 with (thisform)
   {
+  return true;
   if ((stuid.value==null||stuid.value=='')&&(sname.value==null||sname.value==''))
     {alert('用户ID和姓名不能同时为空');
     return false}
