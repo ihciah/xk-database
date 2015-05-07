@@ -40,8 +40,8 @@ class ProfileForm(Form):
 
     def save(self):
         user = Account.query.get(g.user.username)
-        if self.password!='':
-            user.password=Account.create_password(self.password)
+        if self.password.data!='':
+            user.password=Account.create_password(self.password.data)
             user.save()
         stuusr=Student.query.get(g.user.username)
         stuusr.name=self.name.data

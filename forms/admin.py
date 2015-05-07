@@ -46,8 +46,8 @@ class adminProfileForm(Form):
 
     def save(self):
         user = Account.query.get(g.user.username)
-        if self.password!='':
-            user.password=Account.create_password(self.password)
+        if self.password.data!='':
+            user.password=Account.create_password(self.password.data)
             user.save()
 
 class UserProfileForm(Form):
@@ -107,10 +107,10 @@ class UserProfileForm(Form):
         if user is None:
             return
         self.type=type
-        if self.password!='':
+        if self.password.data!='':
             accuser = Account.query.get(uid)
             if accuser is not None:
-                accuser.password=Account.create_password(self.password)
+                accuser.password=Account.create_password(self.password.data)
                 accuser.save()
         if type==1:
             user.name=self.uname.data

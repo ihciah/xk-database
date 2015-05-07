@@ -7,12 +7,31 @@ from flask import g, request, session, current_app
 from flask import url_for, redirect, abort, flash
 import functools
 from sqlalchemy.sql import func
-from models import Student,Course,Xk
+from models import Student,Course,Xk,Teacher
 import random
 
 def gen_course_table(stuid):
     timetable=[[1 for p in range(7)] for t in range(14)]#14*7
     user = Student.query.get(stuid)
+    colors=['red','blue','yellow','green','#00FFFF','black','white','#FE2EF7','#FF8000','#4C0B5F','#A9F5A9','#F7819F']
+    random.shuffle(colors)
+    count=0
+    for i in user.courses:
+        count=count+1
+        cname=i.desp
+        ccode=i.code
+        cteaname=''
+        for te in i.teacher:
+            cteaname+=te.name+' '
+        for time in i.ctime:
+            timetable[time.starttime-1][time.weekday-1]=[time.durtime,cname,cteaname,ccode,time.place,time.additional,colors[count%(len(colors))]]
+            for j in range(time.starttime,time.starttime+time.durtime):
+                timetable[j][time.weekday-1]=0
+    return timetable
+
+def gen_tea_course_table(teaid):
+    timetable=[[1 for p in range(7)] for t in range(14)]#14*7
+    user = Teacher.query.get(teaid)
     colors=['red','blue','yellow','green','#00FFFF','black','white','#FE2EF7','#FF8000','#4C0B5F','#A9F5A9','#F7819F']
     random.shuffle(colors)
     count=0

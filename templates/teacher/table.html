@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>我的时间表 - 某科学的张江大学选课系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+
+    <link rel="icon" type="image/ico" href="/static/favicon.ico" />
+    <!-- Bootstrap -->
+    <link href="/static/css/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/vendor/animate/animate.min.css">
+    <link type="text/css" rel="stylesheet" media="all" href="/static/js/vendor/mmenu/css/jquery.mmenu.all.css" />
+    <link rel="stylesheet" href="/static/js/vendor/videobackground/css/jquery.videobackground.css">
+    <link rel="stylesheet" href="/static/css/vendor/bootstrap-checkbox.css">
+
+    <link rel="stylesheet" href="/static/js/vendor/rickshaw/css/rickshaw.min.css">
+    <link rel="stylesheet" href="/static/js/vendor/morris/css/morris.css">
+    <link rel="stylesheet" href="/static/js/vendor/tabdrop/css/tabdrop.css">
+    <link rel="stylesheet" href="/static/js/vendor/summernote/css/summernote.css">
+    <link rel="stylesheet" href="/static/js/vendor/summernote/css/summernote-bs3.css">
+    <link rel="stylesheet" href="/static/js/vendor/chosen/css/chosen.min.css">
+    <link rel="stylesheet" href="/static/js/vendor/chosen/css/chosen-bootstrap.css">
+
+    <link href="/static/css/minimal.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body class="bg-1">
+    <!-- Preloader -->
+    <div class="mask"><div id="loader"></div></div>
+    <!--/Preloader -->
+    <!-- Wrap all page content here -->
+    <div id="wrap">
+
+      <!-- Make page fluid -->
+      <div class="row">
+        
+
+
+
+
+        <!-- Fixed navbar -->
+        <div class="navbar navbar-default navbar-fixed-top navbar-transparent-black mm-fixed-top" role="navigation" id="navbar">
+          
+
+
+          <!-- Branding -->
+          <div class="navbar-header col-md-2">
+            <a class="navbar-brand" href="index.html">
+              <strong>课程</strong>时间表
+            </a>
+            <div class="sidebar-collapse">
+              <a href="#">
+                <i class="fa fa-bars"></i>
+              </a>
+            </div>
+          </div>
+          <!-- Branding end -->
+
+          <!-- .nav-collapse -->
+          <div class="navbar-collapse">
+                        
+            <!-- Page refresh -->
+            <ul class="nav navbar-nav refresh">
+              <li class="divided">
+                <a href="#" class="page-refresh"><i class="fa fa-refresh"></i></a>
+              </li>
+            </ul>
+            <!-- /Page refresh -->
+
+            <!-- Quick Actions -->
+            <ul class="nav navbar-nav quick-actions">
+              
+
+              <li class="dropdown divided user" id="current-user" style="padding-right: 0px;padding-left: 60px;">
+                <a class="dropdown-toggle options" data-toggle="dropdown" href="#">
+                    {{ g.user.username }} <i class="fa fa-caret-down"></i>
+                </a>
+                
+                <ul class="dropdown-menu arrow settings">
+
+                  <li>
+                    
+                    <h3>背景色:</h3>
+                    <ul id="color-schemes">
+                      <li><a href="#" class="bg-1"></a></li>
+                      <li><a href="#" class="bg-2"></a></li>
+                      <li><a href="#" class="bg-3"></a></li>
+                      <li><a href="#" class="bg-4"></a></li>
+                      <li><a href="#" class="bg-5"></a></li>
+                      <li><a href="#" class="bg-6"></a></li>
+                    </ul>
+
+                  </li>
+
+                  <li class="divider"></li>
+
+                  <li>
+                    <a href="/teacher/profile"><i class="fa fa-user"></i> 个人资料</a>
+                  </li>
+
+                  <li class="divider"></li>
+
+                  <li>
+                    <a href="/account/logout"><i class="fa fa-power-off"></i> 登出</a>
+                  </li>
+                </ul>
+              </li>
+
+            </ul>
+            <!-- /Quick Actions -->
+
+
+
+            <!-- Sidebar -->
+            <ul class="nav navbar-nav side-nav" id="sidebar">
+              
+              <li class="collapsed-content"> 
+                <ul>
+                  <li class="search"><!-- Collapsed search pasting here at 768px --></li>
+                </ul>
+              </li>
+
+              <li class="navigation" id="navigation">
+                <a href="#" class="sidebar-toggle" data-toggle="#navigation">Navigation <i class="fa fa-angle-up"></i></a>
+                
+                <ul class="menu">
+                  
+                  <li>
+                    <a href="/teacher/course-list">
+                      <i class="fa fa-tachometer"></i> 我的所有课程
+                    </a>
+                  </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <i class="fa fa-bar-chart-o"></i> 学生管理 <b class="fa fa-plus dropdown-plus"></b>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInLeft">
+                      <li>
+                        <a href="/teacher/course">
+                          <i class="fa fa-caret-right"></i> 学生查找/修改
+                        </a>
+                      </li>
+                      <li>
+                        <a href="/admin/course-edit">
+                          <i class="fa fa-caret-right"></i> 添加学生
+                        </a>
+                      </li>
+                    </ul>
+                     </li>
+
+                    
+                    <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <i class="fa fa-bar-chart-o"></i> 统计信息 <b class="fa fa-plus dropdown-plus"></b>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInLeft">
+                      <li>
+                        <a href="tables.html">
+                          <i class="fa fa-caret-right"></i> Bootstrap Tables
+                        </a>
+                      </li>
+                      <li>
+                        <a href="datatables.html">
+                          <i class="fa fa-caret-right"></i> DataTables
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+
+
+                </ul>
+
+              </li>
+
+              <li class="summary" id="order-summary">
+                <a href="#" class="sidebar-toggle underline" data-toggle="#order-summary">统计信息 <i class="fa fa-angle-up"></i></a>
+
+                <div class="media">
+                  <a class="pull-right" href="#">
+                    <span id="sales-chart"></span>
+                  </a>
+                  <div class="media-body">
+                    This week sales
+                    <h3 class="media-heading">26, 149</h3>
+                  </div>
+                </div>
+
+                <div class="media">
+                  <a class="pull-right" href="#">
+                    <span id="balance-chart"></span>
+                  </a>
+                  <div class="media-body">
+                    This week balance
+                    <h3 class="media-heading">318, 651</h3>
+                  </div>
+                </div>
+
+              </li>
+
+              <li class="settings" id="general-settings">
+                <a href="#" class="sidebar-toggle underline" data-toggle="#general-settings">General Settings <i class="fa fa-angle-up"></i></a>
+
+                <div class="form-group">
+                  <label class="col-xs-8 control-label">Switch ON</label>
+                  <div class="col-xs-4 control-label">
+                    <div class="onoffswitch greensea">
+                      <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch-on" checked="">
+                      <label class="onoffswitch-label" for="switch-on">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-xs-8 control-label">Switch OFF</label>
+                  <div class="col-xs-4 control-label">
+                    <div class="onoffswitch greensea">
+                      <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch-off">
+                      <label class="onoffswitch-label" for="switch-off">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+              </li>
+
+              
+            </ul>
+            <!-- Sidebar end -->
+
+          </div>
+          <!--/.nav-collapse -->
+
+        </div>
+        <!-- Fixed navbar end -->
+        
+        
+        <!-- Page content -->
+        <div id="content" class="col-md-12">
+          
+
+          <!-- page header -->
+          <div class="pageheader">
+            
+
+            <h2><i class="fa fa-tachometer"></i> 某科学的张江大学选课系统
+            <span>我的时间表</span></h2>
+            
+
+            <div class="breadcrumbs">
+              <ol class="breadcrumb">
+                <li>你在这里</li>
+                <li><a href="/admin">我的课程</a></li>
+                <li class="active">时间表</li>
+              </ol>
+            </div>
+
+
+          </div>
+          <!-- /page header -->
+
+          <!-- content main container -->
+          <div class="main">
+              
+              <div class="row">
+                  <div class="col-md-12">
+
+
+                <!-- tile -->
+                <section class="tile transparent">
+                    <section class="tile color transparent-black">
+                  <!-- tile header -->
+                  <div class="tile-header">
+                    <h1><strong>课程表</strong></h1>
+                    <div class="controls">
+                      <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
+                      <a href="#" class="remove"><i class="fa fa-times"></i></a>
+                    </div>
+                  </div>
+                  <!-- /tile header -->
+
+                  <!-- tile body -->
+                  <div class="tile-body nopadding">
+
+                    <table class="table" border="1" align="center">
+                      <thead>
+                        <tr>
+                          <th align="center">周 节</th>
+                          <th align="center">周 一</th>
+                          <th align="center">周 二</th>
+                          <th align="center">周 三</th>
+                          <th align="center">周 四</th>
+                          <th align="center">周 五</th>
+                          <th align="center">周 六</th>
+                          <th align="center">周 日</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                          {% for line in timetable %}
+                            <tr>
+                                <td align="center">{{loop.index}}</td>
+                                {% for it in line %}
+                                {% if it==1 %}
+                                <td></td>
+                                {% else %}
+                                  {% if it!=0 %}
+                                   <td align="center" rowspan="{{it[0]}}" style="vertical-align:middle;text-shadow: 0 0 20px {{it[6]}};">
+                                       {{it[1]}}@{{it[4]}} {{it[5]}}
+                                       <br/>
+                                       {{it[3]}}
+                                       <br/>
+                                       <a href="/teacher/stulist?course={{it[3]}}">查看学生列表</a>
+                                   </td>
+                                  {% endif %}
+                                {% endif %}
+                                {% endfor %}
+                            </tr>
+                          {% endfor %}
+                      </tbody>
+                    </table>
+
+                  </div>
+                  <!-- /tile body -->
+
+                </section>
+
+                </section>
+                <!-- /tile -->
+
+              </div>
+
+          </div>
+          <!-- /content container -->
+
+        </div>
+          <!-- /content container -->
+
+        </div>
+        <!-- Page content end -->
+
+      </div>
+      <!-- Make page fluid-->
+
+    </div>
+    <!-- Wrap all page content end -->
+
+
+
+    <section class="videocontent" id="video"></section>
+
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="/static/js/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/static/js/vendor/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/vendor/mmenu/js/jquery.mmenu.min.js"></script>
+    <script type="text/javascript" src="/static/js/vendor/sparkline/jquery.sparkline.min.js"></script>
+    <script type="text/javascript" src="/static/js/vendor/nicescroll/jquery.nicescroll.min.js"></script>
+    <script type="text/javascript" src="/static/js/vendor/animate-numbers/jquery.animateNumbers.js"></script>
+    <script type="text/javascript" src="/static/js/vendor/videobackground/jquery.videobackground.js"></script>
+    <script type="text/javascript" src="/static/js/vendor/blockui/jquery.blockUI.js"></script>
+
+    <script src="/static/js/vendor/flot/jquery.flot.min.js"></script>
+    <script src="/static/js/vendor/flot/jquery.flot.time.min.js"></script>
+    <script src="/static/js/vendor/flot/jquery.flot.selection.min.js"></script>
+    <script src="/static/js/vendor/flot/jquery.flot.animator.min.js"></script>
+    <script src="/static/js/vendor/flot/jquery.flot.orderBars.js"></script>
+    <script src="/static/js/vendor/easypiechart/jquery.easypiechart.min.js"></script>
+
+    <script src="/static/js/vendor/rickshaw/raphael-min.js"></script>
+    <script src="/static/js/vendor/rickshaw/d3.v2.js"></script>
+    <script src="/static/js/vendor/rickshaw/rickshaw.min.js"></script>
+
+    <script src="/static/js/vendor/morris/morris.min.js"></script>
+
+    <script src="/static/js/vendor/tabdrop/bootstrap-tabdrop.min.js"></script>
+
+    <script src="/static/js/vendor/summernote/summernote.min.js"></script>
+
+    <script src="/static/js/vendor/chosen/chosen.jquery.min.js"></script>
+
+    <script src="/static/js/minimal.min.js"></script>
+
+   <script>
+      function delu(username){
+        var r=confirm("确认删除用户以及所有相关数据?");
+        if (r==true)
+        {
+            dodel(username);
+        }
+    }
+  function dodel(username){
+    $.post("/xhr/delu",
+    {
+        username:username
+    },
+    function(data,status){
+        var obj = eval ("(" + data + ")");
+        alert(obj.info);
+        location.reload();
+    }
+    );
+    }
+   </script>
+  </body>
+</html>
+      
