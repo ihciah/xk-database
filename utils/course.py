@@ -109,7 +109,12 @@ def transline2times(l):
     return times
 
 def transline2tea(l):
-    return l.replace(' ','').split(',')
+    k=l.replace(' ','').split(',')
+    r=[]
+    for i in k:
+        if i!='':
+            r.append(i)
+    return r
 
 def transtea2line(teas):
     wtea=[]

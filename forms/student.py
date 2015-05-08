@@ -74,6 +74,7 @@ class SearchForm():
                 sr=sbydesp.all()
         for i in sr:
             if i.Course is not None:
-                setattr( i.Course.__class__, 'time', transj2w(i.Course.ctime))
+                i.time=transj2w(i.Course.ctime)
+                #setattr( i.Course.__class__, 'time', transj2w(i.Course.ctime))
                 res.append(i)
         return res

@@ -12,4 +12,4 @@ SESSION_COOKIE_NAME = '_s'
 PERMANENT_SESSION_LIFETIME = 3600 * 24 * 30
 SECRET_KEY = 'secret key'
 PASSWORD_SECRET = 'password secret'
-SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:pasuwadonashi@localhost/fdxk'
+SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:pasuwadonashi@localhost/fdxk?charset=utf8'

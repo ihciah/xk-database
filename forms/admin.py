@@ -192,12 +192,12 @@ class CourseEditForm(Form):
     )
     major = StringField(
         'major', validators=[
-            Length(min=1, max=20, message=u"选课院系长度错误")
+            Length(min=0, max=20, message=u"选课院系长度错误")
         ]
     )
     additional=StringField(
         'additional', validators=[
-            Length(min=1, max=20, message=u"额外信息长度错误")
+            Length(min=0, max=20, message=u"额外信息长度错误")
         ]
     )
     num = IntegerField(
