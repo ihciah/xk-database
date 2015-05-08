@@ -5,8 +5,8 @@ import json
 from flask import Blueprint
 from flask import g, request, flash
 from flask import render_template, redirect, url_for,current_app
-from utils import login_user,require_stu,require_admin,gen_course_table,get_credit,get_people_count
-from forms import DotkForm,DoxkFrom,Get_count,adminDoxkForm,adminDotkForm,DelCourseForm,DelUserForm
+from utils import login_user,require_stu,require_admin,gen_course_table,get_credit,get_people_count, require_teacher
+from forms import DotkForm,DoxkFrom,Get_count,adminDoxkForm,adminDotkForm,DelCourseForm,DelUserForm, SetScoreForm
 
 __all__ = ['bp']
 
@@ -96,6 +96,18 @@ def deluser():
     if form.validate():
         form.delete()
         result['info']=u'删除成功'
+    for fieldName, errorMessages in form.errors.iteritems():
+        result['info']=','.join(errorMessages)
+    return json.dumps(result)
+
+@bp.route('/setscore',methods=['POST'])
+@require_teacher
+def setscore():
+    form=SetScoreForm(request.form)
+    result={}
+    if form.validate():
+        form.set()
+        result['info']=u'打分成功'
     for fieldName, errorMessages in form.errors.iteritems():
         result['info']=','.join(errorMessages)
     return json.dumps(result)

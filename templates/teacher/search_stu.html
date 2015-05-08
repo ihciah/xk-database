@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>我的时间表 - 某科学的张江大学选课系统</title>
+    <title>学生检索 - 某科学的张江大学选课系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8" />
 
@@ -40,14 +40,14 @@
 
       <!-- Make page fluid -->
       <div class="row">
-        
+
 
 
 
 
         <!-- Fixed navbar -->
         <div class="navbar navbar-default navbar-fixed-top navbar-transparent-black mm-fixed-top" role="navigation" id="navbar">
-          
+
 
 
           <!-- Branding -->
@@ -65,7 +65,7 @@
 
           <!-- .nav-collapse -->
           <div class="navbar-collapse">
-                        
+
             <!-- Page refresh -->
             <ul class="nav navbar-nav refresh">
               <li class="divided">
@@ -76,17 +76,17 @@
 
             <!-- Quick Actions -->
             <ul class="nav navbar-nav quick-actions">
-              
+
 
               <li class="dropdown divided user" id="current-user" style="padding-right: 0px;padding-left: 60px;">
                 <a class="dropdown-toggle options" data-toggle="dropdown" href="#">
                     {{ g.user.username }} <i class="fa fa-caret-down"></i>
                 </a>
-                
+
                 <ul class="dropdown-menu arrow settings">
 
                   <li>
-                    
+
                     <h3>背景色:</h3>
                     <ul id="color-schemes">
                       <li><a href="#" class="bg-1"></a></li>
@@ -120,8 +120,8 @@
 
             <!-- Sidebar -->
             <ul class="nav navbar-nav side-nav" id="sidebar">
-              
-              <li class="collapsed-content"> 
+
+              <li class="collapsed-content">
                 <ul>
                   <li class="search"><!-- Collapsed search pasting here at 768px --></li>
                 </ul>
@@ -129,7 +129,7 @@
 
               <li class="navigation" id="navigation">
                 <a href="#" class="sidebar-toggle" data-toggle="#navigation">Navigation <i class="fa fa-angle-up"></i></a>
-                
+
                 <ul class="menu">
                   <li>
                     <a href="/teacher">
@@ -161,7 +161,7 @@
                     </ul>
                      </li>
 
-                    
+
                     <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                       <i class="fa fa-bar-chart-o"></i> 统计信息 <b class="fa fa-plus dropdown-plus"></b>
@@ -241,7 +241,7 @@
 
               </li>
 
-              
+
             </ul>
             <!-- Sidebar end -->
 
@@ -250,19 +250,19 @@
 
         </div>
         <!-- Fixed navbar end -->
-        
-        
+
+
         <!-- Page content -->
         <div id="content" class="col-md-12">
-          
+
 
           <!-- page header -->
           <div class="pageheader">
-            
+
 
             <h2><i class="fa fa-tachometer"></i> 某科学的张江大学选课系统
             <span>我的时间表</span></h2>
-            
+
 
             <div class="breadcrumbs">
               <ol class="breadcrumb">
@@ -278,75 +278,8 @@
 
           <!-- content main container -->
           <div class="main">
-              
-              <div class="row">
-                  <div class="col-md-12">
 
 
-                <!-- tile -->
-                <section class="tile transparent">
-                    <section class="tile color transparent-black">
-                  <!-- tile header -->
-                  <div class="tile-header">
-                    <h1><strong>课程表</strong></h1>
-                    <div class="controls">
-                      <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
-                      <a href="#" class="remove"><i class="fa fa-times"></i></a>
-                    </div>
-                  </div>
-                  <!-- /tile header -->
-
-                  <!-- tile body -->
-                  <div class="tile-body nopadding">
-
-                    <table class="table" border="1" align="center">
-                      <thead>
-                        <tr>
-                          <th align="center">周 节</th>
-                          <th align="center">周 一</th>
-                          <th align="center">周 二</th>
-                          <th align="center">周 三</th>
-                          <th align="center">周 四</th>
-                          <th align="center">周 五</th>
-                          <th align="center">周 六</th>
-                          <th align="center">周 日</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                          {% for line in timetable %}
-                            <tr>
-                                <td align="center">{{loop.index}}</td>
-                                {% for it in line %}
-                                {% if it==1 %}
-                                <td></td>
-                                {% else %}
-                                  {% if it!=0 %}
-                                   <td align="center" rowspan="{{it[0]}}" style="vertical-align:middle;text-shadow: 0 0 20px {{it[6]}};">
-                                       {{it[1]}}@{{it[4]}} {{it[5]}}
-                                       <br/>
-                                       {{it[3]}}
-                                       <br/>
-                                       <a href="/teacher/stulist?course={{it[3]}}">查看学生列表</a>
-                                   </td>
-                                  {% endif %}
-                                {% endif %}
-                                {% endfor %}
-                            </tr>
-                          {% endfor %}
-                      </tbody>
-                    </table>
-
-                  </div>
-                  <!-- /tile body -->
-
-                </section>
-
-                </section>
-                <!-- /tile -->
-
-              </div>
-
-          </div>
           <!-- /content container -->
 
         </div>
@@ -402,4 +335,4 @@
 
   </body>
 </html>
-      
+

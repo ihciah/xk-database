@@ -43,7 +43,7 @@ class Xk(db.Model, SessionMixin):
     __tablename__ = "xks"
     code = db.Column(db.String(100), ForeignKey('courses.code'), nullable=False, primary_key=True)
     stuid = db.Column(db.String(100), ForeignKey('students.stuid'), nullable=False, primary_key=True)
-    score = db.Column(db.Integer,default=0, autoincrement=False)#给分，百分制
+    score = db.Column(db.Float(precision=1), default=0)#给分，百分制
 
 class Teacher(db.Model, SessionMixin):
     __tablename__ = "teachers"

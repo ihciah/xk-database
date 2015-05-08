@@ -145,13 +145,13 @@
                     </a>
                     <ul class="dropdown-menu animated fadeInLeft">
                       <li>
-                        <a href="/admin/course">
+                        <a href="/teacher/stulist">
                           <i class="fa fa-caret-right"></i> 学生查找/修改
                         </a>
                       </li>
                       <li>
-                        <a href="/admin/course-edit">
-                          <i class="fa fa-caret-right"></i> 添加学生
+                        <a href="/teacher/stuadd">
+                          <i class="fa fa-caret-right"></i> 手动选课
                         </a>
                       </li>
                     </ul>
@@ -318,7 +318,7 @@
                               <td>{{ r.credit }}</td>
                               <td>{{r.students|count}} / {{ r.num }}</td>
                               <td>{{ r.additional }}</td>
-                              <td><a href="/admin/stu-course?id={{r.stuid}}">查看该课程学生列表</a></td>
+                              <td><a href="/teacher/stulist?course={{r.code}}">查看该课程学生列表</a></td>
                           </tr>
                         {% endfor %}
 
