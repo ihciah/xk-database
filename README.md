@@ -1,8 +1,9 @@
 #某科学的选课系统-数据库PJ
 ###基于Flash+SQLAlchemy
 
-Demo:[http://xk.ihc.im](http://xk.ihc.im)
-复旦大学内网可用,如域名未能解析,请手动修改HOSTS指向10.141.247.162
+Demo: [http://xk.ihc.im](http://xk.ihc.im)   
+复旦大学内网可用   
+如域名未能解析,请手动修改HOSTS指向10.141.247.162
 
 ---
 ##功能:
