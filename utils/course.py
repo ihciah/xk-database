@@ -25,7 +25,7 @@ def gen_course_table(stuid):
             cteaname+=te.name+' '
         for time in i.ctime:
             timetable[time.starttime-1][time.weekday-1]=[time.durtime,cname,cteaname,ccode,time.place,time.additional,colors[count%(len(colors))]]
-            for j in range(time.starttime,time.starttime+time.durtime):
+            for j in range(time.starttime,time.starttime+time.durtime-1):
                 timetable[j][time.weekday-1]=0
     return timetable
 
@@ -44,7 +44,7 @@ def gen_tea_course_table(teaid):
             cteaname+=te.name+' '
         for time in i.ctime:
             timetable[time.starttime-1][time.weekday-1]=[time.durtime,cname,cteaname,ccode,time.place,time.additional,colors[count%(len(colors))]]
-            for j in range(time.starttime,time.starttime+time.durtime):
+            for j in range(time.starttime,time.starttime+time.durtime-1):
                 timetable[j][time.weekday-1]=0
     return timetable
 
