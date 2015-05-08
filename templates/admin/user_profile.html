@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>后台管理 - 某科学的张江大学选课系统</title>
+    <title>资料修改 - 某科学的张江大学选课系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8" />
 
@@ -40,14 +40,14 @@
 
       <!-- Make page fluid -->
       <div class="row">
-        
+
 
 
 
 
         <!-- Fixed navbar -->
         <div class="navbar navbar-default navbar-fixed-top navbar-transparent-black mm-fixed-top" role="navigation" id="navbar">
-          
+
 
 
           <!-- Branding -->
@@ -66,7 +66,7 @@
 
           <!-- .nav-collapse -->
           <div class="navbar-collapse">
-                        
+
             <!-- Page refresh -->
             <ul class="nav navbar-nav refresh">
               <li class="divided">
@@ -77,17 +77,17 @@
 
             <!-- Quick Actions -->
             <ul class="nav navbar-nav quick-actions">
-              
+
 
               <li class="dropdown divided user" id="current-user" style="padding-right: 0px;padding-left: 60px;">
                 <a class="dropdown-toggle options" data-toggle="dropdown" href="#">
                     {{ g.user.username }} <i class="fa fa-caret-down"></i>
                 </a>
-                
+
                 <ul class="dropdown-menu arrow settings">
 
                   <li>
-                    
+
                     <h3>背景色:</h3>
                     <ul id="color-schemes">
                       <li><a href="#" class="bg-1"></a></li>
@@ -103,7 +103,7 @@
                   <li class="divider"></li>
 
                   <li>
-                    <a href="#"><i class="fa fa-user"></i> 个人资料</a>
+                    <a href="/admin/profile"><i class="fa fa-user"></i> 个人资料</a>
                   </li>
 
                   <li class="divider"></li>
@@ -121,8 +121,8 @@
 
             <!-- Sidebar -->
             <ul class="nav navbar-nav side-nav" id="sidebar">
-              
-              <li class="collapsed-content"> 
+
+              <li class="collapsed-content">
                 <ul>
                   <li class="search"><!-- Collapsed search pasting here at 768px --></li>
                 </ul>
@@ -130,9 +130,9 @@
 
               <li class="navigation" id="navigation">
                 <a href="#" class="sidebar-toggle" data-toggle="#navigation">Navigation <i class="fa fa-angle-up"></i></a>
-                
+
                 <ul class="menu">
-                  
+
                   <li>
                     <a href="/admin">
                       <i class="fa fa-tachometer"></i> 总览
@@ -156,7 +156,7 @@
                       </li>
                     </ul>
                      </li>
-                   <li class="dropdown open active">
+                      <li class="dropdown open active">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                       <i class="fa fa-bar-chart-o"></i> 用户管理 <b class="fa fa-plus dropdown-plus"></b>
                     </a>
@@ -197,14 +197,14 @@
             
 
             <h2><i class="fa fa-tachometer"></i> 某科学的张江大学选课系统
-            <span>总览</span></h2>
+            <span></span></h2>
             
 
             <div class="breadcrumbs">
               <ol class="breadcrumb">
                 <li>你在这里</li>
                 <li><a href="/admin">后台管理</a></li>
-                <li class="active">总览</li>
+                <li class="active">用户资料修改</li>
               </ol>
             </div>
 
@@ -216,97 +216,162 @@
           <div class="main">
               
               <div class="row">
-                  <div class="col-md-12">
+                  
+                  <div class="col-md-6">
 
 
-                <section class="tile">
+
+                <!-- tile -->
+                <section class="tile color transparent-white">
 
 
 
                   <!-- tile header -->
                   <div class="tile-header">
-                    <h1><strong>检索结果</strong>{% if result_student|count==0 and result_teacher|count==0 %} <font color="red">无结果{% endif %}</font></h1>
-                    <div class="controls">
-                      <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
-                      <a href="#" class="remove"><i class="fa fa-times"></i></a>
-                    </div>
+                    <h1><strong>修改资料</strong></h1>
                   </div>
                   <!-- /tile header -->
 
                   <!-- tile body -->
-                  {% if result_student and result_student|count!=0 %}
-                  <div class="tile-body nopadding">
+                    <div class="tile-body">
+                    {% with messages = get_flashed_messages() %}
+                     {% if messages %}
+                      <div class="notification notification-warning" style="margin-top: 0px;">
+                      <h4>提示</h4>
+                          {% for message in messages %}
+                      <p>{{ message }}</p>
+                          {% endfor %}
+                    </div>
+                      {% endif %}
+                      {% endwith %}
+                    
+                    <form class="form-horizontal" role="form" action="/admin/user-profile" method="POST">
+                    {% if stu %}
 
-                    <table class="table table-bordered">
-                      <thead>
-                        <tr>
-                          <th>学生ID</th>
-                          <th>姓名</th>
-                          <th>年龄</th>
-                          <th>专业</th>
-                          <th>年级</th>
-                          <th>操作</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {% for r in result_student %}
-                          <tr>
-                                  <td>{{ r.stuid }}</td>
-                                  <td>{{ r.name }}</td>
-                                  <td>{{ r.age }}</td>
-                                  <td>{{ r.major }}</td>
-                                  <td>{{ r.grade }}</td>
-                                  <td><a href="/admin/stu-course?id={{r.stuid}}">教务管理</a> | <a href="/admin/user-profile?id={{r.stuid}}">资料修改</a> | <a onclick="delu('{{r.stuid}}')">删除用户</a></td>
-                          </tr>
-                        {% endfor %}
+                        <div class="form-group">
+                        <label for="sid" class="col-sm-4 control-label">学号</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="sid" name="stuid" value="{{stu.stuid}}" readonly>
+                        </div>
+                      </div>
 
-                      </tbody>
-                    </table>
+                      <div class="form-group">
+                        <label for="name" class="col-sm-4 control-label">姓名</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="name" name="uname" value="{{stu.name}}">
+                        </div>
+                      </div>
+
+                        <div class="form-group">
+                        <label for="sex" class="col-sm-4 control-label">姓别</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="sex" name="sex" value="{{stu.sex}}">
+                        </div>
+                      </div>
+
+                       <div class="form-group">
+                        <label for="age" class="col-sm-4 control-label">年龄</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="age" name="age" value="{{stu.age}}">
+                        </div>
+                      </div>
+
+                        <div class="form-group">
+                        <label for="major" class="col-sm-4 control-label">专业</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="major" name="major" value="{{stu.major}}">
+                        </div>
+                      </div>
+
+                        <div class="form-group">
+                        <label for="grade" class="col-sm-4 control-label">年级</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="grade" name="grade"  value="{{stu.grade}}">
+                        </div>
+                      </div>
+                        <br/>
+                        <br/>
+
+                        {% endif %}
+                        {% if tea %}
+                        <div class="form-group">
+                        <label for="tid" class="col-sm-4 control-label">教师编号</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="tid" name="teaid" value="{{tea.teaid}}" readonly>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="tname" class="col-sm-4 control-label">姓名</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="tname" name="uname" value="{{tea.name}}">
+                        </div>
+                      </div>
+
+                        <div class="form-group">
+                        <label for="tsex" class="col-sm-4 control-label">姓别</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="tsex" name="sex" value="{{tea.sex}}">
+                        </div>
+                      </div>
+
+                       <div class="form-group">
+                        <label for="tage" class="col-sm-4 control-label">年龄</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="tage" name="age" value="{{tea.age}}">
+                        </div>
+                      </div>
+
+                        <div class="form-group">
+                        <label for="tmajor" class="col-sm-4 control-label">院系</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="tmajor" name="major" value="{{tea.major}}">
+                        </div>
+                      </div>
+
+                        <div class="form-group">
+                        <label for="tprof" class="col-sm-4 control-label">职称</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="tprof" name="prof" value="{{tea.prof}}">
+                        </div>
+                      </div>
+
+                        <br/>
+                        <br/>
+
+                        {% endif %}
+
+                        <div class="form-group">
+                        <label for="pass" class="col-sm-4 control-label">修改密码</label>
+                        <div class="col-sm-8">
+                          <input type="password" class="form-control" id="pass" name="password" placeholder="新密码(不需修改请留空)">
+                        </div>
+                      </div>
+
+                        <div class="form-group">
+                        <label for="cpass" class="col-sm-4 control-label">确认密码</label>
+                        <div class="col-sm-8">
+                          <input type="password" class="form-control" id="cpass" name="confirm" placeholder="确认密码">
+                        </div>
+                      </div>
+
+                      <div class="form-group form-footer footer-white">
+                        <div class="col-sm-offset-4 col-sm-8">
+                          <button type="submit" class="btn btn-greensea">提交</button>
+                          <button type="reset" class="btn btn-red">重置</button>
+                        </div>
+                      </div>
+                            
+                    </form>
 
                   </div>
-                    <br/>
-                  {% endif %}
-                  <!-- /tile body -->
-                  <!-- tile body -->
-                  {% if result_teacher and result_teacher|count!=0 %}
-                  <div class="tile-body nopadding">
-
-                    <table class="table table-bordered">
-                      <thead>
-                        <tr>
-                          <th>教师ID</th>
-                          <th>姓名</th>
-                          <th>性别</th>
-                          <th>年龄</th>
-                          <th>院系</th>
-                          <th>职称</th>
-                          <th>操作</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {% for r in result_teacher %}
-                          <tr>
-                                  <td>{{ r.teaid }}</td>
-                                  <td>{{ r.name }}</td>
-                                  <td>{% if r.sex==1 %}男{% elif r.sex==0 %}女{% else %}未指定{% endif %}</td>
-                                  <td>{{ r.age }}</td>
-                                  <td>{{ r.major }}</td>
-                                  <td>{{ r.prof }}</td>
-                                  <td><a href="/admin/user-profile?id={{r.teaid}}">资料修改</a> | <a onclick="delu('{{r.teaid}}')">删除用户</a></td>
-                          </tr>
-                        {% endfor %}
-
-                      </tbody>
-                    </table>
-
-                  </div>
-                  {% endif %}
                   <!-- /tile body -->
 
                 </section>
                 <!-- /tile -->
 
               </div>
+
               </div>
 
           </div>
@@ -320,12 +385,6 @@
 
     </div>
     <!-- Wrap all page content end -->
-
-
-
-    <section class="videocontent" id="video"></section>
-
-
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="/static/js/jquery.js"></script>
@@ -359,27 +418,6 @@
 
     <script src="/static/js/minimal.min.js"></script>
 
-   <script>
-      function delu(username){
-        var r=confirm("确认删除用户以及所有相关数据?");
-        if (r==true)
-        {
-            dodel(username);
-        }
-    }
-  function dodel(username){
-    $.post("/xhr/delu",
-    {
-        username:username
-    },
-    function(data,status){
-        var obj = eval ("(" + data + ")");
-        alert(obj.info);
-        location.reload();
-    }
-    );
-    }
-   </script>
   </body>
 </html>
       

@@ -9,6 +9,8 @@ from wtforms.validators import Optional
 from models import Student,Account,Course,Xk
 from sqlalchemy.sql import func
 from utils import transj2w
+import random
+
 class ProfileForm(Form):
     name = StringField(
         'name', validators=[
@@ -25,6 +27,11 @@ class ProfileForm(Form):
             NumberRange(min=1,max=80, message=u'年龄必须在1~80以内')
         ]
     )
+    sex = IntegerField(
+        'sex',validators=[
+            NumberRange(min=0,max=1, message=u'请选择性别!')
+        ]
+    )
     major = StringField(
         'major', validators=[
             Length(min=0, max=20, message=u"专业长度必须在20位以下")
@@ -38,14 +45,15 @@ class ProfileForm(Form):
 
     def save(self):
         user = Account.query.get(g.user.username)
-        if self.password!='':
-            user.password=Account.create_password(self.password)
+        if self.password.data!='':
+            user.password=Account.create_password(self.password.data)
             user.save()
         stuusr=Student.query.get(g.user.username)
         stuusr.name=self.name.data
         stuusr.age=self.age.data
         stuusr.major=self.major.data
         stuusr.grade=self.grade.data
+        stuusr.sex=self.sex.data
         stuusr.save()
 class SearchForm():
     def __init__(self,r):
@@ -66,6 +74,6 @@ class SearchForm():
                 sr=sbydesp.all()
         for i in sr:
             if i.Course is not None:
-                i.Course.time=transj2w(i.Course.time)
+                setattr( i.Course.__class__, 'time', transj2w(i.Course.ctime))
                 res.append(i)
         return res

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>后台管理 - 某科学的张江大学选课系统</title>
+    <title>学生检索 - 某科学的张江大学选课系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8" />
 
@@ -40,20 +40,14 @@
 
       <!-- Make page fluid -->
       <div class="row">
-        
-
-
-
 
         <!-- Fixed navbar -->
         <div class="navbar navbar-default navbar-fixed-top navbar-transparent-black mm-fixed-top" role="navigation" id="navbar">
-          
-
 
           <!-- Branding -->
           <div class="navbar-header col-md-2">
             <a class="navbar-brand" href="index.html">
-              <strong>后台</strong>管理
+              <strong>课程</strong>时间表
             </a>
             <div class="sidebar-collapse">
               <a href="#">
@@ -63,10 +57,9 @@
           </div>
           <!-- Branding end -->
 
-
           <!-- .nav-collapse -->
           <div class="navbar-collapse">
-                        
+
             <!-- Page refresh -->
             <ul class="nav navbar-nav refresh">
               <li class="divided">
@@ -77,17 +70,17 @@
 
             <!-- Quick Actions -->
             <ul class="nav navbar-nav quick-actions">
-              
+
 
               <li class="dropdown divided user" id="current-user" style="padding-right: 0px;padding-left: 60px;">
                 <a class="dropdown-toggle options" data-toggle="dropdown" href="#">
                     {{ g.user.username }} <i class="fa fa-caret-down"></i>
                 </a>
-                
+
                 <ul class="dropdown-menu arrow settings">
 
                   <li>
-                    
+
                     <h3>背景色:</h3>
                     <ul id="color-schemes">
                       <li><a href="#" class="bg-1"></a></li>
@@ -103,7 +96,7 @@
                   <li class="divider"></li>
 
                   <li>
-                    <a href="#"><i class="fa fa-user"></i> 个人资料</a>
+                    <a href="/teacher/profile"><i class="fa fa-user"></i> 个人资料</a>
                   </li>
 
                   <li class="divider"></li>
@@ -121,8 +114,8 @@
 
             <!-- Sidebar -->
             <ul class="nav navbar-nav side-nav" id="sidebar">
-              
-              <li class="collapsed-content"> 
+
+              <li class="collapsed-content">
                 <ul>
                   <li class="search"><!-- Collapsed search pasting here at 768px --></li>
                 </ul>
@@ -130,45 +123,33 @@
 
               <li class="navigation" id="navigation">
                 <a href="#" class="sidebar-toggle" data-toggle="#navigation">Navigation <i class="fa fa-angle-up"></i></a>
-                
+
                 <ul class="menu">
-                  
                   <li>
-                    <a href="/admin">
-                      <i class="fa fa-tachometer"></i> 总览
+                    <a href="/teacher">
+                      <i class="fa fa-th-large"></i> 我的时间表
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="/teacher/course-list">
+                      <i class="fa fa-tachometer"></i> 我的所有课程
                     </a>
                   </li>
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      <i class="fa fa-bar-chart-o"></i> 课程管理 <b class="fa fa-plus dropdown-plus"></b>
+                      <i class="fa fa-bar-chart-o"></i> 学生管理 <b class="fa fa-plus dropdown-plus"></b>
                     </a>
                     <ul class="dropdown-menu animated fadeInLeft">
                       <li>
-                        <a href="/admin/course">
-                          <i class="fa fa-caret-right"></i> 课程查找/修改
+                        <a href="/teacher/stulist">
+                          <i class="fa fa-caret-right"></i> 学生查找/修改
                         </a>
                       </li>
                       <li>
-                        <a href="/admin/course-edit">
-                          <i class="fa fa-caret-right"></i> 课程添加
-                        </a>
-                      </li>
-                    </ul>
-                     </li>
-                   <li class="dropdown open active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      <i class="fa fa-bar-chart-o"></i> 用户管理 <b class="fa fa-plus dropdown-plus"></b>
-                    </a>
-                    <ul class="dropdown-menu animated fadeInLeft">
-                      <li class="active">
-                        <a href="/admin/userlist">
-                          <i class="fa fa-caret-right"></i> 用户查找/修改
-                        </a>
-                      </li>
-                      <li>
-                        <a href="/admin/useradd">
-                          <i class="fa fa-caret-right"></i> 用户添加
+                        <a href="/teacher/stuadd">
+                          <i class="fa fa-caret-right"></i> 手动选课
                         </a>
                       </li>
                     </ul>
@@ -186,25 +167,25 @@
 
         </div>
         <!-- Fixed navbar end -->
-        
-        
+
+
         <!-- Page content -->
         <div id="content" class="col-md-12">
-          
+
 
           <!-- page header -->
           <div class="pageheader">
-            
+
 
             <h2><i class="fa fa-tachometer"></i> 某科学的张江大学选课系统
-            <span>总览</span></h2>
-            
+            <span>我的时间表</span></h2>
+
 
             <div class="breadcrumbs">
               <ol class="breadcrumb">
                 <li>你在这里</li>
-                <li><a href="/admin">后台管理</a></li>
-                <li class="active">总览</li>
+                <li><a href="/admin">我的课程</a></li>
+                <li class="active">时间表</li>
               </ol>
             </div>
 
@@ -214,7 +195,7 @@
 
           <!-- content main container -->
           <div class="main">
-              
+
               <div class="row">
                   <div class="col-md-12">
 
@@ -225,7 +206,7 @@
 
                   <!-- tile header -->
                   <div class="tile-header">
-                    <h1><strong>检索结果</strong>{% if result_student|count==0 and result_teacher|count==0 %} <font color="red">无结果{% endif %}</font></h1>
+                    <h1><strong>{% if courseid %}课程{{courseid}}的{% else %}搜索结果 - {% endif %}学生列表</strong>{% if result|count==0 %} <font color="red">无结果{% endif %}</font></h1>
                     <div class="controls">
                       <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
                       <a href="#" class="remove"><i class="fa fa-times"></i></a>
@@ -234,29 +215,39 @@
                   <!-- /tile header -->
 
                   <!-- tile body -->
-                  {% if result_student and result_student|count!=0 %}
+                  {% if result and result|count!=0 %}
                   <div class="tile-body nopadding">
 
                     <table class="table table-bordered">
                       <thead>
                         <tr>
                           <th>学生ID</th>
+                          {% if not courseid %}<th>课程ID</th>{% endif %}
                           <th>姓名</th>
                           <th>年龄</th>
+                          <th>性别</th>
                           <th>专业</th>
                           <th>年级</th>
                           <th>操作</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {% for r in result_student %}
+                        {% for r in result %}
                           <tr>
-                                  <td>{{ r.stuid }}</td>
-                                  <td>{{ r.name }}</td>
-                                  <td>{{ r.age }}</td>
-                                  <td>{{ r.major }}</td>
-                                  <td>{{ r.grade }}</td>
-                                  <td><a href="/admin/stu-course?id={{r.stuid}}">教务管理</a> | <a href="/admin/user-profile?id={{r.stuid}}">资料修改</a> | <a onclick="delu('{{r.stuid}}')">删除用户</a></td>
+                              <td style="vertical-align:middle;">{{ r.Student.stuid }}</td>
+                              {% if not courseid %}<td style="vertical-align:middle;">{{ r.Xk.code }}</td>{% endif %}
+                              <td style="vertical-align:middle;">{{ r.Student.name }}</td>
+                              <td style="vertical-align:middle;">{{ r.Student.age }}</td>
+                              <td style="vertical-align:middle;">{% if r.Student.sex==1 %}男{% elif r.Student.sex==0 %}女{% else %}未指定{% endif %}</td>
+                              <td style="vertical-align:middle;">{{ r.Student.major }}</td>
+                              <td style="vertical-align:middle;">{{ r.Student.grade }}</td>
+                              <td style="vertical-align:middle;width: 20%;">
+                          <input type="text" class="form-control" id="inp{{r.Student.stuid}}{{r.Xk.code}}" value="{{r.Xk.score}}" style="width: 40%; display: inline;">
+
+                            <a style="display: inline;" class="btn btn-default" type="button" onclick="df('inp{{r.Student.stuid}}{{r.Xk.code}}','{{r.Student.stuid}}','{{r.Xk.code}}')">打分</a>
+
+                        <!-- /input-group -->
+                      </td>
                           </tr>
                         {% endfor %}
 
@@ -268,40 +259,7 @@
                   {% endif %}
                   <!-- /tile body -->
                   <!-- tile body -->
-                  {% if result_teacher and result_teacher|count!=0 %}
-                  <div class="tile-body nopadding">
 
-                    <table class="table table-bordered">
-                      <thead>
-                        <tr>
-                          <th>教师ID</th>
-                          <th>姓名</th>
-                          <th>性别</th>
-                          <th>年龄</th>
-                          <th>院系</th>
-                          <th>职称</th>
-                          <th>操作</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {% for r in result_teacher %}
-                          <tr>
-                                  <td>{{ r.teaid }}</td>
-                                  <td>{{ r.name }}</td>
-                                  <td>{% if r.sex==1 %}男{% elif r.sex==0 %}女{% else %}未指定{% endif %}</td>
-                                  <td>{{ r.age }}</td>
-                                  <td>{{ r.major }}</td>
-                                  <td>{{ r.prof }}</td>
-                                  <td><a href="/admin/user-profile?id={{r.teaid}}">资料修改</a> | <a onclick="delu('{{r.teaid}}')">删除用户</a></td>
-                          </tr>
-                        {% endfor %}
-
-                      </tbody>
-                    </table>
-
-                  </div>
-                  {% endif %}
-                  <!-- /tile body -->
 
                 </section>
                 <!-- /tile -->
@@ -358,19 +316,14 @@
     <script src="/static/js/vendor/chosen/chosen.jquery.min.js"></script>
 
     <script src="/static/js/minimal.min.js"></script>
-
-   <script>
-      function delu(username){
-        var r=confirm("确认删除用户以及所有相关数据?");
-        if (r==true)
-        {
-            dodel(username);
-        }
-    }
-  function dodel(username){
-    $.post("/xhr/delu",
+<script>
+    function df(fid,sid,code){
+    score=document.getElementById(fid).value;
+    $.post("/xhr/setscore",
     {
-        username:username
+        code:code,
+        stuid:sid,
+        score:score
     },
     function(data,status){
         var obj = eval ("(" + data + ")");
@@ -379,7 +332,8 @@
     }
     );
     }
-   </script>
+</script>
+
   </body>
 </html>
-      
+

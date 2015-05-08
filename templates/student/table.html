@@ -157,26 +157,6 @@
                       <i class="fa fa-tint"></i> 随便逛逛
                     </a>
                   </li>
-                    
-                    <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      <i class="fa fa-bar-chart-o"></i> 统计信息 <b class="fa fa-plus dropdown-plus"></b>
-                    </a>
-                    <ul class="dropdown-menu animated fadeInLeft">
-                      <li>
-                        <a href="tables.html">
-                          <i class="fa fa-caret-right"></i> 学分排名
-                        </a>
-                      </li>
-                      <li>
-                        <a href="datatables.html">
-                          <i class="fa fa-caret-right"></i> 待定
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-
-
                 </ul>
 
               </li>
@@ -231,18 +211,9 @@
               
               <div class="row">
                   <div class="col-md-12">
-
-
                 <!-- tile -->
                 <section class="tile transparent">
-
-
-
-
                     <section class="tile color transparent-black">
-
-
-
                   <!-- tile header -->
                   <div class="tile-header">
                     <h1><strong>课程表</strong></h1>
@@ -278,10 +249,10 @@
                                 <td></td>
                                 {% else %}
                                   {% if it!=0 %}
-                                   <td align="center" rowspan="{{it[0]}}" style="vertical-align:middle">
-                                       {{it[1]}}({{it[4]}})
+                                   <td align="center" rowspan="{{it[0]}}" style="vertical-align:middle;text-shadow: 0 0 20px {{it[6]}};">
+                                       {{it[1]}} {{it[5]}}
                                        <br/>
-                                       {{it[2]}}
+                                       {{it[2]}}({{it[4]}})
                                        <br/>
                                        {{it[3]}} - <a onclick="tk('{{it[3]}}')">退课?</a>
                                    </td>

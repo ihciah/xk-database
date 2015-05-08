@@ -5,8 +5,8 @@ import json
 from flask import Blueprint
 from flask import g, request, flash
 from flask import render_template, redirect, url_for,current_app
-from utils import login_user,require_stu,require_admin,gen_course_table,get_credit,get_people_count
-from forms import DotkForm,DoxkFrom,Get_count
+from utils import login_user,require_stu,require_admin,gen_course_table,get_credit,get_people_count, require_teacher
+from forms import DotkForm,DoxkFrom,Get_count,adminDoxkForm,adminDotkForm,DelCourseForm,DelUserForm, SetScoreForm
 
 __all__ = ['bp']
 
@@ -34,6 +34,29 @@ def tk():
     for fieldName, errorMessages in form.errors.iteritems():
         result['info']=','.join(errorMessages)
     return json.dumps(result)
+@bp.route('/admintk',methods=['POST'])
+@require_admin
+def admintk():
+    form=adminDotkForm(request.form)
+    result={}
+    if form.validate():
+        form.delete()
+        result['info']=u'退课成功'
+    for fieldName, errorMessages in form.errors.iteritems():
+        result['info']=','.join(errorMessages)
+    return json.dumps(result)
+
+@bp.route('/adminxk',methods=['POST'])
+@require_admin
+def adminxk():
+    form=adminDoxkForm(request.form)
+    result={}
+    if form.validate():
+        form.save()
+        result['info']=u'选课成功'
+    for fieldName, errorMessages in form.errors.iteritems():
+        result['info']=','.join(errorMessages)
+    return json.dumps(result)
 
 @bp.route('/credit',methods=['GET'])
 @require_stu
@@ -52,3 +75,39 @@ def stucount():
     else:
         r={'state':'error'}
     return json.dumps(r)
+
+@bp.route('/delcourse',methods=['POST'])
+@require_admin
+def delcourse():
+    form=DelCourseForm(request.form)
+    result={}
+    if form.validate():
+        form.delete()
+        result['info']=u'删除成功'
+    for fieldName, errorMessages in form.errors.iteritems():
+        result['info']=','.join(errorMessages)
+    return json.dumps(result)
+
+@bp.route('/delu',methods=['POST'])
+@require_admin
+def deluser():
+    form=DelUserForm(request.form)
+    result={}
+    if form.validate():
+        form.delete()
+        result['info']=u'删除成功'
+    for fieldName, errorMessages in form.errors.iteritems():
+        result['info']=','.join(errorMessages)
+    return json.dumps(result)
+
+@bp.route('/setscore',methods=['POST'])
+@require_teacher
+def setscore():
+    form=SetScoreForm(request.form)
+    result={}
+    if form.validate():
+        form.set()
+        result['info']=u'打分成功'
+    for fieldName, errorMessages in form.errors.iteritems():
+        result['info']=','.join(errorMessages)
+    return json.dumps(result)

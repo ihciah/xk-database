@@ -225,7 +225,7 @@
 
                   <!-- tile header -->
                   <div class="tile-header">
-                    <h1><strong>检索结果</strong>{% if result_student|count==0 and result_teacher|count==0 %} <font color="red">无结果{% endif %}</font></h1>
+                    <h1><strong>课程{{courseid}}的学生列表</strong>{% if result_student|count==0 %} <font color="red">无结果{% endif %}</font></h1>
                     <div class="controls">
                       <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
                       <a href="#" class="remove"><i class="fa fa-times"></i></a>
@@ -268,40 +268,7 @@
                   {% endif %}
                   <!-- /tile body -->
                   <!-- tile body -->
-                  {% if result_teacher and result_teacher|count!=0 %}
-                  <div class="tile-body nopadding">
 
-                    <table class="table table-bordered">
-                      <thead>
-                        <tr>
-                          <th>教师ID</th>
-                          <th>姓名</th>
-                          <th>性别</th>
-                          <th>年龄</th>
-                          <th>院系</th>
-                          <th>职称</th>
-                          <th>操作</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {% for r in result_teacher %}
-                          <tr>
-                                  <td>{{ r.teaid }}</td>
-                                  <td>{{ r.name }}</td>
-                                  <td>{% if r.sex==1 %}男{% elif r.sex==0 %}女{% else %}未指定{% endif %}</td>
-                                  <td>{{ r.age }}</td>
-                                  <td>{{ r.major }}</td>
-                                  <td>{{ r.prof }}</td>
-                                  <td><a href="/admin/user-profile?id={{r.teaid}}">资料修改</a> | <a onclick="delu('{{r.teaid}}')">删除用户</a></td>
-                          </tr>
-                        {% endfor %}
-
-                      </tbody>
-                    </table>
-
-                  </div>
-                  {% endif %}
-                  <!-- /tile body -->
 
                 </section>
                 <!-- /tile -->

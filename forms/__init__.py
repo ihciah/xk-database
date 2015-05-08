@@ -5,3 +5,4 @@ from .account import *
 from .student import *
 from .course import *
 from .admin import *
+from .teacher import *

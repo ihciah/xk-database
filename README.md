@@ -1,21 +1,22 @@
 #某科学的选课系统-数据库PJ
-###初步计划采用Flash框架实现
+###基于Flash+SQLAlchemy
 
 ---
 ##功能:
 * 基本功能
-  * a.登录登出控制、资料修改
-  * b.选课、查询、退课
-  * c.管理员添加课程、后台选课
+  * a.登录登出控制、个人资料修改
+  * b.学生选课、查询、退课
+  * c.管理员增删改查课程、增删改查用户、由课程查学生、由学生查课程后台选课
+  * d.教师查自己学生、给分
 * 额外功能
-  * a.教师账号登录、查看学生列表、详细信息
-  * b.学生选课自动列出历史给分
-  * c.后台数据分析并图标展示
-  * d.课程列表导入
-* 更多待续...
+  * a.学生选课自动列出历史给分(数据来源:[GPATools](https://github.com/hackerzhou/GPATool))
+  * b.后台数据分析并图标展示
+  * c.课程推荐功能
 
 ---
 ##部署说明
+* 安装依赖
+  * pip install -r requirements.txt
 * 数据库初始化
   * create database fdxk;
   * python manager.py db init (if the folder migrations does not exist)
@@ -23,8 +24,6 @@
   * python manager.py db upgrade
 * 运行
   * python run.py
-* 依赖
-  * pip install -r requirements.txt
 
 ---
 ##协议
