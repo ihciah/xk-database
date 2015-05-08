@@ -23,17 +23,17 @@ def home():
 def profile():
     user = Student.query.get(g.user.username)
     if request.method == 'GET':
-        return render_template('student/profile.html',name=user.name,age=user.age,major=user.major,grade=user.grade)
+        return render_template('student/profile.html',user=user)
     form = ProfileForm(request.form)
     if form.validate():
         form.save()
         flash(u"资料成功更新!")
         user = Student.query.get(g.user.username)
-        render_template('student/profile.html',name=user.name,age=user.age,major=user.major,grade=user.grade)
+        render_template('student/profile.html',user=user)
     for fieldName, errorMessages in form.errors.iteritems():
         for err in errorMessages:
             flash(err)
-    return render_template('student/profile.html',name=user.name,age=user.age,major=user.major,grade=user.grade)
+    return render_template('student/profile.html',user=user)
 
 @bp.route('/xk',methods=['GET','POST'])
 @require_stu

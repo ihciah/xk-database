@@ -41,14 +41,8 @@
       <!-- Make page fluid -->
       <div class="row">
 
-
-
-
-
         <!-- Fixed navbar -->
         <div class="navbar navbar-default navbar-fixed-top navbar-transparent-black mm-fixed-top" role="navigation" id="navbar">
-
-
 
           <!-- Branding -->
           <div class="navbar-header col-md-2">
@@ -161,86 +155,9 @@
                     </ul>
                      </li>
 
-
-                    <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      <i class="fa fa-bar-chart-o"></i> 统计信息 <b class="fa fa-plus dropdown-plus"></b>
-                    </a>
-                    <ul class="dropdown-menu animated fadeInLeft">
-                      <li>
-                        <a href="tables.html">
-                          <i class="fa fa-caret-right"></i> Bootstrap Tables
-                        </a>
-                      </li>
-                      <li>
-                        <a href="datatables.html">
-                          <i class="fa fa-caret-right"></i> DataTables
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-
-
                 </ul>
 
               </li>
-
-              <li class="summary" id="order-summary">
-                <a href="#" class="sidebar-toggle underline" data-toggle="#order-summary">统计信息 <i class="fa fa-angle-up"></i></a>
-
-                <div class="media">
-                  <a class="pull-right" href="#">
-                    <span id="sales-chart"></span>
-                  </a>
-                  <div class="media-body">
-                    This week sales
-                    <h3 class="media-heading">26, 149</h3>
-                  </div>
-                </div>
-
-                <div class="media">
-                  <a class="pull-right" href="#">
-                    <span id="balance-chart"></span>
-                  </a>
-                  <div class="media-body">
-                    This week balance
-                    <h3 class="media-heading">318, 651</h3>
-                  </div>
-                </div>
-
-              </li>
-
-              <li class="settings" id="general-settings">
-                <a href="#" class="sidebar-toggle underline" data-toggle="#general-settings">General Settings <i class="fa fa-angle-up"></i></a>
-
-                <div class="form-group">
-                  <label class="col-xs-8 control-label">Switch ON</label>
-                  <div class="col-xs-4 control-label">
-                    <div class="onoffswitch greensea">
-                      <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch-on" checked="">
-                      <label class="onoffswitch-label" for="switch-on">
-                        <span class="onoffswitch-inner"></span>
-                        <span class="onoffswitch-switch"></span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-xs-8 control-label">Switch OFF</label>
-                  <div class="col-xs-4 control-label">
-                    <div class="onoffswitch greensea">
-                      <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch-off">
-                      <label class="onoffswitch-label" for="switch-off">
-                        <span class="onoffswitch-inner"></span>
-                        <span class="onoffswitch-switch"></span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-
-              </li>
-
 
             </ul>
             <!-- Sidebar end -->
@@ -289,7 +206,7 @@
 
                   <!-- tile header -->
                   <div class="tile-header">
-                    <h1><strong>课程{{courseid}}的学生列表</strong>{% if result|count==0 %} <font color="red">无结果{% endif %}</font></h1>
+                    <h1><strong>{% if courseid %}课程{{courseid}}的{% else %}搜索结果 - {% endif %}学生列表</strong>{% if result|count==0 %} <font color="red">无结果{% endif %}</font></h1>
                     <div class="controls">
                       <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
                       <a href="#" class="remove"><i class="fa fa-times"></i></a>
@@ -305,6 +222,7 @@
                       <thead>
                         <tr>
                           <th>学生ID</th>
+                          {% if not courseid %}<th>课程ID</th>{% endif %}
                           <th>姓名</th>
                           <th>年龄</th>
                           <th>性别</th>
@@ -316,16 +234,17 @@
                       <tbody>
                         {% for r in result %}
                           <tr>
-                              <td>{{ r.Student.stuid }}</td>
-                              <td>{{ r.Student.name }}</td>
-                              <td>{{ r.Student.age }}</td>
-                              <td>{{ r.Student.sex }}</td>
-                              <td>{{ r.Student.major }}</td>
-                              <td>{{ r.Student.grade }}</td>
-                              <td style="width: 20%;">
-                          <input type="text" class="form-control" id="inp{{r.Student.stuid}}" value="{{r.Xk.score}}" style="width: 40%; display: inline;">
+                              <td style="vertical-align:middle;">{{ r.Student.stuid }}</td>
+                              {% if not courseid %}<td style="vertical-align:middle;">{{ r.Xk.code }}</td>{% endif %}
+                              <td style="vertical-align:middle;">{{ r.Student.name }}</td>
+                              <td style="vertical-align:middle;">{{ r.Student.age }}</td>
+                              <td style="vertical-align:middle;">{% if r.Student.sex==1 %}男{% elif r.Student.sex==0 %}女{% else %}未指定{% endif %}</td>
+                              <td style="vertical-align:middle;">{{ r.Student.major }}</td>
+                              <td style="vertical-align:middle;">{{ r.Student.grade }}</td>
+                              <td style="vertical-align:middle;width: 20%;">
+                          <input type="text" class="form-control" id="inp{{r.Student.stuid}}{{r.Xk.code}}" value="{{r.Xk.score}}" style="width: 40%; display: inline;">
 
-                            <a style="display: inline;" class="btn btn-default" type="button" onclick="df('inp{{r.Student.stuid}}','{{r.Student.stuid}}')">打分</a>
+                            <a style="display: inline;" class="btn btn-default" type="button" onclick="df('inp{{r.Student.stuid}}{{r.Xk.code}}','{{r.Student.stuid}}','{{r.Xk.code}}')">打分</a>
 
                         <!-- /input-group -->
                       </td>
@@ -398,11 +317,11 @@
 
     <script src="/static/js/minimal.min.js"></script>
 <script>
-    function df(fid,sid){
+    function df(fid,sid,code){
     score=document.getElementById(fid).value;
     $.post("/xhr/setscore",
     {
-        code:"{{courseid}}",
+        code:code,
         stuid:sid,
         score:score
     },

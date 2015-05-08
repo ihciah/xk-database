@@ -27,6 +27,11 @@ class ProfileForm(Form):
             NumberRange(min=1,max=80, message=u'年龄必须在1~80以内')
         ]
     )
+    sex = IntegerField(
+        'sex',validators=[
+            NumberRange(min=0,max=1, message=u'请选择性别!')
+        ]
+    )
     major = StringField(
         'major', validators=[
             Length(min=0, max=20, message=u"专业长度必须在20位以下")
@@ -48,6 +53,7 @@ class ProfileForm(Form):
         stuusr.age=self.age.data
         stuusr.major=self.major.data
         stuusr.grade=self.grade.data
+        stuusr.sex=self.sex.data
         stuusr.save()
 class SearchForm():
     def __init__(self,r):

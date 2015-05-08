@@ -32,28 +32,35 @@
     <![endif]-->
   </head>
   <body class="bg-1">
+
+ 
+
     <!-- Preloader -->
     <div class="mask"><div id="loader"></div></div>
     <!--/Preloader -->
+
     <!-- Wrap all page content here -->
     <div id="wrap">
 
+      
+
+
       <!-- Make page fluid -->
       <div class="row">
-
+        
 
 
 
 
         <!-- Fixed navbar -->
         <div class="navbar navbar-default navbar-fixed-top navbar-transparent-black mm-fixed-top" role="navigation" id="navbar">
-
+          
 
 
           <!-- Branding -->
           <div class="navbar-header col-md-2">
-            <a class="navbar-brand" href="index.html">
-              <strong>后台</strong>管理
+            <a class="navbar-brand" href="/stu">
+              <strong>选课</strong>管理
             </a>
             <div class="sidebar-collapse">
               <a href="#">
@@ -66,7 +73,7 @@
 
           <!-- .nav-collapse -->
           <div class="navbar-collapse">
-
+                        
             <!-- Page refresh -->
             <ul class="nav navbar-nav refresh">
               <li class="divided">
@@ -77,17 +84,17 @@
 
             <!-- Quick Actions -->
             <ul class="nav navbar-nav quick-actions">
-
+              
 
               <li class="dropdown divided user" id="current-user" style="padding-right: 0px;padding-left: 60px;">
                 <a class="dropdown-toggle options" data-toggle="dropdown" href="#">
                     {{ g.user.username }} <i class="fa fa-caret-down"></i>
                 </a>
-
+                
                 <ul class="dropdown-menu arrow settings">
 
                   <li>
-
+                    
                     <h3>背景色:</h3>
                     <ul id="color-schemes">
                       <li><a href="#" class="bg-1"></a></li>
@@ -103,7 +110,7 @@
                   <li class="divider"></li>
 
                   <li>
-                    <a href="/admin/profile"><i class="fa fa-user"></i> 个人资料</a>
+                    <a href="/stu/profile"><i class="fa fa-user"></i> 个人资料</a>
                   </li>
 
                   <li class="divider"></li>
@@ -121,8 +128,8 @@
 
             <!-- Sidebar -->
             <ul class="nav navbar-nav side-nav" id="sidebar">
-
-              <li class="collapsed-content">
+              
+              <li class="collapsed-content"> 
                 <ul>
                   <li class="search"><!-- Collapsed search pasting here at 768px --></li>
                 </ul>
@@ -130,45 +137,33 @@
 
               <li class="navigation" id="navigation">
                 <a href="#" class="sidebar-toggle" data-toggle="#navigation">Navigation <i class="fa fa-angle-up"></i></a>
-
+                
                 <ul class="menu">
+                  <li>
+                    <a href="/teacher">
+                      <i class="fa fa-th-large"></i> 我的时间表
+                    </a>
+                  </li>
 
                   <li>
-                    <a href="/admin">
-                      <i class="fa fa-tachometer"></i> 总览
+                    <a href="/teacher/course-list">
+                      <i class="fa fa-tachometer"></i> 我的所有课程
                     </a>
                   </li>
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      <i class="fa fa-bar-chart-o"></i> 课程管理 <b class="fa fa-plus dropdown-plus"></b>
+                      <i class="fa fa-bar-chart-o"></i> 学生管理 <b class="fa fa-plus dropdown-plus"></b>
                     </a>
                     <ul class="dropdown-menu animated fadeInLeft">
                       <li>
-                        <a href="/admin/course">
-                          <i class="fa fa-caret-right"></i> 课程查找/修改
+                        <a href="/teacher/stulist">
+                          <i class="fa fa-caret-right"></i> 学生查找/修改
                         </a>
                       </li>
                       <li>
-                        <a href="/admin/course-edit">
-                          <i class="fa fa-caret-right"></i> 课程添加
-                        </a>
-                      </li>
-                    </ul>
-                     </li>
-                      <li class="dropdown open active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      <i class="fa fa-bar-chart-o"></i> 用户管理 <b class="fa fa-plus dropdown-plus"></b>
-                    </a>
-                    <ul class="dropdown-menu animated fadeInLeft">
-                      <li class="active">
-                        <a href="/admin/userlist">
-                          <i class="fa fa-caret-right"></i> 用户查找/修改
-                        </a>
-                      </li>
-                      <li>
-                        <a href="/admin/useradd">
-                          <i class="fa fa-caret-right"></i> 用户添加
+                        <a href="/teacher/stuadd">
+                          <i class="fa fa-caret-right"></i> 手动选课
                         </a>
                       </li>
                     </ul>
@@ -177,7 +172,6 @@
                 </ul>
 
               </li>
-
             </ul>
             <!-- Sidebar end -->
 
@@ -197,14 +191,14 @@
             
 
             <h2><i class="fa fa-tachometer"></i> 某科学的张江大学选课系统
-            <span></span></h2>
+            <span>总览</span></h2>
             
 
             <div class="breadcrumbs">
               <ol class="breadcrumb">
                 <li>你在这里</li>
-                <li><a href="/admin">后台管理</a></li>
-                <li class="active">用户资料修改</li>
+                <li><a href="/stu">选课管理</a></li>
+                <li class="active">资料修改</li>
               </ol>
             </div>
 
@@ -245,101 +239,51 @@
                       {% endif %}
                       {% endwith %}
                     
-                    <form class="form-horizontal" role="form" action="/admin/user-profile" method="POST">
-                    {% if stu %}
-
-                        <div class="form-group">
-                        <label for="sid" class="col-sm-4 control-label">学号</label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" id="sid" name="stuid" value="{{stu.stuid}}" readonly>
-                        </div>
-                      </div>
+                    <form class="form-horizontal" role="form" action="/teacher/profile" method="POST">
 
                       <div class="form-group">
                         <label for="name" class="col-sm-4 control-label">姓名</label>
                         <div class="col-sm-8">
-                          <input type="text" class="form-control" id="name" name="uname" value="{{stu.name}}">
+                          <input type="text" class="form-control" id="name" name="name" value="{{user.name}}">
                         </div>
                       </div>
 
                         <div class="form-group">
-                        <label for="sex" class="col-sm-4 control-label">姓别</label>
+                        <label class="col-sm-4 control-label">性别</label>
                         <div class="col-sm-8">
-                          <input type="text" class="form-control" id="sex" name="sex" value="{{stu.sex}}">
+                          <div class="radio radio-transparent">
+                            <input type="radio" name="sex" id="optionsRadios1" value="1"{% if user.sex==1 %} checked{% endif %}>
+                            <label for="optionsRadios1">男</label>
+                          </div>
+                          <div class="radio radio-transparent">
+                            <input type="radio" name="sex" id="optionsRadios2" value="0"{% if user.sex==0 %} checked{% endif %}>
+                            <label for="optionsRadios2">女</label>
+                          </div>
                         </div>
                       </div>
 
                        <div class="form-group">
                         <label for="age" class="col-sm-4 control-label">年龄</label>
                         <div class="col-sm-8">
-                          <input type="text" class="form-control" id="age" name="age" value="{{stu.age}}">
+                          <input type="text" class="form-control" id="age" name="age" value="{{user.age}}">
                         </div>
                       </div>
 
                         <div class="form-group">
-                        <label for="major" class="col-sm-4 control-label">专业</label>
+                        <label for="major" class="col-sm-4 control-label">院系</label>
                         <div class="col-sm-8">
-                          <input type="text" class="form-control" id="major" name="major" value="{{stu.major}}">
+                          <input type="text" class="form-control" id="major" name="major" value="{{user.major}}">
                         </div>
                       </div>
 
                         <div class="form-group">
-                        <label for="grade" class="col-sm-4 control-label">年级</label>
+                        <label for="prof" class="col-sm-4 control-label">职称</label>
                         <div class="col-sm-8">
-                          <input type="text" class="form-control" id="grade" name="grade"  value="{{stu.grade}}">
+                          <input type="text" class="form-control" id="prof" name="prof"  value="{{user.prof}}">
                         </div>
                       </div>
                         <br/>
                         <br/>
-
-                        {% endif %}
-                        {% if tea %}
-                        <div class="form-group">
-                        <label for="tid" class="col-sm-4 control-label">教师编号</label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" id="tid" name="teaid" value="{{tea.teaid}}" readonly>
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <label for="tname" class="col-sm-4 control-label">姓名</label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" id="tname" name="uname" value="{{tea.name}}">
-                        </div>
-                      </div>
-
-                        <div class="form-group">
-                        <label for="tsex" class="col-sm-4 control-label">姓别</label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" id="tsex" name="sex" value="{{tea.sex}}">
-                        </div>
-                      </div>
-
-                       <div class="form-group">
-                        <label for="tage" class="col-sm-4 control-label">年龄</label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" id="tage" name="age" value="{{tea.age}}">
-                        </div>
-                      </div>
-
-                        <div class="form-group">
-                        <label for="tmajor" class="col-sm-4 control-label">院系</label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" id="tmajor" name="major" value="{{tea.major}}">
-                        </div>
-                      </div>
-
-                        <div class="form-group">
-                        <label for="tprof" class="col-sm-4 control-label">职称</label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" id="tprof" name="prof" value="{{tea.prof}}">
-                        </div>
-                      </div>
-
-                        <br/>
-                        <br/>
-
-                        {% endif %}
 
                         <div class="form-group">
                         <label for="pass" class="col-sm-4 control-label">修改密码</label>
@@ -366,11 +310,19 @@
 
                   </div>
                   <!-- /tile body -->
+                  
+                
+
 
                 </section>
                 <!-- /tile -->
 
+
+
+
               </div>
+                  
+
 
               </div>
 
@@ -385,6 +337,12 @@
 
     </div>
     <!-- Wrap all page content end -->
+
+
+
+    <section class="videocontent" id="video"></section>
+
+
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="/static/js/jquery.js"></script>
@@ -418,6 +376,280 @@
 
     <script src="/static/js/minimal.min.js"></script>
 
+    <script>
+    $(function(){
+
+      // Initialize card flip
+      $('.card.hover').hover(function(){
+        $(this).addClass('flip');
+      },function(){
+        $(this).removeClass('flip');
+      });
+
+      // Initialize flot chart
+      var d1 =[ [1, 715],
+            [2, 985],
+            [3, 1525],
+            [4, 1254],
+            [5, 1861],
+            [6, 2621],
+            [7, 1987],
+            [8, 2136],
+            [9, 2364],
+            [10, 2851],
+            [11, 1546],
+            [12, 2541]
+      ];
+      var d2 =[ [1, 463],
+                [2, 578],
+                [3, 327],
+                [4, 984],
+                [5, 1268],
+                [6, 1684],
+                [7, 1425],
+                [8, 1233],
+                [9, 1354],
+                [10, 1200],
+                [11, 1260],
+                [12, 1320]
+      ];
+      var months = ["January", "February", "March", "April", "May", "Juny", "July", "August", "September", "October", "November", "December"];
+
+      // flot chart generate
+      var plot = $.plotAnimator($("#statistics-chart"), 
+        [
+          {
+            label: 'Sales', 
+            data: d1,    
+            lines: {lineWidth:3}, 
+            shadowSize:0,
+            color: '#ffffff'
+          },
+          { label: "Visits",
+            data: d2, 
+            animator: {steps: 99, duration: 500, start:200, direction: "right"},   
+            lines: {        
+              fill: .15,
+              lineWidth: 0
+            },
+            color:['#ffffff']
+          },{
+            label: 'Sales',
+            data: d1, 
+            points: { show: true, fill: true, radius:6,fillColor:"rgba(0,0,0,.5)",lineWidth:2 }, 
+            color: '#fff',        
+            shadowSize:0
+          },
+          { label: "Visits",
+            data: d2, 
+            points: { show: true, fill: true, radius:6,fillColor:"rgba(255,255,255,.2)",lineWidth:2 }, 
+            color: '#fff',        
+            shadowSize:0
+          }
+        ],{ 
+        
+        xaxis: {
+
+          tickLength: 0,
+          tickDecimals: 0,
+          min:1,
+          ticks: [[1,"JAN"], [2, "FEB"], [3, "MAR"], [4, "APR"], [5, "MAY"], [6, "JUN"], [7, "JUL"], [8, "AUG"], [9, "SEP"], [10, "OCT"], [11, "NOV"], [12, "DEC"]],
+
+          font :{
+            lineHeight: 24,
+            weight: "300",
+            color: "#ffffff",
+            size: 14
+          }
+        },
+        
+        yaxis: {
+          ticks: 4,
+          tickDecimals: 0,
+          tickColor: "rgba(255,255,255,.3)",
+
+          font :{
+            lineHeight: 13,
+            weight: "300",
+            color: "#ffffff"
+          }
+        },
+        
+        grid: {
+          borderWidth: {
+            top: 0,
+            right: 0,
+            bottom: 1,
+            left: 1
+          },
+          borderColor: 'rgba(255,255,255,.3)',
+          margin:0,
+          minBorderMargin:0,              
+          labelMargin:20,
+          hoverable: true,
+          clickable: true,
+          mouseActiveRadius:6
+        },
+        
+        legend: { show: false}
+      });
+
+      $(window).resize(function() {
+        // redraw the graph in the correctly sized div
+        plot.resize();
+        plot.setupGrid();
+        plot.draw();
+      });
+
+      $('#mmenu').on(
+        "opened.mm",
+        function()
+        {
+          // redraw the graph in the correctly sized div
+          plot.resize();
+          plot.setupGrid();
+          plot.draw();
+        }
+      );
+
+      $('#mmenu').on(
+        "closed.mm",
+        function()
+        {
+          // redraw the graph in the correctly sized div
+          plot.resize();
+          plot.setupGrid();
+          plot.draw();
+        }
+      );
+
+      // tooltips showing
+      $("#statistics-chart").bind("plothover", function (event, pos, item) {
+        if (item) {
+          var x = item.datapoint[0],
+              y = item.datapoint[1];
+
+          $("#tooltip").html('<h1 style="color: #418bca">' + months[x - 1] + '</h1>' + '<strong>' + y + '</strong>' + ' ' + item.series.label)
+            .css({top: item.pageY-30, left: item.pageX+5})
+            .fadeIn(200);
+        } else {
+          $("#tooltip").hide();
+        }
+      });
+
+      
+      //tooltips options
+      $("<div id='tooltip'></div>").css({
+        position: "absolute",
+        //display: "none",
+        padding: "10px 20px",
+        "background-color": "#ffffff",
+        "z-index":"99999"
+      }).appendTo("body");
+
+      //generate actual pie charts
+      $('.pie-chart').easyPieChart();
+
+
+      //server load rickshaw chart
+      var graph;
+
+      var seriesData = [ [], []];
+      var random = new Rickshaw.Fixtures.RandomData(50);
+
+      for (var i = 0; i < 50; i++) {
+        random.addData(seriesData);
+      }
+
+      graph = new Rickshaw.Graph( {
+        element: document.querySelector("#serverload-chart"),
+        height: 150,
+        renderer: 'area',
+        series: [
+          {
+            data: seriesData[0],
+            color: '#6e6e6e',
+            name:'File Server'
+          },{
+            data: seriesData[1],
+            color: '#fff',
+            name:'Mail Server'
+          }
+        ]
+      } );
+
+      var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+        graph: graph,
+      });
+
+      setInterval( function() {
+        random.removeData(seriesData);
+        random.addData(seriesData);
+        graph.update();
+
+      },1000);
+
+      // Morris donut chart
+      Morris.Donut({
+        element: 'browser-usage',
+        data: [
+          {label: "Chrome", value: 25},
+          {label: "Safari", value: 20},
+          {label: "Firefox", value: 15},
+          {label: "Opera", value: 5},
+          {label: "Internet Explorer", value: 10},
+          {label: "Other", value: 25}
+        ],
+        colors: ['#00a3d8', '#2fbbe8', '#72cae7', '#d9544f', '#ffc100', '#1693A5']
+      });
+
+      $('#browser-usage').find("path[stroke='#ffffff']").attr('stroke', 'rgba(0,0,0,0)');
+
+      //sparkline charts
+      $('#projectbar1').sparkline('html', {type: 'bar', barColor: '#22beef', barWidth: 4, height: 20});
+      $('#projectbar2').sparkline('html', {type: 'bar', barColor: '#cd97eb', barWidth: 4, height: 20});
+      $('#projectbar3').sparkline('html', {type: 'bar', barColor: '#a2d200', barWidth: 4, height: 20});
+      $('#projectbar4').sparkline('html', {type: 'bar', barColor: '#ffc100', barWidth: 4, height: 20});
+      $('#projectbar5').sparkline('html', {type: 'bar', barColor: '#ff4a43', barWidth: 4, height: 20});
+      $('#projectbar6').sparkline('html', {type: 'bar', barColor: '#a2d200', barWidth: 4, height: 20});
+
+      // sortable table
+      $('.table.table-sortable th.sortable').click(function() {
+        var o = $(this).hasClass('sort-asc') ? 'sort-desc' : 'sort-asc';
+        $('th.sortable').removeClass('sort-asc').removeClass('sort-desc');
+        $(this).addClass(o);
+      });
+
+      //todo's
+      $('#todolist li label').click(function() {
+        $(this).toggleClass('done');
+      });
+
+      // Initialize tabDrop
+      $('.tabdrop').tabdrop({text: '<i class="fa fa-th-list"></i>'});
+
+      //load wysiwyg editor
+      $('#quick-message-content').summernote({
+        toolbar: [
+          //['style', ['style']], // no style button
+          ['style', ['bold', 'italic', 'underline', 'clear']],
+          ['fontsize', ['fontsize']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['height', ['height']],
+          //['insert', ['picture', 'link']], // no insert buttons
+          //['table', ['table']], // no table button
+          //['help', ['help']] //no help button
+        ],
+        height: 143   //set editable area's height
+      });
+
+      //multiselect input
+      $(".chosen-select").chosen({disable_search_threshold: 10});
+      
+    })
+      
+    </script>
   </body>
 </html>
       

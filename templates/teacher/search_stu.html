@@ -161,86 +161,9 @@
                     </ul>
                      </li>
 
-
-                    <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      <i class="fa fa-bar-chart-o"></i> 统计信息 <b class="fa fa-plus dropdown-plus"></b>
-                    </a>
-                    <ul class="dropdown-menu animated fadeInLeft">
-                      <li>
-                        <a href="tables.html">
-                          <i class="fa fa-caret-right"></i> Bootstrap Tables
-                        </a>
-                      </li>
-                      <li>
-                        <a href="datatables.html">
-                          <i class="fa fa-caret-right"></i> DataTables
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-
-
                 </ul>
 
               </li>
-
-              <li class="summary" id="order-summary">
-                <a href="#" class="sidebar-toggle underline" data-toggle="#order-summary">统计信息 <i class="fa fa-angle-up"></i></a>
-
-                <div class="media">
-                  <a class="pull-right" href="#">
-                    <span id="sales-chart"></span>
-                  </a>
-                  <div class="media-body">
-                    This week sales
-                    <h3 class="media-heading">26, 149</h3>
-                  </div>
-                </div>
-
-                <div class="media">
-                  <a class="pull-right" href="#">
-                    <span id="balance-chart"></span>
-                  </a>
-                  <div class="media-body">
-                    This week balance
-                    <h3 class="media-heading">318, 651</h3>
-                  </div>
-                </div>
-
-              </li>
-
-              <li class="settings" id="general-settings">
-                <a href="#" class="sidebar-toggle underline" data-toggle="#general-settings">General Settings <i class="fa fa-angle-up"></i></a>
-
-                <div class="form-group">
-                  <label class="col-xs-8 control-label">Switch ON</label>
-                  <div class="col-xs-4 control-label">
-                    <div class="onoffswitch greensea">
-                      <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch-on" checked="">
-                      <label class="onoffswitch-label" for="switch-on">
-                        <span class="onoffswitch-inner"></span>
-                        <span class="onoffswitch-switch"></span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-xs-8 control-label">Switch OFF</label>
-                  <div class="col-xs-4 control-label">
-                    <div class="onoffswitch greensea">
-                      <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch-off">
-                      <label class="onoffswitch-label" for="switch-off">
-                        <span class="onoffswitch-inner"></span>
-                        <span class="onoffswitch-switch"></span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-
-              </li>
-
 
             </ul>
             <!-- Sidebar end -->
@@ -279,10 +202,121 @@
           <!-- content main container -->
           <div class="main">
 
+              <div class="row">
+{% with messages = get_flashed_messages() %}
+                     {% if messages %}
+                      <div class="notification notification-warning" style="margin-top: 0px;">
+                      <h4>提示</h4>
+                          {% for message in messages %}
+                      <p>{{ message }}</p>
+                          {% endfor %}
+                    </div>
+                      {% endif %}
+                      {% endwith %}
+                  <div class="col-md-6">
 
-          <!-- /content container -->
 
-        </div>
+
+                <!-- tile -->
+                <section class="tile color transparent-white">
+
+
+
+                  <!-- tile header -->
+                  <div class="tile-header">
+                    <h1><strong>按姓名或学号检索用户</strong></h1>
+                      <p><i>请选择检索条件(检索所有请留空):</i></p>
+                  </div>
+                  <!-- /tile header -->
+
+                  <!-- tile body -->
+                    <div class="tile-body">
+
+
+                    <form class="form-horizontal" role="form" action="/teacher/stulist" method="POST">
+
+
+                        <div class="form-group">
+                        <label for="username" class="col-sm-2 control-label">学生ID</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="username" name="stuid" placeholder="请输入学生学号">
+                        </div>
+                      </div>
+
+                        <div class="form-group">
+                        <label for="name" class="col-sm-2 control-label">学生姓名</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="name" name="sname" placeholder="请输入学生姓名">
+                        </div>
+                      </div>
+
+                      <div class="form-group form-footer footer-white">
+                        <div class="col-sm-offset-4 col-sm-8">
+                          <button type="submit" class="btn btn-greensea">提交</button>
+                          <button type="reset" class="btn btn-red">重置</button>
+                        </div>
+                      </div>
+
+                    </form>
+
+                  </div>
+                  <!-- /tile body -->
+
+                </section>
+                <!-- /tile -->
+
+              </div>
+
+                  <div class="col-md-6">
+
+
+
+                <!-- tile -->
+                <section class="tile color transparent-white">
+
+
+
+                  <!-- tile header -->
+                  <div class="tile-header">
+                    <h1><strong>按课程代码检索用户</strong></h1>
+                      <br/><br/><br/>
+                  </div>
+                  <!-- /tile header -->
+
+                  <!-- tile body -->
+                    <div class="tile-body">
+
+                    <form class="form-horizontal" role="form" action="/teacher/stulist" method="GET">
+
+
+                        <div class="form-group">
+                        <label for="code" class="col-sm-2 control-label">课程代码</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="code" name="course" placeholder="您只能检索您所属的课程">
+                        </div>
+                      </div>
+                        <br/><br/>
+
+                      <div class="form-group form-footer footer-white">
+                        <div class="col-sm-offset-4 col-sm-8">
+                          <button type="submit" class="btn btn-greensea">提交</button>
+                          <button type="reset" class="btn btn-red">重置</button>
+                        </div>
+                      </div>
+
+                    </form>
+
+                  </div>
+                  <!-- /tile body -->
+
+                </section>
+                <!-- /tile -->
+
+              </div>
+
+              </div>
+
+          </div>
           <!-- /content container -->
 
         </div>
