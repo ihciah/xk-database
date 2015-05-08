@@ -1,5 +1,5 @@
 基本功能：
-教师页面均未完成-ihciah/qzane
+教师页面所有功能-ihciah-FINISHED
 管理员页面/stu-course(GET/xk-ajax/tk-ajax)，/user-profile(GET/POST)-ihciah-FINIAHED
 后台useradd、添加课程教师+时间教室-ihciah
 学生页面基本功能:选课退课查课、个人信息修改、列课表-ihciah-FINISHED
