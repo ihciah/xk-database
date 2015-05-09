@@ -114,7 +114,7 @@ def transline2times(l):
                 additional=nits[1]
             else:
                 place=its[2]
-                additional=0
+                additional=''
             times.append([weekday,starttime,durtime,place,additional])
     return times
 
