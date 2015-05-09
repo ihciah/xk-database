@@ -230,7 +230,7 @@ class CourseEditForm(Form):
             cdel=Timeplace.query.filter(Timeplace.code == self.code.data)
             cdel.delete()
             for st in t:
-                ta=Timeplace(code=self.code.data,weekday=st[0],starttime=st[1],durtime=st[2],place=st[3])
+                ta=Timeplace(code=self.code.data,weekday=st[0],starttime=st[1],durtime=st[2],place=st[3],additional=st[4])
                 ta.save()
         tea=transline2tea(self.teas.data)
         if tea is not None and len(tea)!=0:
