@@ -113,7 +113,7 @@ def transline2times(l):
                 place=nits[0]
                 additional=nits[1]
             else:
-                place=its[2]
+                place=its[2].replace('##','')
                 additional=''
             times.append([weekday,starttime,durtime,place,additional])
     return times
