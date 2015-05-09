@@ -1,5 +1,5 @@
 #某科学的选课系统-数据库PJ
-###基于Flash+SQLAlchemy
+###基于Flask+SQLAlchemy
 
 Demo: [http://xk.ihcblog.com](http://xk.ihcblog.com)   
 复旦大学内网可用   
