@@ -25,7 +25,6 @@ class SearchStudentFrom(Form):
     def dosearch(self):
         res_stu=Student.query
         res_tea=Teacher.query
-        current_app.logger.debug(self.sname.data)
         if self.stuid.data is not None and self.stuid.data.replace(' ','')!='':
             self.stuid.data = self.stuid.data.replace('%','').replace(' ','')
             res_stu=res_stu.filter(Student.stuid.like(self.stuid.data+'%'))
