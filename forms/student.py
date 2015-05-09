@@ -66,10 +66,10 @@ class SearchForm():
         res=[]#TM给跪了,直接Course.query就是没找到怎么写。。
         sbycode=Course.session.query(Course,func.count(Xk.stuid).label('sum')).outerjoin(Xk,Xk.code==Course.code).group_by(Course.code).filter(Course.code.like(self.scode+'%'))
         sr=sbycode.all()
-        if len(sr)>0 and sr[0].Course is None:
+        if sr is None or (len(sr)>0 and sr[0].Course is None):
             sbymajor=Course.session.query(Course,func.count(Xk.stuid).label('sum')).outerjoin(Xk,Xk.code==Course.code).group_by(Course.code).filter(Course.major.like(self.scode+'%'))
             sr=sbymajor.all()
-            if len(sr)>0 and sr[0].Course is None:
+            if sr is None or (len(sr)>0 and sr[0].Course is None):
                 sbydesp=Course.session.query(Course,func.count(Xk.stuid).label('sum')).outerjoin(Xk,Xk.code==Course.code).group_by(Course.code).filter(Course.desp.like(self.scode+'%'))
                 sr=sbydesp.all()
         for i in sr:
