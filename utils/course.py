@@ -73,7 +73,10 @@ def transt2line(times):
     }
     wtime=[]
     for time in times:
-        wtime.append("%s %d-%d@%s" %(tra[str(time.weekday)],time.starttime,time.durtime+time.starttime-1,time.place))
+        if time.additional is not None and time.additional.replace(' ','')!='':
+            wtime.append("%s %d-%d@%s##%s" %(tra[str(time.weekday)],time.starttime,time.durtime+time.starttime-1,time.place,time.additional.replace(' ','')))
+        else:
+            wtime.append("%s %d-%d@%s" %(tra[str(time.weekday)],time.starttime,time.durtime+time.starttime-1,time.place))
     return ','.join(wtime)
 
 def transline2times(l):
@@ -104,8 +107,15 @@ def transline2times(l):
             tts=its[1].split('-')
             starttime=int(tts[0])
             durtime=int(tts[1])-int(tts[0])+1
-            place=its[2]
-            times.append([weekday,starttime,durtime,place])
+
+            if its[2].find('##')!=-1 and its[2].find('##')!=len(its[2].replace(' ',''))-2:
+                nits=its[2].split('##')
+                place=nits[0]
+                additional=nits[1]
+            else:
+                place=its[2]
+                additional=0
+            times.append([weekday,starttime,durtime,place,additional])
     return times
 
 def transline2tea(l):
