@@ -27,12 +27,12 @@ class Coursekinds(db.Model,SessionMixin):
         'mysql_collate': 'utf8_general_ci'
     }
     code = db.Column(db.String(100), primary_key=True, nullable=False)#课程代码(不完整版)
-    coursename = majorname = db.Column(db.String(100),nullable=True)#课程名称
+    coursename = db.Column(db.String(100),nullable=True)#课程名称
     ccredir = db.Column(db.Float(precision=1), default=0)#这门课的学分
     kindid = db.Column(db.String(50), ForeignKey('kinds.kindid'), nullable=False, primary_key=True)#课程种类id
     compulsory = db.Column(db.Integer, default=0)#1->必修;0->选修
     semester = db.Column(db.Integer, default=0)#推荐修读学期(0-8)，0为无
-    kinds = relationship('kinds')
+    #kinds = relationship('kinds')
     
 class Majors(db.Model,SessionMixin):
     __tablename__ = "majors"#专业代码和描述
@@ -55,8 +55,8 @@ class Scheme(db.Model,SessionMixin):
     majorid = db.Column(db.String(100), ForeignKey('majors.majorid'), nullable=False, primary_key=True)
     kindid = db.Column(db.String(50), ForeignKey('kinds.kindid'), nullable=False, primary_key=True)
     credit = db.Column(db.Float(precision=1), default=0)#要修读的学分
-    majors = relationship('Majors')
-    kinds = relationship('Kinds')
-    coursekinds = relationship('Coursekinds')
+    #majors = relationship('Majors')
+    #kinds = relationship('Kinds')
+    #coursekinds = relationship('Coursekinds')
     
     
