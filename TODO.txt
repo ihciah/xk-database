@@ -1,14 +1,14 @@
 基本功能：
 教师页面所有功能-ihciah-FINISHED
-管理员页面/stu-course(GET/xk-ajax/tk-ajax)，/user-profile(GET/POST)-ihciah-FINIAHED
-后台useradd、添加课程教师+时间教室-ihciah
+管理员页面-ihciah-FINIAHED
+后台useradd、添加课程教师+时间教室-ihciah-FINISHED
 学生页面基本功能:选课退课查课、个人信息修改、列课表-ihciah-FINISHED
 学生页面课程查询BUG修复-ihciah-FINISHED
 
 额外功能：
-给分数据处理、导入-qzane
-学生页面课程查询时鼠标浮动展示-qzane/ihciah
-课程推荐-qzane
+给分数据处理、导入-qzane-UNFINISHED
+学生页面课程查询时鼠标浮动展示-qzane/ihciah-UNFINISHED
+课程推荐-qzane-FINISHED
 
 
 @2015-5-2
