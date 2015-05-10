@@ -6,3 +6,4 @@ from .student import *
 from .course import *
 from .admin import *
 from .teacher import *
+from .scheme import *
