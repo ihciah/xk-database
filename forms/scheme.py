@@ -27,7 +27,7 @@ class SearchMajorCourse(Form):
         sr1.sort(key=lambda x:len(x.kindid))
         for kind in sr1:
             leftCredit = kind.credit
-            schemes = Coursekinds.session.query(Coursekinds,Kinds).filter(Coursekinds.kindid==kind.kindid).filter(Coursekinds.compulsory==1).outerjoin(Kinds,Kinds.kindid==Coursekinds.kindid)
+            schemes = Coursekinds.session.query(Coursekinds,Kinds).filter(Coursekinds.kindid==kind.kindid).filter(Coursekinds.compulsory==1).outerjoin(Kinds,Kinds.kindid==Coursekinds.kindid).limit(int(kind.credit*2))
             sr=schemes.all()
             for i in sr:
                 i.addi = len(res)
@@ -35,9 +35,9 @@ class SearchMajorCourse(Form):
                 res.append(i)
                 leftCredit -= i.Coursekinds.ccredir
             
-            schemes = Coursekinds.session.query(Coursekinds,Kinds).filter(Coursekinds.kindid==kind.kindid).filter(Coursekinds.compulsory==0).outerjoin(Kinds,Kinds.kindid==Coursekinds.kindid)
-            schemes = schemes.order_by(func.random())
+            schemes = Coursekinds.session.query(Coursekinds,Kinds).filter(Coursekinds.kindid==kind.kindid).filter(Coursekinds.compulsory==0).outerjoin(Kinds,Kinds.kindid==Coursekinds.kindid).limit(int(kind.credit*2))
             sr=schemes.all()
+            sr.sort(key=lambda x:random.random())
             for i in sr:
                 if leftCredit <= 0:
                     break
