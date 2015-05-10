@@ -1,5 +1,9 @@
 #某科学的选课系统-数据库PJ
-###基于Flash+SQLAlchemy
+###基于Flask+SQLAlchemy
+
+Demo: [http://xk.ihcblog.com](http://xk.ihcblog.com)   
+复旦大学内网可用   
+如域名未能解析,请手动修改HOSTS指向10.141.247.162
 
 ---
 ##功能:
@@ -24,6 +28,8 @@
   * python manager.py db upgrade
 * 运行
   * python run.py
+* 部署至服务器
+  * 自己问谷哥→_→
 
 ---
 ##协议

@@ -66,14 +66,15 @@ class SearchForm():
         res=[]#TM给跪了,直接Course.query就是没找到怎么写。。
         sbycode=Course.session.query(Course,func.count(Xk.stuid).label('sum')).outerjoin(Xk,Xk.code==Course.code).group_by(Course.code).filter(Course.code.like(self.scode+'%'))
         sr=sbycode.all()
-        if len(sr)>0 and sr[0].Course is None:
+        if len(sr)==0 or (len(sr)>0 and sr[0].Course is None):
             sbymajor=Course.session.query(Course,func.count(Xk.stuid).label('sum')).outerjoin(Xk,Xk.code==Course.code).group_by(Course.code).filter(Course.major.like(self.scode+'%'))
             sr=sbymajor.all()
-            if len(sr)>0 and sr[0].Course is None:
+            if len(sr)==0 or (len(sr)>0 and sr[0].Course is None):
                 sbydesp=Course.session.query(Course,func.count(Xk.stuid).label('sum')).outerjoin(Xk,Xk.code==Course.code).group_by(Course.code).filter(Course.desp.like(self.scode+'%'))
                 sr=sbydesp.all()
         for i in sr:
             if i.Course is not None:
-                setattr( i.Course.__class__, 'time', transj2w(i.Course.ctime))
+                i.time=transj2w(i.Course.ctime)
+                #setattr( i.Course.__class__, 'time', transj2w(i.Course.ctime))
                 res.append(i)
         return res

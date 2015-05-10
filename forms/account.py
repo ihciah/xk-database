@@ -6,7 +6,7 @@ from wtforms import Form, validators, TextAreaField
 from wtforms import BooleanField, StringField, PasswordField, IntegerField
 from wtforms.validators import DataRequired, Length, Regexp,NumberRange
 from wtforms.validators import Optional
-from models import Account,Student
+from models import Account,Student,Teacher
 class SignupForm(Form):
     username = StringField(
         'username', validators=[
@@ -24,7 +24,7 @@ class SignupForm(Form):
 
     def validate_username(self, field):
         data = field.data
-        if Account.query.get(data):
+        if Account.query.get(data) or Teacher.query.get(data):
             raise ValueError(u'此用户名已被注册')
 
     def save(self, role=1):

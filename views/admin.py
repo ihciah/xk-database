@@ -128,8 +128,9 @@ def course_edit():
         flash(u"课程保存成功!")
     else:
         course=Course.query.get(form.code.data)
-    times=transt2line(course.ctime)
-    teas=transtea2line(course.teacher)
+    if course is not None:
+        times=transt2line(course.ctime)
+        teas=transtea2line(course.teacher)
     for fieldName, errorMessages in form.errors.iteritems():
         for err in errorMessages:
             flash(err)

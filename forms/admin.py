@@ -25,7 +25,6 @@ class SearchStudentFrom(Form):
     def dosearch(self):
         res_stu=Student.query
         res_tea=Teacher.query
-        current_app.logger.debug(self.sname.data)
         if self.stuid.data is not None and self.stuid.data.replace(' ','')!='':
             self.stuid.data = self.stuid.data.replace('%','').replace(' ','')
             res_stu=res_stu.filter(Student.stuid.like(self.stuid.data+'%'))
@@ -192,12 +191,12 @@ class CourseEditForm(Form):
     )
     major = StringField(
         'major', validators=[
-            Length(min=1, max=20, message=u"选课院系长度错误")
+            Length(min=0, max=20, message=u"选课院系长度错误")
         ]
     )
     additional=StringField(
         'additional', validators=[
-            Length(min=1, max=20, message=u"额外信息长度错误")
+            Length(min=0, max=20, message=u"额外信息长度错误")
         ]
     )
     num = IntegerField(
@@ -231,7 +230,7 @@ class CourseEditForm(Form):
             cdel=Timeplace.query.filter(Timeplace.code == self.code.data)
             cdel.delete()
             for st in t:
-                ta=Timeplace(code=self.code.data,weekday=st[0],starttime=st[1],durtime=st[2],place=st[3])
+                ta=Timeplace(code=self.code.data,weekday=st[0],starttime=st[1],durtime=st[2],place=st[3],additional=st[4])
                 ta.save()
         tea=transline2tea(self.teas.data)
         if tea is not None and len(tea)!=0:

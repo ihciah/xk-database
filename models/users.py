@@ -7,6 +7,11 @@ from werkzeug import security
 __all__ = ['Account']
 class Account(db.Model, SessionMixin):
     __tablename__ = "users"
+    __table_args__ = {
+        'mysql_engine': 'InnoDB',
+        'mysql_charset': 'utf8',
+        'mysql_collate': 'utf8_general_ci'
+    }
     username = db.Column(db.String(100), primary_key=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
     role = db.Column(db.Integer,nullable=False)

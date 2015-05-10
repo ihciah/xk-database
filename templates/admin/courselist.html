@@ -270,7 +270,7 @@
                                   <td>{{ r.Course.desp }} / {{ r.Course.major }}</td>
                                   <td>{% for t in r.Course.teacher %}{{ t.name }}/{{ t.prof }} {% endfor %}</td>
                                   <td class="text-center"><a href="/admin/course-stu?id={{ r.Course.code }}"> {{ r.sum }} / {{ r.Course.num }}</td>
-                                  <td class="text-center">{{ r.Course.time }}</td>
+                                  <td class="text-center">{{ r.time }}</td>
 
                           </tr>
                         {% endfor %}

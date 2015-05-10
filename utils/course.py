@@ -25,7 +25,7 @@ def gen_course_table(stuid):
             cteaname+=te.name+' '
         for time in i.ctime:
             timetable[time.starttime-1][time.weekday-1]=[time.durtime,cname,cteaname,ccode,time.place,time.additional,colors[count%(len(colors))]]
-            for j in range(time.starttime,time.starttime+time.durtime):
+            for j in range(time.starttime,time.starttime+time.durtime-1):
                 timetable[j][time.weekday-1]=0
     return timetable
 
@@ -44,7 +44,7 @@ def gen_tea_course_table(teaid):
             cteaname+=te.name+' '
         for time in i.ctime:
             timetable[time.starttime-1][time.weekday-1]=[time.durtime,cname,cteaname,ccode,time.place,time.additional,colors[count%(len(colors))]]
-            for j in range(time.starttime,time.starttime+time.durtime):
+            for j in range(time.starttime,time.starttime+time.durtime-1):
                 timetable[j][time.weekday-1]=0
     return timetable
 
@@ -73,7 +73,10 @@ def transt2line(times):
     }
     wtime=[]
     for time in times:
-        wtime.append("%s %d-%d@%s" %(tra[str(time.weekday)],time.starttime,time.durtime+time.starttime-1,time.place))
+        if time.additional is not None and time.additional.replace(' ','')!='':
+            wtime.append("%s %d-%d@%s##%s" %(tra[str(time.weekday)],time.starttime,time.durtime+time.starttime-1,time.place,time.additional.replace(' ','')))
+        else:
+            wtime.append("%s %d-%d@%s" %(tra[str(time.weekday)],time.starttime,time.durtime+time.starttime-1,time.place))
     return ','.join(wtime)
 
 def transline2times(l):
@@ -104,12 +107,24 @@ def transline2times(l):
             tts=its[1].split('-')
             starttime=int(tts[0])
             durtime=int(tts[1])-int(tts[0])+1
-            place=its[2]
-            times.append([weekday,starttime,durtime,place])
+
+            if its[2].find('##')!=-1 and its[2].find('##')!=len(its[2].replace(' ',''))-2:
+                nits=its[2].split('##')
+                place=nits[0]
+                additional=nits[1]
+            else:
+                place=its[2].replace('##','')
+                additional=''
+            times.append([weekday,starttime,durtime,place,additional])
     return times
 
 def transline2tea(l):
-    return l.replace(' ','').split(',')
+    k=l.replace(' ','').split(',')
+    r=[]
+    for i in k:
+        if i!='':
+            r.append(i)
+    return r
 
 def transtea2line(teas):
     wtea=[]
