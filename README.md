@@ -22,8 +22,8 @@ Demo: [http://xk.ihcblog.com](http://xk.ihcblog.com)
 ---
 ##部署说明
 * 基础环境
-  *Python 2.7
-  *Mysql (Windows平台可以使用XAMPP)
+  * Python 2.7
+  * Mysql (Windows平台可以使用XAMPP)
 * 安装依赖
   * pip install -r requirements.txt
 * 数据库初始化
