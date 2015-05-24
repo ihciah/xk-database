@@ -13,12 +13,17 @@ Demo: [http://xk.ihcblog.com](http://xk.ihcblog.com)
   * c.管理员增删改查课程、增删改查用户、由课程查学生、由学生查课程后台选课
   * d.教师查自己学生、给分
 * 额外功能
-  * a.学生选课自动列出历史给分(数据来源:[GPATools](https://github.com/hackerzhou/GPATool))
-  * b.后台数据分析并图标展示
-  * c.课程推荐功能
+  * a.学生选课自动列出历史给分(数据来源:[GPATools](https://github.com/hackerzhou/GPATool)) - 弃了！
+  * b.后台数据分析并图标展示 - 弃了！
+  * c.课程推荐功能 - 已改为根据培养方案推荐！
+* 其实这是一个坑
+  * 嗯，就是这样。
 
 ---
 ##部署说明
+* 基础环境
+  *Python 2.7
+  *Mysql (Windows平台可以使用XAMPP)
 * 安装依赖
   * pip install -r requirements.txt
 * 数据库初始化
